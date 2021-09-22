@@ -1,0 +1,9 @@
+# robots.txt for https://www.ascd.org.
+# For more information, please contact webhelp@ascd.org
+
+User-agent: *
+Disallow: /search
+Disallow: /user/*
+
+
+Sitemap: https://www.ascd.org/sitemap.xml

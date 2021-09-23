@@ -1,4 +1,3 @@
-import React from 'react'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -108,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: 0.2,
   },
 }))
-export default function TextStyle({ color, variant, component, children }) {
+export default function TextStyle({ color, variant, component, children, ...restProps }) {
   const classes = useStyles({ color })
 
   const customVariants = [
@@ -134,6 +133,7 @@ export default function TextStyle({ color, variant, component, children }) {
       <Typography
         className={`${customVariant} ${classes.textColor}`}
         component={component}
+        {...restProps}
       >
         {children}
       </Typography>
@@ -144,6 +144,7 @@ export default function TextStyle({ color, variant, component, children }) {
         variant={variant}
         component={component}
         className={classes.textColor}
+        {...restProps}
       >
         {children}
       </Typography>

@@ -5,10 +5,12 @@ import SEOHead from '@/const/head'
 import Head from 'next/head'
 import { Box, Container } from '@material-ui/core'
 import TextCTA from '@/components/molecules/textcta'
+import HeroHalfHalf from '@/components/molecules/herohalfhalf'
 import TextStyle from '@/components/atoms/textstyle'
 import BecomeMember from '@/components/organisms/becomemember'
 import { makeStyles } from '@material-ui/core/styles'
 import paths from '@/paths/path'
+import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Memberships({ page }) {
+export default function Memberships({ page, image }) {
   const classes = useStyles()
 
   return (
@@ -43,18 +45,26 @@ export default function Memberships({ page }) {
       <Head>
         <title>Memberships</title>
       </Head>
-      <Box maxWidth='lg' className={classes.diagonalBackground}>
-        <Container maxWidth='lg'>
-          <Box mt={[0, 10]} className={classes.title}>
-            <TextStyle variant='h1'>Become a member</TextStyle>
-            <Box pt={2}>
-              <TextStyle variant='subtitle1'>
-                Join a community of life-changing educators who come together
-                around a shared vision.
-              </TextStyle>
-            </Box>
-          </Box>
-        </Container>
+      <Box mt={[0, 0, 5]} mb={[6, 10]}>
+        <Box
+          pl={[0, 0, 3, 0]}
+          pb={[1, 3]}
+          maxWidth={['100%', '1024px']}
+          margin='auto'
+        >
+          <HeroHalfHalf 
+            title='Become a member'
+            description='Join a community of life-changing educators who come together around a shared vision.'
+            image={image?.fields?.imageBynder 
+              ? image?.fields?.imageBynder[0]?.src + '?' + imageoptimization.qualityParameter + '=' + imageoptimization.qualityValue
+              : image?.fields?.imageContentful?.fields?.file?.url
+                ? image?.fields?.imageContentful?.fields?.file?.url + '?' + imageoptimization.qualityParameter + '=' + imageoptimization.qualityValue
+                : '/images/ASCDImageFiller.png'
+            }
+            imageAlt={image?.fields?.alternate}
+            imagePos='right'
+          />
+        </Box>
       </Box>
       <Box mt={[0, 2]}>
         <BecomeMember noBackground={true} noTitle={true} />
@@ -78,9 +88,16 @@ export async function getStaticProps() {
     include: 3,
   })
 
+  const image = await client.getEntries({
+    content_type: 'image',
+    'fields.alternate': 'Membership details',
+    include: 2,
+  })
+
   return {
     props: {
       page: data.items[0],
+      image: image.items[0],
     },
     revalidate: 20,
   }

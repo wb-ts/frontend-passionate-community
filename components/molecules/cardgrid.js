@@ -124,7 +124,9 @@ export default function CardGrid({ items, ...props }) {
     props.gridLayout === 'four-col-avatar'
 
   const viewAllAuthors =
-    props?.headerBody && props?.headerBody[0]?.props?.children[0]
+    props?.headerBody &&
+    props?.headerBody[0]?.props?.children &&
+    props?.headerBody[0]?.props?.children.length > 0
       ? props?.headerBody[0].props?.children?.find(
           (child) => child?.props?.href == '/people/all'
         )

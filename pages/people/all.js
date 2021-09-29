@@ -10,7 +10,6 @@ import { Box, Container, Divider, Grid } from '@material-ui/core'
 import Banner from '@/components/molecules/banner'
 import _ from 'lodash'
 import { sortBy } from 'lodash'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import FilterDropdown from '@/components/atoms/filterdropdown'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
@@ -59,19 +58,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function AllAuthors({ authors, profileCategories, topicCategories, SEO }) {
+export default function AllAuthors({ authors, profileCategories, topicCategories, SEO, hasQueryParamCategoryProfiles, hasQueryParamCategoryTopics }) {
   const classes = useStyles()
 
   const [people, setPeople] = useState([])
   const [authorsByExpertise, setAuthorsByExpertise] = useState([])
-  const router = useRouter()
-  const profileCategoriesId = 'categoryProfiles'
-  const topicCategoriesId = 'categoryTopics'
 
-  const sortedAuthors = sortBy(!people?.length 
-                                ? (!authorsByExpertise?.length? authors: authorsByExpertise) 
+  const sortedAuthors = sortBy(!hasQueryParamCategoryProfiles 
+                                ? (!hasQueryParamCategoryTopics ? authors : authorsByExpertise) 
                                 : people, (item) =>
-    item.fields.lastName?.trim().toUpperCase()
+    item?.fields?.lastName?.trim().toUpperCase()
   )
 
   const result = _(sortedAuthors)
@@ -94,29 +90,21 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
   useEffect(() => {
     let authorsFilteredByExpertise = []
     let filteredAuthors = []
-    let queryParamList = {}
-    let keyValuePairs = router.asPath?.indexOf('?') > -1 ? router.asPath?.split('?').pop()?.split('&') : []
-    if (keyValuePairs && keyValuePairs.length) {
-      keyValuePairs.forEach((pair) => { 
-        pair = pair.split('=')
-        queryParamList[pair[0]] = decodeURI(pair[1] || '')
-      })
 
-      const givenProfileCategoryIds = profileCategories?.length && queryParamList.hasOwnProperty(profileCategoriesId) 
-        ? (profileCategories
-            .filter(profileCategory => queryParamList[profileCategoriesId].toLowerCase().split(',').includes(profileCategory.fields.title?.toLowerCase()))
-            ?.map(el => el.sys.id)
-          )
-        : []
+    const givenProfileCategoryIds = profileCategories?.length 
+      ? (profileCategories
+          ?.map(el => el.sys.id)
+        )
+      : []
 
-      const givenTopicCategoryIds = topicCategories?.length && queryParamList.hasOwnProperty(topicCategoriesId)
-        ? (topicCategories
-            .filter(topicCategory => queryParamList[topicCategoriesId].toLowerCase().split(',').includes(topicCategory.fields.title?.toLowerCase()))
-            ?.map(el => el.sys.id)
-          )
-        : []
-       
-      if (authors?.length) {
+    const givenTopicCategoryIds = topicCategories?.length
+      ? (topicCategories
+          ?.map(el => el.sys.id)
+        )
+      : []
+      
+    if (authors?.length) {
+      if (hasQueryParamCategoryProfiles) {
         filteredAuthors = authors.filter(author => author.fields.profileType)
           .filter((a) => {
             let match = false
@@ -128,9 +116,14 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
             return match
           })
         setPeople(filteredAuthors)
+      }
 
-        authorsFilteredByExpertise = (filteredAuthors.length ? filteredAuthors : authors)
-          .filter(author => author.fields.expertise)
+      if (hasQueryParamCategoryTopics) {
+        authorsFilteredByExpertise = (filteredAuthors.length 
+          ? 
+            filteredAuthors 
+          : (hasQueryParamCategoryProfiles ? filteredAuthors : authors))
+          .filter(author => author?.fields?.expertise)
           .filter((a) => {
             let match = false
             a.fields.expertise.forEach((e) => {
@@ -142,9 +135,7 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
           })
         setAuthorsByExpertise(authorsFilteredByExpertise)
         if (filteredAuthors?.length) {
-          if (givenTopicCategoryIds.length) {
-            setPeople(authorsFilteredByExpertise)
-          }
+          setPeople(authorsFilteredByExpertise)
         }
       }
     }
@@ -269,8 +260,26 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   const maxEntries = 1000
+  const categoryProfiles = context.query.categoryProfiles && context.query.categoryProfiles.length ? context.query.categoryProfiles : ''
+  const hasKeyCategoryProfiles = context.query.categoryProfiles !== undefined
+  const categoryTopics = context.query.categoryTopics && context.query.categoryTopics.length ? context.query.categoryTopics : ''
+  const hasKeyCategoryTopics = context.query.categoryTopics !== undefined
+
+  const profileCategories = await client.getEntries({
+    content_type: 'categoryProfiles',
+    'fields.title[in]': categoryProfiles,
+    limit: maxEntries,
+  })
+
+  const topicCategories = await client.getEntries({
+    content_type: 'categoryTopics',
+    'fields.title[in]': categoryTopics,
+    limit: maxEntries,
+  })
+
+  //unarchived persons
   let offset = 0
   let items = []
   let processedEntries = null
@@ -292,17 +301,9 @@ export async function getStaticProps() {
     }
   }
 
-  const profileCategories = await client.getEntries({
-    content_type: 'categoryProfiles',
-  })
-
-  const topicCategories = await client.getEntries({
-    content_type: 'categoryTopics',
-  })
-
   const SEOData = await client.getEntries({
     content_type: 'seo',
-    'fields.id': 'authors',
+    'fields.id': 'people/all',
   })
 
   return {
@@ -311,7 +312,8 @@ export async function getStaticProps() {
       profileCategories: profileCategories.items,
       topicCategories: topicCategories.items,
       SEO: SEOData.items.length ? SEOData.items[0] : {},
+      hasQueryParamCategoryProfiles: hasKeyCategoryProfiles,
+      hasQueryParamCategoryTopics: hasKeyCategoryTopics,
     },
-    revalidate: 20,
   }
 }

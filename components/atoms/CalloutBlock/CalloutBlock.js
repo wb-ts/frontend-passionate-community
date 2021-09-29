@@ -1,9 +1,10 @@
 import React from 'react'
 import { Box, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
-import TextStyle from './textstyle'
+import TextStyle from '../textstyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -17,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   body: {
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: (props) =>
+      props.background ? props.background : theme.palette.common.white,
   },
   title: {
     fontSize: theme.typography.pxToRem(22),
@@ -25,8 +27,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function CallOutBlock({ sidelabel, title, body }) {
-  const classes = useStyles()
+export default function CalloutBlock({ sidelabel, title, body, ...props }) {
+  const classes = useStyles(props) // Optional props: background
+
   return (
     <Box display='flex'>
       <Box className={classes.side} pt={2}>
@@ -46,4 +49,11 @@ export default function CallOutBlock({ sidelabel, title, body }) {
       </Box>
     </Box>
   )
+}
+
+CalloutBlock.propTypes = {
+  sidelabel: PropTypes.string,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  background: PropTypes.string,
 }

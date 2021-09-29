@@ -404,6 +404,7 @@ export async function getStaticProps({ params }) {
   const data = await client.getEntries({
     content_type: 'blog',
     'fields.slug': params.slug,
+    include: 4,
   })
 
   if (!data || !data.items || data.items.length == 0) {

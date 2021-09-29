@@ -1,10 +1,11 @@
 import React from 'react'
 import { Box, Divider, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import ArticleItem from '@/components/molecules/articleitem'
+import ArticleItem from '@/components/molecules/ArticleItem'
 import TextStyle from '@/components/atoms/textstyle'
 import ViewAllCTA from '@/components/atoms/viewallcta'
 import clsx from 'clsx'
+import { articleItemToCardData } from '@/lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -85,10 +86,10 @@ export default function GridSection({
           className={clsx([classes.item, classes.addMargin])}
         >
           {variant == 'articleOverlay' && (
-            <ArticleItem article={items[0]} overlay />
+            <ArticleItem cardData={articleItemToCardData(items[0])} overlay />
           )}
           {variant == 'articleUnder' && (
-            <ArticleItem article={items[0]} hasImage />
+            <ArticleItem cardData={articleItemToCardData(items[0])} hasImage />
           )}
           {variant == 'articleUnder' && <Divider className={classes.divider} />}
         </Grid>
@@ -108,10 +109,17 @@ export default function GridSection({
                   className={clsx([classes.item, classes.sideItem])}
                 >
                   {variant == 'articleOverlay' && (
-                    <ArticleItem article={item} submedia overlay />
+                    <ArticleItem
+                      cardData={articleItemToCardData(item)}
+                      submedia
+                      overlay
+                    />
                   )}
                   {variant == 'articleUnder' && (
-                    <ArticleItem article={item} firstSubItem={key == 0} />
+                    <ArticleItem
+                      cardData={articleItemToCardData(item)}
+                      firstSubItem={key == 0}
+                    />
                   )}
                   {divider && variant == 'articleUnder' && <Divider />}
                 </Grid>

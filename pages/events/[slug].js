@@ -81,14 +81,14 @@ export default function Event({ event, events }) {
   const useMemberBookPrice = hasMemberBookPrice(userAccessData)
 
   const futureEvents = events
-    .filter((item) => item.fields.slug !== event.fields.slug)
+    .filter((item) => item?.fields?.slug !== event?.fields?.slug)
     .filter((item) => {
-      const released = Date.parse(item.fields.dateTime)
+      const released = Date.parse(item?.fields?.dateTime)
       const today = new Date().getTime()
       return released > today
     })
     .sort((a, b) => {
-      return Date.parse(a.fields.dateTime) - Date.parse(b.fields.dateTime)
+      return Date.parse(a?.fields?.dateTime) - Date.parse(b?.fields?.dateTime)
     })
 
   const options = {
@@ -128,22 +128,22 @@ export default function Event({ event, events }) {
 
   return (
     <Layout>
-      <SEOHead seo={event?.fields?.seo ? event.fields.seo : event} />
+      <SEOHead seo={event?.fields?.seo ? event?.fields?.seo : event} />
       <Box pt={[0, 7]} pb={7} maxWidth={['100%', '1024px']} margin='auto'>
         <HeroHalfHalf
-          title={event.fields.title}
-          description={event.fields.description}
+          title={event?.fields?.title}
+          description={event?.fields?.description}
           imagePos='right'
           image={
-            event.fields?.thumbnail?.fields?.imageBynder
-              ? event.fields?.thumbnail?.fields?.imageBynder[0]?.src +
+            event?.fields?.thumbnail?.fields?.imageBynder
+              ? event?.fields?.thumbnail?.fields?.imageBynder[0]?.src +
                 '?' +
                 imageoptimization.qualityParameter +
                 '=' +
                 imageoptimization.qualityValue
-              : event.fields?.thumbnail?.fields?.imageContentful?.fields?.file
+              : event?.fields?.thumbnail?.fields?.imageContentful?.fields?.file
                   ?.url
-              ? event.fields?.thumbnail?.fields?.imageContentful?.fields?.file
+              ? event?.fields?.thumbnail?.fields?.imageContentful?.fields?.file
                   ?.url +
                 '?' +
                 imageoptimization.qualityParameter +
@@ -151,44 +151,45 @@ export default function Event({ event, events }) {
                 imageoptimization.qualityValue
               : '/images/ASCDImageFiller.png'
           }
-          imageAlt={event.fields.thumbnail.fields?.alternate}
+          imageAlt={event?.fields?.thumbnail?.fields?.alternate}
         />
       </Box>
       <Box className={classes.details} py={6} prl={[5, 0]}>
         <Container>
           <Grid container spacing={4}>
             <Grid xs={12} md={6} item className={classes.detailsText}>
-              {documentToReactComponents(event.fields.eventDetails, options)}
+              {documentToReactComponents(event?.fields?.eventDetails, options)}
             </Grid>
             <Grid item xs={12} md={6} className={classes.buttons}>
-              {event.fields.link && (
+              {event?.fields?.link && (
                 <CtaButton
                   variant='contained'
                   width='158'
                   height='42'
                   onclick={() => void 0}
-                  href={event.fields.link}
+                  href={event?.fields?.link}
                   label='Event Details'
                   color='secondary'
                   size='medium'
                 />
               )}
               <Box ml={[0, 2]} mt={[2, 0]}>
-                {event.fields.type.fields.title == 'Webinar' &&
-                event.fields.webinarLink ? (
+                {event?.fields?.type?.fields?.title == 'Webinar' &&
+                event?.fields?.webinarLink ? (
                   <Button
                     variant='outlined'
                     className={classes.snipcartBtn}
                     target='_blank'
-                    href={event.fields.webinarLink}
+                    href={event?.fields?.webinarLink}
                   >
                     Register Now
                   </Button>
                 ) : (
                   <>
-                    {event.fields.eventId === '2021-leadership-summit' ||
-                    event.fields.eventId === 'symposium-new-era-of-education' ||
-                    event.fields.eventId === '2022-annual-conference' ? (
+                    {event?.fields?.eventId === '2021-leadership-summit' ||
+                    event?.fields?.eventId ===
+                      'symposium-new-era-of-education' ||
+                    event?.fields?.eventId === '2022-annual-conference' ? (
                       <>
                         <CtaButton
                           variant='contained'
@@ -197,9 +198,9 @@ export default function Event({ event, events }) {
                           label='Register Now'
                           backgroundColor='#3C64B1'
                           id={
-                            event.fields.eventId === '2021-leadership-summit'
+                            event?.fields?.eventId === '2021-leadership-summit'
                               ? 'december-event'
-                              : event.fields.eventId ===
+                              : event?.fields?.eventId ===
                                 '2022-annual-conference'
                               ? '2022-annual-conference'
                               : 'october-event'
@@ -216,32 +217,32 @@ export default function Event({ event, events }) {
                         className={classes.snipcartBtn}
                         snipcart={{
                           label: 'Register Now',
-                          dataItemId: event.fields.eventId,
-                          dataItemName: event.fields.title,
-                          dataItemImage: event.fields?.thumbnail?.fields
+                          dataItemId: event?.fields?.eventId,
+                          dataItemName: event?.fields?.title,
+                          dataItemImage: event?.fields?.thumbnail?.fields
                             ?.imageBynder
-                            ? event.fields?.thumbnail?.fields?.imageBynder[0]
+                            ? event?.fields?.thumbnail?.fields?.imageBynder[0]
                                 ?.src +
                               '?' +
                               imageoptimization.qualityParameter +
                               '=' +
                               imageoptimization.qualityValue
-                            : event.fields?.thumbnail?.fields?.imageContentful
+                            : event?.fields?.thumbnail?.fields?.imageContentful
                                 ?.fields?.file?.url
-                            ? event.fields?.thumbnail?.fields?.imageContentful
+                            ? event?.fields?.thumbnail?.fields?.imageContentful
                                 ?.fields?.file?.url +
                               '?' +
                               imageoptimization.qualityParameter +
                               '=' +
                               imageoptimization.qualityValue
                             : '/images/ASCDImageFiller.png',
-                          dataItemDescription: event.fields.description,
+                          dataItemDescription: event?.fields?.description,
                           dataItemPrice: useMemberBookPrice
-                            ? event.fields.priceMember
-                            : event.fields.nonMemberPrice,
+                            ? event?.fields?.priceMember
+                            : event?.fields?.nonMemberPrice,
                           dataItemCustom1Value: event?.fields?.taxJar?.fields
                             ?.taxJarId
-                            ? event.fields.taxJar.fields.taxJarId
+                            ? event?.fields?.taxJar?.fields?.taxJarId
                             : '',
                         }}
                       />
@@ -250,13 +251,13 @@ export default function Event({ event, events }) {
                 )}
               </Box>
             </Grid>
-            {event.fields.eventId === '2021-leadership-summit' && (
+            {event?.fields?.eventId === '2021-leadership-summit' && (
               <>
                 <Grid xs={12} md={6} item></Grid>
                 <Grid xs={12} md={6} item>
                   {useMemberBookPrice
-                    ? _getPriceLabel(event.fields.priceMember)
-                    : _getPriceLabel(event.fields.nonMemberPrice)}
+                    ? _getPriceLabel(event?.fields?.priceMember)
+                    : _getPriceLabel(event?.fields?.nonMemberPrice)}
                 </Grid>
               </>
             )}
@@ -302,7 +303,7 @@ export async function getStaticPaths() {
 
   return {
     paths: data.items.map((item) => ({
-      params: { slug: item.fields.slug },
+      params: { slug: item?.fields?.slug },
     })),
     fallback: true,
   }

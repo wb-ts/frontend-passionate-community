@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import TextStyle from '@/components/atoms/textstyle'
-import { Box, Grid, IconButton, Modal } from '@material-ui/core'
+import { Box, Grid, IconButton, Modal, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -13,6 +13,8 @@ import CustomLink from '@/components/atoms/CustomLink'
 import { useRouter } from 'next/router'
 import imageoptimization from '@/const/imageoptimization'
 import constSnipcart from '@/const/snipcart'
+import ReactToPrint from 'react-to-print'
+import { AppContext } from '@/context/state'
 
 const useStyles = makeStyles((theme) => ({
   tocLink: {
@@ -79,6 +81,24 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   bodyText: {
+    overflowX: 'auto',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
+  printBody: {
+    height: '100vh',
+    width: '100vw',
+    paddingBottom: 32,
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
+  PrintBodyText: {
     overflowX: 'auto',
     msOverflowStyle: 'none',
     scrollbarWidth: 'none',
@@ -250,6 +270,7 @@ const ChapterPreview = ({
   const [open, setOpen] = useState(false)
   const [currentChapter, setCurrentChapter] = useState()
   const [currentChapterIndex, setCurrentChapterIndex] = useState()
+  const { user } = useContext(AppContext)
 
   const hasAccessToChapter = (chapter) =>
     (hasMemberBookAccess && chapter) || chapter?.fields.freeChapter
@@ -269,6 +290,56 @@ const ChapterPreview = ({
       setCurrentChapterIndex()
     }
   }
+
+  const printRef = useRef()
+  const ContentToPrint = React.forwardRef((props, ref) => (
+    <table ref={ref}>
+      <tbody>
+        <tr>
+          <td>
+            <Box className={classes.printBody} display='block'>
+              <Box
+                className={classes.printBodyText}
+                color='black'
+                pl={[6.5, 8, 3]}
+                pt={3}
+                pr={[6, 3, 7]}
+                display='block'
+                minWidth={['80vw', '30vw', '35vw', '27vw']}
+                height={['83vh', 'auto']}
+              >
+                <TextStyle color='black' variant='h3'>
+                  {currentChapter?.fields.title}
+                </TextStyle>
+                {documentToReactComponents(
+                  currentChapter?.fields.body,
+                  options
+                )}
+              </Box>
+            </Box>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot style={{ textAlign: 'center' }}>
+        <tr>
+          <td>
+            <footer
+              style={{
+                position: 'fixed',
+                bottom: '0',
+                width: '100%',
+                textAlign: 'center',
+              }}
+            >
+              <TextStyle variant='subtitle3'>
+                Printed by {user.name} for personal use only
+              </TextStyle>
+            </footer>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  ))
 
   useEffect(() => {
     if (router.query.chapter) {
@@ -414,11 +485,34 @@ const ChapterPreview = ({
               height={['83vh', 'auto']}
               ref={topRef}
             >
+              {user.name ? (
+                <Box width='100%' display='flex' justifyContent='flex-end'>
+                  <ReactToPrint
+                    copyStyles='true'
+                    trigger={() => (
+                      <Button color='primary' variant='outlined'>
+                        Print Chapter
+                      </Button>
+                    )}
+                    content={() => printRef.current}
+                  />
+                  <div style={{ display: 'none' }}>
+                    <ContentToPrint ref={printRef} />
+                  </div>
+                </Box>
+              ) : (
+                <Box width='100%' display='flex' justifyContent='flex-end'>
+                  <TextStyle variant='h7'>
+                    Log in for a printable version
+                  </TextStyle>
+                </Box>
+              )}
               <TopicTag
                 variant='special'
                 label={currentChapter?.fields.label}
                 color='black'
               />
+
               <TextStyle color='black' variant='h3'>
                 {currentChapter?.fields.title}
               </TextStyle>
@@ -434,7 +528,9 @@ const ChapterPreview = ({
             >
               <CartTile
                 snipcart={{
-                  label: custom4Value ? constSnipcart.BTN_LABEL_PREORDER : constSnipcart.BTN_LABEL_ADD,
+                  label: custom4Value
+                    ? constSnipcart.BTN_LABEL_PREORDER
+                    : constSnipcart.BTN_LABEL_ADD,
                   dataItemId: productNumber,
                   dataItemName: bookTitle,
                   dataItemUrl: slug,
@@ -456,7 +552,9 @@ const ChapterPreview = ({
             <Box display={['initial', 'none']} position='fixed' bottom='0'>
               <MiniCartTile
                 snipcart={{
-                  label: custom4Value ? constSnipcart.BTN_LABEL_PREORDER : constSnipcart.BTN_LABEL_ADD,
+                  label: custom4Value
+                    ? constSnipcart.BTN_LABEL_PREORDER
+                    : constSnipcart.BTN_LABEL_ADD,
                   dataItemId: productNumber,
                   dataItemName: bookTitle,
                   dataItemUrl: slug,

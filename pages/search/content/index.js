@@ -93,7 +93,7 @@ function _indexBooks(data) {
       thumbnail: _helperGetImage(item.fields.thumbnail),
       description: documentToPlainTextString(item.fields.description),
       featured: item.fields.featured,
-      authorInfo: item.fields.authors.map(
+      authorInfo: item.fields.authors?.map(
         (author) =>
           author.fields?.title +
           (author.fields?.email ? '/' + author.fields?.email : '')
@@ -318,7 +318,7 @@ function _helperGetAuthor(authors) {
   let authorList = []
 
   if (authors) {
-    authorList = authors.map((item) =>
+    authorList = authors?.map((item) =>
       item.fields !== undefined ? item.fields.title : null
     )
   }

@@ -6,9 +6,9 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'next/router'
 import qs from 'qs'
 import algoliasearch from 'algoliasearch/lite'
-import { findResultsState } from 'react-instantsearch-dom/server'
 import { Head, App } from '@/components/search'
 import SEOHead from '@/const/head'
+import { client } from '@/lib/contentful'
 
 import {
   algoliaAppId,
@@ -33,10 +33,18 @@ const DEFAULT_PROPS = {
   indexName: algoliaSearchIndexId,
 }
 
-const SEO = {
-  fields: {
-    title: 'ASCD Search',
-  },
+export const getStaticProps = async () => {
+  const SEOData = await client.getEntries({
+    content_type: 'seo',
+    'fields.id': 'search',
+  })
+
+  return {
+    props: {
+      SEO: SEOData.items.length ? SEOData.items[0] : {},
+    },
+    revalidate: 20,
+  }
 }
 
 class Page extends React.Component {
@@ -50,19 +58,6 @@ class Page extends React.Component {
     searchState: {},
     lastRouter: this.props.router,
   }
-
-  // static async getInitialProps({ asPath }) {
-  //   const searchState = pathToSearchState(asPath)
-  //   const resultsState = await findResultsState(App, {
-  //     ...DEFAULT_PROPS,
-  //     searchState,
-  //   })
-
-  //   return {
-  //     resultsState,
-  //     searchState,
-  //   }
-  // }
 
   static getDerivedStateFromProps(props, state) {
     if (isEqual(state.lastRouter, props.router)) {
@@ -97,7 +92,7 @@ class Page extends React.Component {
   render() {
     return (
       <Layout>
-        <SEOHead seo={SEO} />
+        <SEOHead seo={this.props.SEO} />
         <Head></Head>
         <Container>
           <App

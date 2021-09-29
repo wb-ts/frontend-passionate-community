@@ -57,6 +57,7 @@ export default function ModalMessageBox({
   onMessageBoxClose,
   message,
   itemlist = [],
+  ...restProps
 }) {
   const classes = useStyles()
 
@@ -69,6 +70,7 @@ export default function ModalMessageBox({
       }}
       aria-labelledby='simple-modal-title'
       aria-describedby='simple-modal-description'
+      {...restProps}
     >
       <Box className={classes.modal}>
         <Box

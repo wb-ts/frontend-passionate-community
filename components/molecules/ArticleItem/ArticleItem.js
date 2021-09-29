@@ -2,9 +2,7 @@ import React from 'react'
 import { Card, CardActionArea, CardContent, CardMedia } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ArticleInfo from '@/components/atoms/articleinfo'
-import imageoptimization from '@/const/imageoptimization'
-import paths from '@/paths/path'
-
+import PropTypes from 'prop-types'
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: (props) =>
@@ -95,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function ArticleItem({
-  article,
+  cardData,
   overlay = false,
   hasImage = false,
   firstSubItem,
@@ -109,54 +107,48 @@ export default function ArticleItem({
   return (
     <Card className={classes.root} square elevation={0}>
       <CardActionArea
-        href={paths.article({ slug: article.fields.slug })}
+        href={cardData.actionHref}
         classes={{
           root: classes.mainmedia,
           focusHighlight: classes.focusHighlight,
         }}
         disableRipple
       >
-        {(overlay || hasImage) && article && (
+        {(overlay || hasImage) && cardData && (
           <CardMedia
-            image={
-              article.fields?.image?.fields?.imageBynder
-                ? article.fields?.image?.fields?.imageBynder[0]?.src +
-                  '?' +
-                  imageoptimization.qualityParameter +
-                  '=' +
-                  imageoptimization.qualityValue
-                : article.fields?.image?.fields?.imageContentful?.fields?.file
-                    ?.url
-                ? article.fields?.image?.fields?.imageContentful?.fields?.file
-                    ?.url +
-                  '?' +
-                  imageoptimization.qualityParameter +
-                  '=' +
-                  imageoptimization.qualityValue
-                : '/images/ASCDImageFiller.png'
-            }
+            image={cardData.mediaImg}
             className={overlay ? classes.mediaOverlay : classes.mediaTop}
-            title={article.fields.title}
+            title={cardData.title}
           />
         )}
-        {article && (
+        {cardData && (
           <CardContent className={overlay ? classes.overlay : classes.under}>
             <ArticleInfo
-              premium={article.fields.premium}
-              topicTag={article.fields.topic?.fields?.title}
+              premium={cardData.premium}
+              topicTag={cardData.topicTag}
               topicTagColor={!overlay && 'black'}
-              title={article.fields.title}
-              authorName={`${
-                article.fields.authors && article.fields.authors.length > 0
-                  ? `${article.fields.authors[0].fields?.firstName}  ${article.fields.authors[0].fields?.lastName}`
-                  : ''
-              }`}
-              datePublished={article.fields.issueDate}
-              authorSpace
+              title={cardData.title}
+              authorName={cardData.authorName}
+              datePublished={cardData.datePublished}
             />
           </CardContent>
         )}
       </CardActionArea>
     </Card>
   )
+}
+
+ArticleItem.propTypes = {
+  cardData: PropTypes.shape({
+    title: PropTypes.string,
+    actionHref: PropTypes.string,
+    mediaImg: PropTypes.string,
+    premium: PropTypes.bool,
+    topicTag: PropTypes.string,
+    authorName: PropTypes.string,
+    datePublished: PropTypes.string,
+  }),
+  overlay: PropTypes.bool,
+  hasImage: PropTypes.bool,
+  firstSubItem: PropTypes.bool,
 }

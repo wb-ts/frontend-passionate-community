@@ -74,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     borderRadius: '8px',
   },
+  downloads: {
+    '& a:hover': {
+      textDecoration: 'none !important',
+    },
+  },
 }))
 
 export default function PianoProfile({ mobile }) {
@@ -161,6 +166,7 @@ export default function PianoProfile({ mobile }) {
       id: null,
       name: null,
     })
+    location.reload()
   }
 
   return user.id ? (
@@ -236,6 +242,16 @@ export default function PianoProfile({ mobile }) {
                 onClick={toggleDrawer(true)}
               >
                 Notes & Highlights
+              </StyledButton>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box px={2}>
+              <StyledButton
+                startIcon={<HistoryIcon />}
+                className={classes.downloads}
+              >
+                <Link href='/user/downloads'>My Downloads</Link>
               </StyledButton>
             </Box>
           </Grid>

@@ -1,8 +1,7 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@material-ui/core/styles'
 
-const defaultTheme = createMuiTheme({
+const defaultTheme = createTheme({
   zIndex: {
-    modal: 1401,
     snackbar: 1500,
     tooltip: 1600,
   },

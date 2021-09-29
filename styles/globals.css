@@ -201,7 +201,7 @@ a:hover {
   background-color: #ffffff;
 }
 
-/* .ais-RefinementList-showMore:hover:after, 
+/* .ais-RefinementList-showMore:hover:after,
 .ais-RefinementList-showMore:focus:after {
   color: #ffffff;
 } */
@@ -337,6 +337,21 @@ a:hover {
   }
   .search-pagination {
     float: none;
+  }
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 1in 0in 1in 0in;
+  }
+  html,
+  body {
+    font-family: 'Literata', 'Poppins', 'Arial';
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 30px;
+    letter-spacing: 0.2;
   }
 }
 

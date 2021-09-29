@@ -1,7 +1,7 @@
 import { Box, Typography } from '@material-ui/core'
 import CardGrid from '@/components/molecules/cardgrid'
 import TextCTA from '@/components/molecules/textcta'
-import CallOutBlock from '@/components/atoms/calloutblock'
+import CalloutBlock from '@/components/atoms/CalloutBlock'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
 import TwoColumnCTA from '@/components/molecules/twocolumncta'
@@ -187,7 +187,7 @@ export const components = (item, key) => {
       case 'componentTip':
         return (
           <Box width={['100%', '80%']}>
-            <CallOutBlock
+            <CalloutBlock
               sidelabel={item.fields.title ? '' : 'TIP'}
               title={item.fields.title}
               body={item.fields.body}

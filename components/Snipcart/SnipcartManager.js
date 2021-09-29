@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AppContext } from '@/context/state'
 import { hasMemberBookPrice } from '@/lib/access-validator'
-import { getSnipcartClient } from '@/lib/utils'
+import { getSnipcartClient, getProductFromSnipcart } from '@/lib/utils'
 import { fetchProductPricesByProductNumbers } from '@/lib/contentful'
-import { getProductFromSnipcart } from '@/lib/utils'
 import ModalMessageBox from '@/components/organisms/ModalMessageBox'
 
 /**
@@ -314,6 +313,7 @@ const SnipcartManager = () => {
       onMessageBoxClose={(value) => setOpenModal(value)}
       message={backOrderMessage}
       itemlist={backOrderItemlist}
+      style={{ zIndex: 1800 }}
     ></ModalMessageBox>
   )
 }

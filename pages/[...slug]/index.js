@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
@@ -24,7 +24,6 @@ import TextStyle from '@/components/atoms/textstyle'
 import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router'
 import paths from '@/paths/path'
-import { useState } from 'react'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import HubSpotForm from '@/components/molecules/hubspotform'
@@ -763,6 +762,7 @@ export default function Page({ page }) {
 export async function getStaticPaths() {
   const data = await client.getEntries({
     content_type: 'page',
+    limit: process.env.NEXT_STATIC_BUILD_LIMIT || 200,
   })
 
   return {
@@ -783,10 +783,12 @@ export async function getStaticProps({ params }) {
     'fields.slug': params.slug.join('/'),
     include: 3,
   })
-
+  if ('affiliates' === params.slug.join('/')) {
+    console.log(params.slug.join('/'))
+  }
   return {
     props: {
-      page: data?.items.length > 0 ? data.items[0] : null,
+      page: data?.items[0] || null,
     },
     revalidate: 20,
   }

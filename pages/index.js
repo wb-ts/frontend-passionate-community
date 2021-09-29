@@ -170,9 +170,38 @@ export async function getStaticProps() {
     'fields.id': 'home',
   })
 
+  const blogData = await client.getEntries({
+    content_type: 'blog',
+      'fields.featured': true,
+      limit: 4,
+      order: '-fields.date',
+    })
+
+  const numberOfBlogs = blogData.items && blogData.items.length ? blogData.items.length : 0
+  const numberOfArticles = data.items && data.items.length ? data.items.length : 0
+  let allArticles = []
+  if (numberOfBlogs > 0) {
+    //Component(s) used by this page use(s) article content type; only a few fields are used for this page.
+    blogData.items.forEach((b) => {
+      allArticles = [...allArticles, JSON.parse(JSON.stringify(b))]
+      allArticles[allArticles.length - 1].fields.issueDate = b.fields.date
+      allArticles[allArticles.length - 1].fields.premium = false
+      allArticles[allArticles.length - 1].fields.isBlog = true
+    })
+  }
+  if (numberOfArticles) {
+    data.items.forEach((a) => {
+      allArticles = [...allArticles, a]
+    })
+  }
+  allArticles.sort((a, b) => {
+    return Date.parse(b.fields.issueDate) - Date.parse(a.fields.issueDate)
+  })
+  allArticles = allArticles.slice(0, 4)
+
   return {
     props: {
-      articles: data.items,
+      articles: allArticles, //data.items,
       valuepropositions: vpData.items[0],
       topics: topics.items,
       books: books.items,

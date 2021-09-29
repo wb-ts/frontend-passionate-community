@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   topictag: {
-    color : theme.palette.accent.lightGrey,
+    color: theme.palette.accent.lightGrey,
   },
   title3Lines: {
     overflow: 'hidden',
@@ -38,21 +38,19 @@ export default function ArticleInfo({
   title,
   authorName,
   datePublished,
-  expand = false,
-  authorSpace = false,
   ...props
 }) {
   const classes = useStyles()
 
   TimeAgo.addLocale(en)
   const timeAgo = new TimeAgo('en-US')
-  
+
   return (
     <Box
       className={classes.root}
       display='flex'
       flexDirection='column'
-      justifyContent={`${expand ? 'space-between' : 'flex-start'}`}
+      justifyContent='flex-start'
     >
       {topicTag && (
         <Box display='flex'>
@@ -69,9 +67,16 @@ export default function ArticleInfo({
           {title}
         </TextStyle>
       </Box>
-      <Box mt={authorSpace ? [0.3, 0.3, 1.5] : 1}>
-        <TextStyle variant='subtitle3' className={!!topicTagColor ? classes.topictag : ''} >
-          {timeAgo.format(Date.parse(datePublished))}
+      <Box mt={1}>
+        <TextStyle
+          variant='subtitle3'
+          className={topicTagColor ? classes.topictag : ''}
+        >
+          {Date.parse(datePublished) ? (
+            timeAgo.format(Date.parse(datePublished))
+          ) : (
+            <div data-testid='blank-timeago'></div>
+          )}
           {authorName ? ' • ' + authorName : ''}
         </TextStyle>
       </Box>
@@ -80,12 +85,10 @@ export default function ArticleInfo({
 }
 
 ArticleInfo.propTypes = {
-    premium: PropTypes.string,
-    topicTag: PropTypes.string,
-    topicTagColor: PropTypes.string,
-    title: PropTypes.string,
-    authorName: PropTypes.string,
-    datePublished: PropTypes.string,
-    expand: PropTypes.bool,
-    authorSpace: PropTypes.bool,
+  premium: PropTypes.string,
+  topicTag: PropTypes.string,
+  topicTagColor: PropTypes.string,
+  title: PropTypes.string,
+  authorName: PropTypes.string,
+  datePublished: PropTypes.string,
 }

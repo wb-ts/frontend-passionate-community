@@ -18,6 +18,7 @@ const defaultTheme = createTheme({
       main: '#F4F6F7',
       light: '#FFFFFF',
       lightGrey: 'rgba(244, 246, 247, 1)',
+      lightGreen: '#BBE3DA',
     },
     accent: {
       darkGreen: '#00362F',
@@ -25,7 +26,6 @@ const defaultTheme = createTheme({
       paleRed: '#F37E90',
       darkOrange: '#A45E0A',
       lightGrey: '#546366',
-
     },
     text: {
       primary: '#000000',

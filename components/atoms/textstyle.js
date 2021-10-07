@@ -83,6 +83,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     textTransform: 'uppercase',
   },
+  sessionDate: {
+    fontSize: theme.typography.pxToRem(20),
+    lineHeight: theme.typography.pxToRem(28),
+    letterSpacing: 0.2,
+    fontWeight: 700,
+  },
   textColor: {
     color: (props) => (props.color ? props.color : 'inherit'),
   },
@@ -107,8 +113,21 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 800,
     letterSpacing: 0.2,
   },
+  remainingSeat: {
+    fontSize: theme.typography.pxToRem(14),
+    fontWeight: 400,
+    lineHeight: theme.typography.pxToRem(28),
+    textTransform: 'uppercase',
+  },
 }))
-export default function TextStyle({ color, variant, component, children, ...restProps }) {
+export default function TextStyle({
+  color,
+  variant,
+  component,
+  children,
+  className,
+  ...restProps
+}) {
   const classes = useStyles({ color })
 
   const customVariants = [
@@ -126,13 +145,15 @@ export default function TextStyle({ color, variant, component, children, ...rest
     'strikeThrough',
     'smallStrikeThrough',
     'tinyStrikeThrough',
+    'remainingSeat',
+    'sessionDate',
   ]
   const customVariant = classes[variant]
 
   if (customVariants.includes(variant)) {
     return (
       <Typography
-        className={`${customVariant} ${classes.textColor}`}
+        className={`${customVariant} ${classes.textColor} ${className}`}
         component={component}
         {...restProps}
       >
@@ -144,7 +165,7 @@ export default function TextStyle({ color, variant, component, children, ...rest
       <Typography
         variant={variant}
         component={component}
-        className={classes.textColor}
+        className={`${classes.textColor} ${className}`}
         {...restProps}
       >
         {children}

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '40%',
+      width: 'fit-content',
     },
   },
 }))

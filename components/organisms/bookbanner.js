@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid, Divider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Image from 'material-ui-image'
 import CustomLink from '@/components/atoms/CustomLink'
@@ -63,6 +63,7 @@ export default function BookBanner({
   book,
   productNumber,
   updateProductNumber,
+  showShipping,
   ...props
 }) {
   const classes = useStyles()
@@ -146,7 +147,9 @@ export default function BookBanner({
       )
     : null
 
-  const cartButtonCaptionLabel = getCartButtonCaptionLabel(version?.fields?.dateRelease)
+  const cartButtonCaptionLabel = getCartButtonCaptionLabel(
+    version?.fields?.dateRelease
+  )
 
   return (
     <Grid container alignItems='center' spacing={5}>
@@ -241,7 +244,8 @@ export default function BookBanner({
                     author.fields?.title +
                     (author.fields?.email ? '/' + author.fields?.email : '')
                 ),
-                dataItemCustom4Value: cartButtonCaptionLabel === constSnipcart.BTN_LABEL_PREORDER, 
+                dataItemCustom4Value:
+                  cartButtonCaptionLabel === constSnipcart.BTN_LABEL_PREORDER,
                 dataItemQuantity: qty,
                 digitalFileGuid: version.fields?.digitalFileGuid,
                 productReleaseDate: version?.fields?.dateRelease,
@@ -271,49 +275,49 @@ export default function BookBanner({
         </Box>
 
         {/* JIRA ASCD-818: start */}
-        {/*
-        <Box my={1}>
-          <Divider />
+        {showShipping && (
           <Box my={1}>
-            <Box display='flex' alignItems='center'>
-              <Box mr={1}>
-                <LocalShippingIcon className={classes.icons} />
-              </Box>
-              <Box display='inline'>
-                <Box>
-                  {' '}
-                  <TextStyle variant='h6'>Ships in 1-3 days</TextStyle>
+            <Divider />
+            <Box my={1}>
+              <Box display='flex' alignItems='center'>
+                <Box mr={1}>
+                  <LocalShippingIcon className={classes.icons} />
                 </Box>
-                <Box className={classes.shippingDetails}>
-                  <TextStyle variant='caption'>
-                    Free shipping on orders over $50
-                  </TextStyle>
+                <Box display='inline'>
+                  <Box>
+                    {' '}
+                    <TextStyle variant='h6'>Ships in 1-3 days</TextStyle>
+                  </Box>
+                  <Box className={classes.shippingDetails}>
+                    <TextStyle variant='caption'>
+                      Free shipping on orders over $50
+                    </TextStyle>
+                  </Box>
                 </Box>
               </Box>
             </Box>
-          </Box>
-          <Divider />
-          <Box my={1}>
-            <Box display='flex' alignItems='center'>
-              <Box mr={1}>
-                <LoyaltySharpIcon className={classes.icons} />
-              </Box>
-              <Box display='inline'>
-                <Box>
-                  {' '}
-                  <TextStyle variant='h6'>Discounts</TextStyle>
+            <Divider />
+            <Box my={1}>
+              <Box display='flex' alignItems='center'>
+                <Box mr={1}>
+                  <LoyaltySharpIcon className={classes.icons} />
                 </Box>
-                <Box className={classes.shippingDetails}>
-                  <TextStyle variant='caption'>
-                    Buy 15 books, save 35%
-                  </TextStyle>
+                <Box display='inline'>
+                  <Box>
+                    {' '}
+                    <TextStyle variant='h6'>Discounts</TextStyle>
+                  </Box>
+                  <Box className={classes.shippingDetails}>
+                    <TextStyle variant='caption'>
+                      Buy 15 books, save 35%
+                    </TextStyle>
+                  </Box>
                 </Box>
               </Box>
             </Box>
+            <Divider />
           </Box>
-          <Divider />
-        </Box>
-         */}
+        )}
         {/* JIRA ASCD-818: end */}
       </Grid>
     </Grid>

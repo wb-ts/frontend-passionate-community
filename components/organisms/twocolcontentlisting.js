@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Grid, Box } from '@material-ui/core'
+import { Divider, Grid, Box, ListItem } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
@@ -35,6 +35,7 @@ export default function TwoColContentListing({
   TimeAgo.addLocale(en)
   const classes = useStyles()
   const isEvents = variant === 'event'
+  const isWorkshops = variant === 'workshop'
   const dateFormat = require('dateformat')
 
   return (
@@ -43,8 +44,10 @@ export default function TwoColContentListing({
         <TwoColumnHeader
           title={title}
           body={body}
-          ctaLink={isEvents ? paths.events : null}
-          ctaLabel={isEvents && limit ? 'View all events' : null}
+          ctaLink={isEvents || isWorkshops ? paths.events : null}
+          ctaLabel={
+            (isEvents || isWorkshops) && limit ? `View all ${variant}s` : null
+          }
         />
       </Grid>
       <Grid item xs={12} md={7}>
@@ -62,16 +65,14 @@ export default function TwoColContentListing({
                     <Grid item xs={12} key={`content-list-${key}`}>
                       <HorizontalCard
                         key={item.fields.title}
-                        premium={
-                          item.fields.premium ? item.fields.premium : null
+                        price={isWorkshops ? item.fields.memberPrice : null}
+                        remaining={
+                          isWorkshops ? 'only 12 seats remaining' : null
                         }
-                        label={item.fields.topic?.fields?.title}
+                        label={item.fields.topics[0]?.fields?.title}
                         title={item.fields.title}
-                        body={item.fields.body ? item.fields.body : null}
                         image={
-                          item.fields.thumbnail
-                            ? item.fields.thumbnail
-                            : item.fields.image
+                          item.fields.spotlightImage?.fields?.imageContentful?.fields?.file?.url
                         }
                         date={
                           item.fields.dateTime
@@ -79,7 +80,7 @@ export default function TwoColContentListing({
                             : ''
                         }
                         ctaLink={
-                          isEvents
+                          isEvents || isWorkshops
                             ? paths.event({ slug: item.fields.slug })
                             : item.fields.url
                         }

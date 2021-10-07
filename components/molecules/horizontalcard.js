@@ -114,6 +114,12 @@ const useStyles = makeStyles((theme) => ({
   noPadding: {
     padding: 0,
   },
+  price: {
+    marginLeft: 'auto',
+  },
+  remaining: {
+    color: theme.palette.primary.light,
+  },
 }))
 
 export default function HorizontalCard({
@@ -121,6 +127,8 @@ export default function HorizontalCard({
   label,
   title,
   date,
+  price,
+  remaining,
   image,
   ctaLink,
   body,
@@ -180,6 +188,11 @@ export default function HorizontalCard({
               />
             )}
             {label && <TopicTag variant='special' label={label} />}
+            {price && (
+              <TextStyle className={classes.price} variant='overlineLarge'>
+                ${price}
+              </TextStyle>
+            )}
           </Box>
 
           {title && (
@@ -214,6 +227,13 @@ export default function HorizontalCard({
             <Box mt={1.5}>
               <TextStyle variant='caption' color='#546366'>
                 {date}
+              </TextStyle>
+            </Box>
+          )}
+          {remaining && (
+            <Box mt={1.5}>
+              <TextStyle variant='remainingSeat' className={classes.remaining}>
+                {remaining}
               </TextStyle>
             </Box>
           )}

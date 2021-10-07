@@ -158,7 +158,7 @@ export default function TopicTag({
           onClick={onclick ? onclick : null}
           onDelete={ondelete ? ondelete : null}
           deleteIcon={deleteIcon}
-          className={classes.topicSmall}
+          className={classes.topic}
           color={variant === 'basic' ? 'primary' : 'secondary'}
           size='small'
         />

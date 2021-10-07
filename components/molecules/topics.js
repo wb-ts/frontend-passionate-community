@@ -52,7 +52,7 @@ export default function Topics({ title, topics, contentType, ...props }) {
           {title}
         </TextStyle>
       </Box>
-      <Box mt={4} className={classes.topicsContainer}>
+      <Box mt={props.mt ? props.mt : 4} className={classes.topicsContainer}>
         {sortedTopics.map((topic, key) => (
           <Box key={key} p={0.5}>
             <TopicTag

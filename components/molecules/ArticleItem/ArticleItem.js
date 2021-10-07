@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardActionArea, CardContent, CardMedia } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import ArticleInfo from '@/components/atoms/articleinfo'
+import ArticleInfo from '@/components/atoms/ArticleInfo'
 import PropTypes from 'prop-types'
 const useStyles = makeStyles((theme) => ({
   root: {

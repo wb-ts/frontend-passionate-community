@@ -5,25 +5,14 @@ import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
 import ReactMarkdown from 'react-markdown'
-// import HorizontalScroll from '@/components/organisms/horizontalscroll'
-import ReadMore from '@/components/molecules/readmore'
 import BookBanner from '@/components/organisms/bookbanner'
 import TwoColContentListing from '@/components/organisms/twocolcontentlisting'
-// import Topics from '@/components/molecules/topics'
-// import paths from '@/paths/path'
-// import BookToc from '@/components/organisms/BookToc'
-// import ChapterPreview from '@/components/organisms/ChapterPreview'
-// import AlternateRows from '@/components/molecules/alternaterows'
-// import ArticleAuthors from '@/components/organisms/articleaauthors'
 import LiveWorkshop from '@/components/workshop/LiveWorkshop'
 import NeverMiss from '@/components/workshop/NeverMiss'
+import SpotlightImage from '@/components/workshop/SpotlightImage'
 import VirtualWorkshop from '@/components/workshop/VirtualWorkshop'
-import { AppContext } from '@/context/state'
-import { hasMemberBookPrice, hasAccessToBook } from '@/lib/access-validator'
 import { useRouter } from 'next/router'
 import { Skeleton } from '@material-ui/lab'
-import { getCartButtonCaptionLabel } from '@/lib/utils'
-import constSnipcart from '@/const/snipcart'
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
@@ -38,11 +27,7 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'center',
     },
   },
-  heroImg: {
-    width: '100%',
-    border: '1px solid rgba(0, 0, 0, 0.1)',
-    borderRadius: '16px 16px 16px 64px',
-  },
+
   virtualWorkshop: {
     flexGrow: 1,
     maxWidth: 587,
@@ -83,8 +68,22 @@ export default function Workshop({ workshop, workshops }) {
 
   const classes = useStyles()
   const [productNumber, setProductNumber] = useState(null)
+
+  const getContentText = (data) => {
+    if (data && typeof data !== 'string' && data.nodeType == 'document') {
+      const jsonData = JSON.parse(JSON.stringify(data))
+
+      return jsonData.content[0] !== undefined
+        ? documentToReactComponents(jsonData, options)
+        : ''
+    } else if (typeof data == 'string') {
+      return data
+    } else {
+      return null
+    }
+  }
+
   useEffect(() => {
-    console.log('rendering workshop ', workshop)
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
       const variant = url.searchParams.get('variant')
@@ -97,23 +96,21 @@ export default function Workshop({ workshop, workshops }) {
       <SEOHead seo={workshop?.fields?.seo ? workshop.fields.seo : workshop} />
       <Container maxWidth='lg'>
         <Box mt={[5, 9]}>
-          <img
-            src={
+          <SpotlightImage
+            imgUrl={
               workshop.fields.spotlightImage.fields.imageContentful.fields.file
                 .url
             }
-            alt='events-hero'
-            className={classes.heroImg}
+            imgTitle={
+              workshop.fields.spotlightImage.fields.imageContentful.fields.title
+            }
           />
         </Box>
         <Box className={classes.workshops}>
           <Box className={classes.virtualWorkshop}>
             <VirtualWorkshop
               title={workshop.fields?.title}
-              body={documentToReactComponents(
-                workshop.fields.description,
-                options
-              )}
+              description={getContentText(workshop.fields.description)}
               audience={workshop.fields.audience.map(
                 (item) => item.fields.title
               )}
@@ -122,6 +119,13 @@ export default function Workshop({ workshop, workshops }) {
                 workshop.fields.authors[0].fields.description,
                 options
               )}
+              author={
+                workshop.fields.authors[0]
+                  ? workshop.fields.authors.map((author) =>
+                      getContentText(author.fields.description)
+                    )
+                  : null
+              }
             />
           </Box>
           <Box className={classes.liveWorkshop}>

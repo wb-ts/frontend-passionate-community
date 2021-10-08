@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Box,
   Grid,
@@ -34,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 export default function NeverMiss() {
   const classes = useStyles()
+  const [email, setEmail] = React.useState('')
+
+  React.useEffect(() => {
+    console.log('email ', email)
+  }, [email])
   return (
     <Box className={classes.container}>
       <Grid container spacing={3}>
@@ -55,8 +61,12 @@ export default function NeverMiss() {
             justifyContent='center'
           >
             <OutlinedInput
+              type='email'
+              data-testid='email-input'
               id='outlined-adornment-weight'
               placeholder='Your email address'
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               endAdornment={
                 <InputAdornment position='end'>
                   <SendIcon color={'primary'} />

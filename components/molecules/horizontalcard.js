@@ -8,7 +8,7 @@ import {
   Avatar,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import TopicTag from '@/components/molecules/topictag'
+import TopicTag from '@/components/molecules/TopicTag'
 import TextStyle from '@/components/atoms/textstyle'
 import ViewAllCTA from '@/components/atoms/viewallcta'
 import Image from 'material-ui-image'

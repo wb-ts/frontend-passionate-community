@@ -6,7 +6,7 @@ import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import DaysAgo from '@/components/atoms/daysago'
 import TextStyle from '@/components/atoms/textstyle'
-import TopicTag from '@/components/molecules/topictag'
+import TopicTag from '@/components/molecules/TopicTag'
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({

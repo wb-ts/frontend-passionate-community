@@ -3,12 +3,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Chip, Typography, Box } from '@material-ui/core'
 import TextStyle from '@/components/atoms/textstyle'
 import Image from 'material-ui-image'
+import { PropTypes } from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   topic: {
     width: 'fit-content',
-    textTransform: (props) => props.textTransform,
-    marginRight: (props) => (props.marginRight ? props.marginRight : null),
+    textTransform: (restProps) => restProps.textTransform,
+    marginRight: (restProps) =>
+      restProps.marginRight ? restProps.marginRight : null,
     fontSize: theme.typography.pxToRem(14),
     fontWeight: 500,
     lineHeight: theme.typography.pxToRem(20),
@@ -16,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
   topicSmall: {
     width: 'fit-content',
-    textTransform: (props) => props.textTransform,
-    marginRight: (props) => (props.marginRight ? props.marginRight : null),
+    textTransform: (restProps) => restProps.textTransform,
+    marginRight: (restProps) =>
+      restProps.marginRight ? restProps.marginRight : null,
     fontSize: theme.typography.pxToRem(11),
     fontWeight: 500,
     lineHeight: theme.typography.pxToRem(20),
@@ -25,27 +28,33 @@ const useStyles = makeStyles((theme) => ({
   },
   specialTag: {
     width: 'fit-content',
-    textTransform: (props) => props.textTransform,
-    marginRight: (props) => (props.marginRight ? props.marginRight : null),
+    textTransform: (restProps) => restProps.textTransform,
+    marginRight: (restProps) =>
+      restProps.marginRight ? restProps.marginRight : null,
     borderRadius: '4px',
     background: 'transparent',
-    backgroundColor: (props) =>
-      props.color === 'white' ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.05)',
-    color: (props) => (props.color ? props.color : theme.palette.text.primary),
+    backgroundColor: (restProps) =>
+      restProps.color === 'white'
+        ? 'rgba(0, 0, 0, 0.4)'
+        : 'rgba(0, 0, 0, 0.05)',
+    color: (restProps) =>
+      restProps.color ? 'white !important' : theme.palette.text.primary,
     height: '24px',
     marginBottom: theme.spacing(1),
   },
   whiteTag: {
     width: 'fit-content',
-    textTransform: (props) => props.textTransform,
-    marginRight: (props) => (props.marginRight ? props.marginRight : null),
+    textTransform: (restProps) => restProps.textTransform,
+    marginRight: (restProps) =>
+      restProps.marginRight ? restProps.marginRight : null,
     borderRadius: '4px',
     backgroundColor: theme.palette.background.light,
     color: theme.palette.text.primary,
   },
   premium: {
     width: 'fit-content',
-    marginRight: (props) => (props.marginRight ? props.marginRight : null),
+    marginRight: (restProps) =>
+      restProps.marginRight ? restProps.marginRight : null,
     backgroundColor: 'rgba(255, 140, 0, 0.12)',
     color: '#A45E0A',
     fontSize: theme.typography.pxToRem(11),
@@ -54,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: 0.2,
   },
   premiumText: {
-    textTransform: (props) => props.textTransform,
+    textTransform: (restProps) => restProps.textTransform,
     color: '#A45E0A',
     fontSize: theme.typography.pxToRem(11),
     fontWeight: 600,
@@ -76,9 +85,9 @@ export default function TopicTag({
   deleteIcon,
   variant,
   premium,
-  ...props
+  ...restProps
 }) {
-  const classes = useStyles(props)
+  const classes = useStyles(restProps)
 
   const topic = (variant) => {
     if (variant === 'special') {
@@ -92,6 +101,7 @@ export default function TopicTag({
             />
           )}
           <Chip
+            data-testid='specialTag'
             label={<TextStyle variant='overline'>{label}</TextStyle>}
             onClick={onclick ? onclick : null}
             onDelete={ondelete ? ondelete : null}
@@ -131,6 +141,7 @@ export default function TopicTag({
       return (
         <Chip
           label={label}
+          data-testid='topic'
           onClick={onclick ? onclick : null}
           onDelete={ondelete ? ondelete : null}
           deleteIcon={deleteIcon}
@@ -167,4 +178,14 @@ export default function TopicTag({
   }
 
   return <>{topic(variant)}</>
+}
+
+TopicTag.propTypes = {
+  label: PropTypes.string,
+  onclick: PropTypes.func,
+  ondelete: PropTypes.func,
+  deleteIcon: PropTypes.object,
+  variant: PropTypes.string,
+  premium: PropTypes.bool,
+  restProps: PropTypes.object,
 }

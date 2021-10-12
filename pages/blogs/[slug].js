@@ -16,7 +16,7 @@ import { documentToPlainTextString } from '@contentful/rich-text-plain-text-rend
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { Box, Container, Grid, Typography } from '@material-ui/core'
 import Annotator from '@/components/organisms/annotator'
-import TopicTag from '@/components/molecules/topictag'
+import TopicTag from '@/components/molecules/TopicTag'
 import TextCTA from '@/components/molecules/textcta'
 import ArticleAuthors from '@/components/organisms/articleaauthors'
 import { components } from '@/const/components'

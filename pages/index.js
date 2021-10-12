@@ -172,13 +172,15 @@ export async function getStaticProps() {
 
   const blogData = await client.getEntries({
     content_type: 'blog',
-      'fields.featured': true,
-      limit: 4,
-      order: '-fields.date',
-    })
+    'fields.featured': true,
+    limit: 4,
+    order: '-fields.date',
+  })
 
-  const numberOfBlogs = blogData.items && blogData.items.length ? blogData.items.length : 0
-  const numberOfArticles = data.items && data.items.length ? data.items.length : 0
+  const numberOfBlogs =
+    blogData.items && blogData.items.length ? blogData.items.length : 0
+  const numberOfArticles =
+    data.items && data.items.length ? data.items.length : 0
   let allArticles = []
   if (numberOfBlogs > 0) {
     //Component(s) used by this page use(s) article content type; only a few fields are used for this page.

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Workshop({ workshop, workshops }) {
   const router = useRouter()
-  const futureWorkshops = workshops.filter(
+  const futureWorkshops = workshops?.filter(
     (item) => item?.fields?.slug !== workshop?.fields?.slug
   )
 
@@ -73,7 +73,7 @@ export default function Workshop({ workshop, workshops }) {
     if (data && typeof data !== 'string' && data.nodeType == 'document') {
       const jsonData = JSON.parse(JSON.stringify(data))
 
-      return jsonData.content[0] !== undefined
+      return jsonData?.content[0] !== undefined
         ? documentToReactComponents(jsonData, options)
         : ''
     } else if (typeof data == 'string') {
@@ -84,6 +84,7 @@ export default function Workshop({ workshop, workshops }) {
   }
 
   useEffect(() => {
+    console.log('rendering workshop ', workshop)
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
       const variant = url.searchParams.get('variant')
@@ -94,74 +95,80 @@ export default function Workshop({ workshop, workshops }) {
   return (
     <Layout>
       <SEOHead seo={workshop?.fields?.seo ? workshop.fields.seo : workshop} />
-      <Container maxWidth='lg'>
-        <Box mt={[5, 9]}>
-          <SpotlightImage
-            imgUrl={
-              workshop.fields.spotlightImage.fields.imageContentful.fields.file
-                .url
-            }
-            imgTitle={
-              workshop.fields.spotlightImage.fields.imageContentful.fields.title
-            }
-          />
-        </Box>
-        <Box className={classes.workshops}>
-          <Box className={classes.virtualWorkshop}>
-            <VirtualWorkshop
-              title={workshop.fields?.title}
-              description={getContentText(workshop.fields.description)}
-              audience={workshop.fields.audience.map(
-                (item) => item.fields.title
-              )}
-              topics={workshop.fields.topics.map((item) => item.fields.title)}
-              author={documentToReactComponents(
-                workshop.fields.authors[0].fields.description,
-                options
-              )}
-              author={
-                workshop.fields.authors[0]
-                  ? workshop.fields.authors.map((author) =>
-                      getContentText(author.fields.description)
-                    )
-                  : null
+      {workshop && (
+        <Container maxWidth='lg'>
+          <Box mt={[5, 9]}>
+            <SpotlightImage
+              imgUrl={
+                workshop?.fields?.spotlightImage?.fields?.imageContentful
+                  ?.fields?.file?.url
+              }
+              imgTitle={
+                workshop?.fields?.spotlightImage?.fields?.imageContentful
+                  ?.fields?.title
               }
             />
           </Box>
-          <Box className={classes.liveWorkshop}>
-            <LiveWorkshop />
+          <Box className={classes.workshops}>
+            <Box className={classes.virtualWorkshop}>
+              <VirtualWorkshop
+                title={workshop?.fields?.title}
+                description={getContentText(workshop?.fields?.description)}
+                audience={workshop.fields.audience.map(
+                  (item) => item.fields.title
+                )}
+                topics={workshop.fields.topics.map((item) => item.fields.title)}
+                author={documentToReactComponents(
+                  workshop.fields.authors[0].fields.description,
+                  options
+                )}
+                author={
+                  workshop.fields.authors[0]
+                    ? workshop.fields.authors.map((author) =>
+                        getContentText(author.fields.description)
+                      )
+                    : null
+                }
+              />
+            </Box>
+            <Box className={classes.liveWorkshop}>
+              <LiveWorkshop />
+            </Box>
           </Box>
-        </Box>
 
-        <Box mt={[5, 9]}>
-          <BookBanner
-            book={workshop.fields.materials[0]}
-            productNumber={productNumber}
-            updateProductNumber={(pn) => setProductNumber(pn)}
-            showShipping
-          />
-        </Box>
-        <Box mt={[5, 9]}>
-          <Divider className={classes.mobileHide} />
-        </Box>
-        <Box mt={[5, 10]} mb={8}>
-          <TwoColContentListing
-            title='More Virtual Workshops and Institutes from ASCD'
-            items={futureWorkshops}
-            limit={3}
-            body={
-              <ReactMarkdown>
-                Register today for our upcoming events. All virtual events are
-                available to view for at least 30 days after the event **(so you
-                can still register even after the live event date)**.
-              </ReactMarkdown>
-            }
-            variant='workshop'
-          />
-        </Box>
-        <Divider />
-        <NeverMiss />
-      </Container>
+          <Box mt={[5, 9]}>
+            <BookBanner
+              book={workshop?.fields?.materials[0]}
+              productNumber={productNumber}
+              updateProductNumber={(pn) => setProductNumber(pn)}
+              showShipping
+            />
+          </Box>
+          <Box mt={[5, 9]}>
+            <Divider className={classes.mobileHide} />
+          </Box>
+          <Box mt={[5, 10]} mb={8}>
+            {futureWorkshops.length > 0 && (
+              <TwoColContentListing
+                title='More Virtual Workshops and Institutes from ASCD'
+                items={futureWorkshops}
+                limit={3}
+                body={
+                  <ReactMarkdown>
+                    Register today for our upcoming events. All virtual events
+                    are available to view for at least 30 days after the event
+                    **(so you can still register even after the live event
+                    date)**.
+                  </ReactMarkdown>
+                }
+                variant='workshop'
+              />
+            )}
+          </Box>
+          <Divider />
+          <NeverMiss />
+        </Container>
+      )}
     </Layout>
   )
 }
@@ -182,12 +189,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  console.log('workghop gettting props ', params)
   const data = await client.getEntries({
     content_type: 'workshop',
     'fields.slug': params.slug,
     include: 4,
   })
+
+  console.log('workghop gettting props ', params)
+  console.log('workshop data ', data.items)
 
   if (!data || !data.items || data.items.length == 0) {
     return {
@@ -224,8 +233,8 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       key: data.items[0].sys.id,
-      workshop: data.items[0],
-      workshops: workshops.items,
+      workshop: data.items.length > 0 ? data.items[0] : null,
+      workshops: workshops.items.length > 0 ? workshops.items : [],
       // relatedBooks: books.items,
       // relatedCollections: collections.items.length > 0 ? collections.items : [],
     },

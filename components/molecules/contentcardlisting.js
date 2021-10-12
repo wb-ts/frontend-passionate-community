@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import paths from '@/paths/path'
-import TopicTag from '@/components/molecules/topictag'
+import TopicTag from '@/components/molecules/TopicTag'
 import DaysAgo from '@/components/atoms/daysago'
 import TextStyle from '@/components/atoms/textstyle'
 // import ViewCount from '@/components/molecules/viewcount'

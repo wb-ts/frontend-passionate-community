@@ -69,10 +69,15 @@ export default function TwoColContentListing({
                         remaining={
                           isWorkshops ? 'only 12 seats remaining' : null
                         }
-                        label={item.fields.topics[0]?.fields?.title}
-                        title={item.fields.title}
+                        label={
+                          item.fields?.topics?.length > 0
+                            ? item.fields?.topics[0]?.fields?.title
+                            : ''
+                        }
+                        title={item.fields?.title}
                         image={
-                          item.fields.spotlightImage?.fields?.imageContentful?.fields?.file?.url
+                          item.fields.spotlightImage?.fields?.imageContentful
+                            ?.fields?.file?.url
                         }
                         date={
                           item.fields.dateTime

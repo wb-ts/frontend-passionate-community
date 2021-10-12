@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import CtaButton from '@/components/atoms/ctabutton'
 import TextStyle from '@/components/atoms/textstyle'
 import ViewAllCTA from '@/components/atoms/viewallcta'
-import TopicTag from '@/components/molecules/topictag'
+import TopicTag from '@/components/molecules/TopicTag'
 import { useRouter } from 'next/router'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 

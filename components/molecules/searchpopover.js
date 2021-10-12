@@ -7,7 +7,7 @@ import {
   InputBase,
   IconButton,
 } from '@material-ui/core'
-import TopicTag from '@/components/molecules/topictag'
+import TopicTag from '@/components/molecules/TopicTag'
 import CloseIcon from '@material-ui/icons/Close'
 import SearchIcon from '@material-ui/icons/Search'
 import { useRouter } from 'next/router'

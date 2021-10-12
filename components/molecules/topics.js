@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router'
 import TextStyle from '@/components/atoms/textstyle'
-import TopicTag from '@/components/molecules/topictag'
+import TopicTag from '@/components/molecules/TopicTag'
 import paths from '@/paths/path'
 
 const useStyles = makeStyles((theme) => ({

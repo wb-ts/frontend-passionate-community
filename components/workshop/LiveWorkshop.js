@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import {
   Box,
@@ -16,6 +16,8 @@ import {
 
 import TextStyle from '@/components/atoms/textstyle'
 import sessionsMock from './sessionsMock'
+import { AppContext } from '@/context/state'
+import { validatePaidMembership } from '@/lib/access-validator'
 const useStyles = makeStyles((theme) => ({
   liveWorkshopContainer: {
     backgroundColor: theme.palette.grey.extraLight,
@@ -88,13 +90,24 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }))
-export default function LiveWorkshop() {
+export default function LiveWorkshop({ variations }) {
   const classes = useStyles()
-  const [otherDates, setOtherDates] = React.useState(1)
+  const [otherDates, setOtherDates] = useState(variations[0].variationId)
+  const [sessions, setSessions] = useState([])
+  const { userAccessData } = useContext(AppContext)
+  const useMemberPrice = validatePaidMembership(userAccessData)
 
   const handleChange = (event) => {
     setOtherDates(event.target.value)
   }
+
+  useEffect(() => {
+    const currentVariation = variations.find(
+      (variation) => variation.variationId === otherDates
+    )
+    setSessions(currentVariation.sessions)
+    console.log('sessions ', currentVariation.sessions)
+  }, [otherDates])
   return (
     <Box className={classes.liveWorkshopContainer}>
       <TextStyle variant='sessionDate'>Live Workshops</TextStyle>
@@ -106,11 +119,13 @@ export default function LiveWorkshop() {
       </TextStyle>
       <Box className={classes.sessions}>
         <List>
-          {sessionsMock.map((item, idx) => (
+          {sessions.map((session, idx) => (
             <ListItem key={idx} className={classes.sessionItem}>
-              <TextStyle variant='overlineLarge'>{item.name}</TextStyle>
-              <TextStyle variant='sessionDate'>{item.date}</TextStyle>
-              <TextStyle variant='h7'>{item.time}</TextStyle>
+              <TextStyle variant='overlineLarge'>{session.title}</TextStyle>
+              <TextStyle variant='sessionDate'>
+                {session.startDateTime}
+              </TextStyle>
+              <TextStyle variant='h7'>{session.endDateTime}</TextStyle>
             </ListItem>
           ))}
         </List>
@@ -127,22 +142,17 @@ export default function LiveWorkshop() {
             },
           }}
         >
-          <MenuItem value={1}>
-            <TextStyle variant='h7'>Other Dates</TextStyle>
-          </MenuItem>
-          <MenuItem value={2}>
-            <TextStyle variant='h7'>Other Dates</TextStyle>
-          </MenuItem>
-          <MenuItem value={3}>
-            <TextStyle variant='h7'>Other Dates</TextStyle>
-          </MenuItem>
+          {variations.map((variation, idx) => (
+            <MenuItem value={variation.variationId} key={variation.variationId}>
+              <TextStyle variant='h7'>{variation.title}</TextStyle>
+            </MenuItem>
+          ))}
         </Select>
       </Box>
       <Box display='flex' marginBottom='16px'>
         <AccessTimeIcon className={classes.itemIcon} />
         <Box>
           <Box className={classes.subtitle}>1 PM to 5:15 PM EST</Box>
-          <Box className={classes.description}>Full schedule</Box>
         </Box>
       </Box>
       <Box display='flex'>

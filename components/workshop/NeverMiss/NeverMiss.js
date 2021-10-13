@@ -37,9 +37,6 @@ export default function NeverMiss() {
   const classes = useStyles()
   const [email, setEmail] = React.useState('')
 
-  React.useEffect(() => {
-    console.log('email ', email)
-  }, [email])
   return (
     <Box className={classes.container}>
       <Grid container spacing={3}>

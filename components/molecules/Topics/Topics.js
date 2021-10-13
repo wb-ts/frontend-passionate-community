@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import TextStyle from '@/components/atoms/textstyle'
 import TopicTag from '@/components/molecules/TopicTag'
 import paths from '@/paths/path'
-
+import PropTypes from 'prop-types'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: (props) => (props.center ? 'flex' : null),
@@ -46,7 +46,7 @@ export default function Topics({ title, topics, contentType, ...props }) {
   sortedTopics.sort()
 
   return (
-    <Box className={classes.root}>
+    <Box className={classes.root} data-testid='topics'>
       <Box textAlign={props.center ? 'center' : 'left'}>
         <TextStyle variant={props.titleVariant ? props.titleVariant : 'h2'}>
           {title}
@@ -83,4 +83,11 @@ export default function Topics({ title, topics, contentType, ...props }) {
       </Box>
     </Box>
   )
+}
+
+Topics.propTypes = {
+  title: PropTypes.string,
+  topics: PropTypes.arrayOf(PropTypes.string),
+  contentType: PropTypes.string,
+  props: PropTypes.object,
 }

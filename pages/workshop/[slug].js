@@ -68,7 +68,7 @@ export default function Workshop({ workshop, workshops }) {
 
   const classes = useStyles()
   const [productNumber, setProductNumber] = useState(null)
-
+  const dateFormat = require('dateformat')
   const getContentText = (data) => {
     if (data && typeof data !== 'string' && data.nodeType == 'document') {
       const jsonData = JSON.parse(JSON.stringify(data))
@@ -83,8 +83,32 @@ export default function Workshop({ workshop, workshops }) {
     }
   }
 
+  const getVariations = (data) => {
+    if (data && data.length == 0) {
+      return []
+    }
+    return data.map((variation) => {
+      const variationData = {
+        title: variation?.fields?.title,
+        variationId: variation?.fields?.variationId,
+        nonMemberPrice: variation?.fields?.nonMemberPrice,
+        memberPrice: variation?.fields?.memberPrice,
+        sessions: variation?.fields?.sessions?.map((session) => {
+          console.log('date ', session.fields)
+          const sessionData = {
+            title: session.fields.title,
+            sessionId: session.fields.sessionId,
+            startDateTime: dateFormat(session.fields.startDateTime, 'longDate'),
+            endDateTime: dateFormat(session.fields.endDateTime),
+          }
+          return sessionData
+        }),
+      }
+      return variationData
+    })
+  }
+
   useEffect(() => {
-    console.log('rendering workshop ', workshop)
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
       const variant = url.searchParams.get('variant')
@@ -100,13 +124,9 @@ export default function Workshop({ workshop, workshops }) {
           <Box mt={[5, 9]}>
             <SpotlightImage
               imgUrl={
-                workshop?.fields?.spotlightImage?.fields?.imageContentful
-                  ?.fields?.file?.url
+                workshop?.fields?.spotlightImage?.fields?.imageBynder[0]?.src
               }
-              imgTitle={
-                workshop?.fields?.spotlightImage?.fields?.imageContentful
-                  ?.fields?.title
-              }
+              imgTitle={workshop?.fields?.spotlightImage?.fields?.title}
             />
           </Box>
           <Box className={classes.workshops}>
@@ -118,10 +138,6 @@ export default function Workshop({ workshop, workshops }) {
                   (item) => item.fields.title
                 )}
                 topics={workshop.fields.topics.map((item) => item.fields.title)}
-                author={documentToReactComponents(
-                  workshop.fields.authors[0].fields.description,
-                  options
-                )}
                 author={
                   workshop.fields.authors[0]
                     ? workshop.fields.authors.map((author) =>
@@ -132,7 +148,9 @@ export default function Workshop({ workshop, workshops }) {
               />
             </Box>
             <Box className={classes.liveWorkshop}>
-              <LiveWorkshop />
+              <LiveWorkshop
+                variations={getVariations(workshop?.fields?.variations)}
+              />
             </Box>
           </Box>
 
@@ -195,9 +213,6 @@ export async function getStaticProps({ params }) {
     include: 4,
   })
 
-  console.log('workghop gettting props ', params)
-  console.log('workshop data ', data.items)
-
   if (!data || !data.items || data.items.length == 0) {
     return {
       notFound: true,
@@ -207,8 +222,6 @@ export async function getStaticProps({ params }) {
   const workshops = await client.getEntries({
     content_type: 'workshop',
   })
-
-  console.log('all workshops ', workshops.items.length)
 
   // const collections = await client.getEntries({
   //   content_type: 'collection',

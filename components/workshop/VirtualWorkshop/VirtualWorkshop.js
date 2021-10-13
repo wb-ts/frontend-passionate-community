@@ -1,5 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core'
-import Topics from '@/components/molecules/topics'
+import Topics from '@/components/molecules/Topics'
 import TopicTag from '@/components/molecules/TopicTag'
 import TextStyle from '@/components/atoms/textstyle'
 import ShowMoreText from 'react-show-more-text'

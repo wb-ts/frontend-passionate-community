@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function TwoColContentListing({
+export default function TwoColContentListingWorkshop({
   title,
   body,
   items,
@@ -36,6 +36,7 @@ export default function TwoColContentListing({
   const classes = useStyles()
   const isEvents = variant === 'event'
   const isWorkshops = variant === 'workshop'
+  const ctaLink = isEvents ? paths.events : isWorkshops ? paths.workshop : null
   const dateFormat = require('dateformat')
 
   return (
@@ -44,7 +45,7 @@ export default function TwoColContentListing({
         <TwoColumnHeader
           title={title}
           body={body}
-          ctaLink={isEvents || isWorkshops ? paths.events : null}
+          ctaLink={ctaLink}
           ctaLabel={
             (isEvents || isWorkshops) && limit ? `View all ${variant}s` : null
           }
@@ -64,31 +65,15 @@ export default function TwoColContentListing({
                   <>
                     <Grid item xs={12} key={`content-list-${key}`}>
                       <HorizontalCard
-                        key={item.fields.title}
-                        price={isWorkshops ? item.fields.memberPrice : null}
-                        remaining={
-                          isWorkshops ? 'only 12 seats remaining' : null
-                        }
-                        label={
-                          item.fields?.topics
-                            ? item.fields?.topics[0]?.fields?.title
-                            : ''
-                        }
-                        title={item.fields?.title}
-                        image={
-                          item.fields.spotlightImage?.fields?.imageContentful
-                            ?.fields?.file?.url
-                        }
-                        date={
-                          item.fields.dateTime
-                            ? dateFormat(item.fields.dateTime, 'longDate')
-                            : ''
-                        }
-                        ctaLink={
-                          isEvents || isWorkshops
-                            ? paths.event({ slug: item.fields.slug })
-                            : item.fields.url
-                        }
+                        key={item.title}
+                        price={item.price}
+                        remaining={item.remaining}
+                        label={item.label}
+                        title={item.title}
+                        authorName={item.authorName}
+                        image={item.image}
+                        date={item.date}
+                        ctaLink={item.actionHref}
                         variant={variant}
                       />
                     </Grid>

@@ -51,6 +51,11 @@ export default {
     return `/blogs/${slug}`
   },
 
+  // Workshops.
+  workshop({ slug }) {
+    return `/workshop/${slug}`
+  },
+
   // FAQs.
   faq({ slug }) {
     return `/faq?service=${slug}`

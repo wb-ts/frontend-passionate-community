@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 export default function VirtualWorkshop({
   title,
+  topicTag,
   description,
   audience,
   topics,
@@ -44,7 +45,7 @@ export default function VirtualWorkshop({
   return (
     <Box>
       <Box>
-        <TopicTag variant='topic' label='VIRTUAL WORKSHOP' />
+        <TopicTag variant='topic' label={topicTag} />
       </Box>
       <TextStyle variant='h1' className={classes.title}>
         {title}
@@ -108,6 +109,7 @@ export default function VirtualWorkshop({
 
 VirtualWorkshop.propTypes = {
   title: PropTypes.string.isRequired,
+  topicTag: PropTypes.string.isRequired,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   audience: PropTypes.arrayOf(PropTypes.string),
   topics: PropTypes.arrayOf(PropTypes.string),

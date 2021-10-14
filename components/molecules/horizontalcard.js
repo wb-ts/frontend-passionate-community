@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     paddingLeft: ({ variant }) => variant == 'author' && theme.spacing(3),
     paddingRight: ({ variant }) => variant == 'author' && theme.spacing(3),
+    alignItems: 'flex-start',
     flexDirection: ({ reverse, variant }) =>
       variant == 'author' ? 'column' : reverse ? 'row-reverse' : 'row',
     '&:hover': {
@@ -106,13 +107,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100%',
     paddingLeft: ({ reverse }) => (reverse ? 0 : ''),
-
+    paddingTop: 0,
     [theme.breakpoints.up('md')]: {
       paddingRight: ({ reverse }) => (reverse ? 70 : ''),
     },
   },
   noPadding: {
-    padding: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
   },
   price: {
     marginLeft: 'auto',
@@ -120,12 +122,20 @@ const useStyles = makeStyles((theme) => ({
   remaining: {
     color: theme.palette.primary.light,
   },
+  workshopDate: {
+    fontSize: theme.typography.pxToRem(16),
+    fontWeight: 600,
+    lineHeight: theme.typography.pxToRem(24),
+    letterSpacing: 0.2,
+    color: theme.palette.accent.lightGrey,
+  },
 }))
 
 export default function HorizontalCard({
   premium,
   label,
   title,
+  authorName,
   date,
   price,
   remaining,
@@ -177,7 +187,7 @@ export default function HorizontalCard({
 
         <CardContent
           className={`${classes.cardContentRoot} ${
-            lines > 2 && classes.noPadding
+            (lines > 2 || variant === 'workshop') && classes.noPadding
           }`}
         >
           <Box display='flex'>
@@ -195,11 +205,26 @@ export default function HorizontalCard({
             )}
           </Box>
 
-          {title && (
-            <Box className={classes.titleLine}>
-              <TextStyle variant={lines > 2 ? 'h6' : 'h5'}>{title}</TextStyle>
-            </Box>
-          )}
+          <Box className={classes.titleLine}>
+            {authorName && (
+              <TextStyle
+                variant={
+                  lines > 2 ? 'h6' : variant === 'workshop' ? 'h4' : 'h5'
+                }
+              >
+                {authorName}
+              </TextStyle>
+            )}
+            {title && (
+              <TextStyle
+                variant={
+                  lines > 2 ? 'h6' : variant === 'workshop' ? 'h4' : 'h5'
+                }
+              >
+                {title}
+              </TextStyle>
+            )}
+          </Box>
 
           {body && (
             <Box
@@ -225,7 +250,11 @@ export default function HorizontalCard({
 
           {date && (
             <Box mt={1.5}>
-              <TextStyle variant='caption' color='#546366'>
+              <TextStyle
+                variant='caption'
+                color='#546366'
+                className={variant === 'workshop' && classes.workshopDate}
+              >
                 {date}
               </TextStyle>
             </Box>

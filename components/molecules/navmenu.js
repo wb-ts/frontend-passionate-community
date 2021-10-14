@@ -139,6 +139,10 @@ export default function NavMenu({ mobile }) {
           href: '/webinars',
         },
         {
+          label: 'Author Workshops',
+          href: '/workshops',
+        },
+        {
           label: 'Conferences',
           href: paths.event({ slug: '2022-annual-conference' }),
         },
@@ -178,6 +182,10 @@ export default function NavMenu({ mobile }) {
         {
           label: 'Our Services',
           href: '/services',
+        },
+        {
+          label: 'Author Workshops',
+          href: '/workshops',
         },
         {
           label: 'ACTIVATE',

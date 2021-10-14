@@ -15,9 +15,10 @@ import {
 } from '@material-ui/icons'
 
 import TextStyle from '@/components/atoms/textstyle'
-import sessionsMock from './sessionsMock'
 import { AppContext } from '@/context/state'
 import { validatePaidMembership } from '@/lib/access-validator'
+import dateFormat from 'dateformat'
+
 const useStyles = makeStyles((theme) => ({
   liveWorkshopContainer: {
     backgroundColor: theme.palette.grey.extraLight,
@@ -90,13 +91,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }))
-export default function LiveWorkshop({ variations }) {
+export default function LiveWorkshop({ clockHours, variations }) {
   const classes = useStyles()
   const [otherDates, setOtherDates] = useState(variations[0].variationId)
   const [sessions, setSessions] = useState([])
+  const [price, setPrice] = useState()
   const { userAccessData } = useContext(AppContext)
   const useMemberPrice = validatePaidMembership(userAccessData)
-
+  const [seatsRemaining, setSeatsRemaining] = useState(0)
   const handleChange = (event) => {
     setOtherDates(event.target.value)
   }
@@ -106,26 +108,35 @@ export default function LiveWorkshop({ variations }) {
       (variation) => variation.variationId === otherDates
     )
     setSessions(currentVariation.sessions)
-    console.log('sessions ', currentVariation.sessions)
+    setSeatsRemaining(currentVariation.seatsRemaining)
+    setPrice(
+      useMemberPrice
+        ? currentVariation.memberPrice
+        : currentVariation.nonMemberPrice
+    )
+    console.log('currentVariation ', currentVariation)
   }, [otherDates])
   return (
     <Box className={classes.liveWorkshopContainer}>
       <TextStyle variant='sessionDate'>Live Workshops</TextStyle>
       <TextStyle variant='sessionDate' className={classes.dateTime}>
-        3 Sessions for 3 Clock Hours
+        {sessions.length > 1 ? `${sessions.length} Sessions` : '1 Session'} for{' '}
+        {clockHours}
       </TextStyle>
       <TextStyle className={classes.title}>
-        ONLY THREE SEATS REMAINING
+        {seatsRemaining > 0
+          ? `ONLY {seatsRemaining} SEATS REMAINING`
+          : `NO SEATS REMAINING`}
       </TextStyle>
       <Box className={classes.sessions}>
         <List>
           {sessions.map((session, idx) => (
             <ListItem key={idx} className={classes.sessionItem}>
               <TextStyle variant='overlineLarge'>{session.title}</TextStyle>
-              <TextStyle variant='sessionDate'>
-                {session.startDateTime}
+              <TextStyle variant='sessionDate'>{session.startDate}</TextStyle>
+              <TextStyle variant='h7'>
+                {session.startTime}-{session.endTime}
               </TextStyle>
-              <TextStyle variant='h7'>{session.endDateTime}</TextStyle>
             </ListItem>
           ))}
         </List>
@@ -144,7 +155,7 @@ export default function LiveWorkshop({ variations }) {
         >
           {variations.map((variation, idx) => (
             <MenuItem value={variation.variationId} key={variation.variationId}>
-              <TextStyle variant='h7'>{variation.title}</TextStyle>
+              <TextStyle variant='h7'>{variation.dateRange}</TextStyle>
             </MenuItem>
           ))}
         </Select>
@@ -158,7 +169,7 @@ export default function LiveWorkshop({ variations }) {
       <Box display='flex'>
         <MenuBookIcon className={classes.itemIcon} />
         <Box>
-          <Box className={classes.subtitle}>Required Materials - $75</Box>
+          <Box className={classes.subtitle}>Required Materials - ${price}</Box>
           <Box className={classes.description}>
             Differentiation in the Elementary Grades: Strategies to Engage &
             Equip All Learners

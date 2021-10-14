@@ -13,6 +13,8 @@ import GridSection from '@/components/molecules/gridsection'
 import BecomeMember from '@/components/organisms/becomemember'
 import ReactMarkdown from 'react-markdown'
 import VideoBanner from '../components/organisms/videobanner'
+import { contentfulClient } from '../lib/apollo-client'
+import { gql } from '@apollo/client'
 
 const useStyles = makeStyles((theme) => ({
   articles: {
@@ -137,6 +139,48 @@ export default function Home({
 }
 
 export async function getStaticProps() {
+  /* Example Graphql query
+  const bookTest = await contentfulClient.query({
+    query: gql`
+      query {
+        bookCollection(order: [datePublished_DESC], limit: 2) {
+          items {
+            title
+            slug
+            authorsCollection {
+              items {
+                title
+                email
+              }
+            }
+            thumbnail {
+              imageBynder
+              imageContentful {
+                url
+              }
+            }
+            description {
+              json
+            }
+            bookVersionsCollection {
+              items {
+                taxJar {
+                  taxJarId
+                }
+                priceMember
+                productNumber
+                priceNonMember
+                royaltyFlag
+                digitalFileGuid
+                dateRelease
+              }
+            }
+          }
+        }
+      }
+    `,
+  })*/
+
   const data = await client.getEntries({
     content_type: 'article',
     'fields.featured': true,
@@ -162,6 +206,7 @@ export async function getStaticProps() {
     include: 2,
     limit: 8,
   })
+
   const eventData = await client.getEntries({
     content_type: 'event',
   })
@@ -189,6 +234,7 @@ export async function getStaticProps() {
       allArticles[allArticles.length - 1].fields.issueDate = b.fields.date
       allArticles[allArticles.length - 1].fields.premium = false
       allArticles[allArticles.length - 1].fields.isBlog = true
+      allArticles[allArticles.length - 1].fields.image = b.fields.thumbnail
     })
   }
   if (numberOfArticles) {

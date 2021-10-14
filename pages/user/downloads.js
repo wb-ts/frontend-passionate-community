@@ -58,27 +58,27 @@ export default function UserDashboard() {
   const { userMasterId } = useContext(AppContext)
 
   useEffect(() => {
-    fetch(`/api/digital-assets?userId=${userMasterId}`)
-      .then(function (response) {
-        console.log(response)
-        return response.json()
-      })
-      .then(function (data) {
-        const items = data
-        console.log(data)
-        const rows = items.length
-          ? items.map((v) => {
-              return {
-                id: v?.PRODUCT_ID,
-                shortName: v?.SHORT_NAME,
-                url: v?.URL,
-              }
-            })
-          : {}
-        setRows(rows)
-      })
+    if (userMasterId !== undefined) {
+      fetch(`/api/digital-assets?userId=${userMasterId}`)
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (data) {
+          const items = data
+          const rows = items.length
+            ? items.map((v, index) => {
+                return {
+                  id: `${v?.PRODUCT_ID}_${index}`,
+                  shortName: v?.SHORT_NAME,
+                  url: v?.URL,
+                }
+              })
+            : {}
+          setRows(rows)
+        })
+    }
 
-    if (tp) {
+    /*if (tp) {
       if (!tp.user.isUserValid()) {
         tp.pianoId.show({
           showCloseButton: false,
@@ -88,7 +88,7 @@ export default function UserDashboard() {
           },
         })
       }
-    }
+    }*/
   }, [userMasterId])
 
   return (

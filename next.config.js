@@ -8,9 +8,16 @@ module.exports = {
     return [
       {
         source:
+          '/books/the-big-picture%3Fchapter=foreward-on-being-bold-by-deborah-meier',
+        destination:
+          '/books/the-big-picture?chapter=foreword-on-being-bold-by-deborah-meier',
+        permanent: true,
+      },
+      {
+        source:
           '/books/better-learning-through-structured-teaching%3Fvariant=113006E4',
         destination:
-          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition%3Fvariant=121031',
+          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition?variant=121031',
         permanent: true,
       },
       {
@@ -24,21 +31,21 @@ module.exports = {
         source:
           '/books/better-learning-through-structured-teaching%3Fchapter=about-the-authors-better-learning-through-structured-teaching',
         destination:
-          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition%3Fchapter=about-the-authors-better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition',
+          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition?chapter=about-the-authors-better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition',
         permanent: true,
       },
       {
         source:
           '/books/better-learning-through-structured-teaching%3Fchapter=an-ascd-study-guide-for-better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-2nd-edition',
         destination:
-          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition%3Fchapter=an-ascd-study-guide-for-better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition',
+          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition?chapter=an-ascd-study-guide-for-better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition',
         permanent: true,
       },
       {
         source:
           '/books/better-learning-through-structured-teaching%3Fchapter=copyright-better-learning-through-structured-teaching',
         destination:
-          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition%3Fchapter=copyright-better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition',
+          '/books/better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition?chapter=copyright-better-learning-through-structured-teaching-a-framework-for-the-gradual-release-of-responsibility-3rd-edition',
         permanent: true,
       },
       {

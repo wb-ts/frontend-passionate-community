@@ -1,7 +1,5 @@
 module.exports = {
-  testPathIgnorePatterns: [
-    '/node_modules/',
-  ],
+  testPathIgnorePatterns: ['/node_modules/'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.css$': '<rootDir>/__test-transforms__/cssTransform.js',
@@ -17,6 +15,11 @@ module.exports = {
     '^@/const(.*)$': ['<rootDir>/const$1'],
     '^@/paths(.*)$': ['<rootDir>/paths$1'],
     '^@/context(.*)$': ['<rootDir>/context$1'],
+    // Handle CSS imports (without CSS modules)
+    '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
+    /* Handle image imports
+    https://jestjs.io/docs/webpack#handling-static-assets */
+    '^.+\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js',
   },
   moduleDirectories: ['node_modules', '<rootDir>/__test-utils__'],
   testEnvironment: 'jsdom',

@@ -7,6 +7,8 @@ import TopicTag from '@/components/molecules/TopicTag'
 import ViewAllCTA from '@/components/atoms/viewallcta'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import React, { useState } from 'react'
+import WorkshopListItem from '@/components/molecules/Workshop/WorkshopListItem'
+import { workshopItemToCardData } from '@/lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -59,10 +61,14 @@ export default function ContentGrid({
   showDivider = true,
   showViewAll = true,
   viewAllLink = paths.search({ types: [] }),
+  columnWidth = 4,
+  variant,
+  limit = 12,
+  useMemberBookPrice,
 }) {
   const [state, setState] = useState({
     topic: '',
-    gridLimit: 12,
+    gridLimit: limit,
   })
   const { topic, gridLimit } = state
   const classes = useStyles()
@@ -95,20 +101,29 @@ export default function ContentGrid({
     ))
   }
 
-  const _renderItems = (items) => {
+  const _renderItems = (items, columnWidth) => {
     return items
       .filter((item) => {
         if (topic !== '') {
           return topic == item.fields.topic.fields.title
         }
-
         return true
       })
       .slice(0, `${contentLimit ? contentLimit : items.length}`)
       .map((item, key) => {
         return (
-          <Grid item xs={12} md={3} key={key}>
-            <ContentCardListing item={item} />
+          <Grid item xs={12} md={columnWidth} key={key}>
+            {variant === 'workshop' ? (
+              item.fields.variations.map((v, k) => (
+                <WorkshopListItem
+                  key={k}
+                  useMemberBookPrice
+                  cardData={workshopItemToCardData(item, v)}
+                />
+              ))
+            ) : (
+              <ContentCardListing item={item} />
+            )}
           </Grid>
         )
       })
@@ -148,9 +163,9 @@ export default function ContentGrid({
           </Box>
         </Grid>
       )}
-      {_renderItems(items.slice(0, gridLimit))}
+      {_renderItems(items.slice(0, gridLimit), columnWidth)}
       <Box my={10} textAlign='center'>
-        {gridLimit == items.length && (
+        {gridLimit < items.length && (
           <Button onClick={() => loadMore()} startIcon={<ArrowDownwardIcon />}>
             <TextStyle variant='h5'>View More</TextStyle>
           </Button>

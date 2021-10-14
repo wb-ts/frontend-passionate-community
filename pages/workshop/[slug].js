@@ -6,17 +6,19 @@ import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
 import ReactMarkdown from 'react-markdown'
 import BookBanner from '@/components/organisms/bookbanner'
-import TwoColContentListing from '@/components/organisms/twocolcontentlisting'
+import TwoColContentListingWorkshop from '@/components/organisms/TwoColContentListingWorkshop'
 import LiveWorkshop from '@/components/workshop/LiveWorkshop'
 import NeverMiss from '@/components/workshop/NeverMiss'
 import SpotlightImage from '@/components/workshop/SpotlightImage'
 import VirtualWorkshop from '@/components/workshop/VirtualWorkshop'
 import { useRouter } from 'next/router'
 import { Skeleton } from '@material-ui/lab'
-
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
-
+import {
+  workshopItemToCardData1,
+  workshopItemToCardData,
+} from '@/lib/data-transformations'
+import { AppContext } from '@/context/state'
+import { validatePaidMembership } from '@/lib/access-validator'
 const useStyles = makeStyles((theme) => ({
   root: {},
   workshops: {
@@ -56,9 +58,38 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Workshop({ workshop, workshops }) {
   const router = useRouter()
-  const futureWorkshops = workshops?.filter(
-    (item) => item?.fields?.slug !== workshop?.fields?.slug
-  )
+  const { userAccessData } = useContext(AppContext)
+  const useMemberPrice = validatePaidMembership(userAccessData)
+  const futureWorkshops = workshops
+    ?.filter((item) => item?.fields?.slug !== workshop?.fields?.slug)
+    .map((workshop, idx) => {
+      const {
+        title,
+        actionHref,
+        mediaImg,
+        topicTag,
+        authorName,
+        workshopDate,
+        memberPrice,
+        nonMemberPrice,
+        clockHours,
+        seatsRemaining,
+      } = workshopItemToCardData(workshop, workshop.fields.variations[0])
+      return {
+        key: workshop.fields.slug,
+        remaining:
+          seatsRemaining > 0
+            ? `ONLY {seatsRemaining} SEATS REMAINING`
+            : `NO SEATS REMAINING`,
+        price: useMemberPrice ? memberPrice : nonMemberPrice,
+        label: topicTag,
+        title: title,
+        authorName: authorName,
+        image: mediaImg,
+        date: `${workshopDate}-${clockHours}`,
+        actionHref: actionHref,
+      }
+    })
 
   if (router.isFallback) {
     return (
@@ -68,46 +99,20 @@ export default function Workshop({ workshop, workshops }) {
 
   const classes = useStyles()
   const [productNumber, setProductNumber] = useState(null)
-  const dateFormat = require('dateformat')
-  const getContentText = (data) => {
-    if (data && typeof data !== 'string' && data.nodeType == 'document') {
-      const jsonData = JSON.parse(JSON.stringify(data))
-
-      return jsonData?.content[0] !== undefined
-        ? documentToReactComponents(jsonData, options)
-        : ''
-    } else if (typeof data == 'string') {
-      return data
-    } else {
-      return null
-    }
-  }
-
-  const getVariations = (data) => {
-    if (data && data.length == 0) {
-      return []
-    }
-    return data.map((variation) => {
-      const variationData = {
-        title: variation?.fields?.title,
-        variationId: variation?.fields?.variationId,
-        nonMemberPrice: variation?.fields?.nonMemberPrice,
-        memberPrice: variation?.fields?.memberPrice,
-        sessions: variation?.fields?.sessions?.map((session) => {
-          console.log('date ', session.fields)
-          const sessionData = {
-            title: session.fields.title,
-            sessionId: session.fields.sessionId,
-            startDateTime: dateFormat(session.fields.startDateTime, 'longDate'),
-            endDateTime: dateFormat(session.fields.endDateTime),
-          }
-          return sessionData
-        }),
-      }
-      return variationData
-    })
-  }
-
+  const {
+    title,
+    actionHref,
+    mediaImg,
+    mediaImgTitle,
+    topicTag,
+    description,
+    topics,
+    audience,
+    authorName,
+    authorDescription,
+    variations,
+    clockHours,
+  } = workshopItemToCardData1(workshop)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
@@ -122,35 +127,21 @@ export default function Workshop({ workshop, workshops }) {
       {workshop && (
         <Container maxWidth='lg'>
           <Box mt={[5, 9]}>
-            <SpotlightImage
-              imgUrl={
-                workshop?.fields?.spotlightImage?.fields?.imageBynder[0]?.src
-              }
-              imgTitle={workshop?.fields?.spotlightImage?.fields?.title}
-            />
+            <SpotlightImage imgUrl={mediaImg} imgTitle={mediaImgTitle} />
           </Box>
           <Box className={classes.workshops}>
             <Box className={classes.virtualWorkshop}>
               <VirtualWorkshop
-                title={workshop?.fields?.title}
-                description={getContentText(workshop?.fields?.description)}
-                audience={workshop.fields.audience.map(
-                  (item) => item.fields.title
-                )}
-                topics={workshop.fields.topics.map((item) => item.fields.title)}
-                author={
-                  workshop.fields.authors[0]
-                    ? workshop.fields.authors.map((author) =>
-                        getContentText(author.fields.description)
-                      )
-                    : null
-                }
+                title={title}
+                topicTag={topicTag}
+                description={description}
+                audience={audience}
+                topics={topics}
+                author={authorDescription}
               />
             </Box>
             <Box className={classes.liveWorkshop}>
-              <LiveWorkshop
-                variations={getVariations(workshop?.fields?.variations)}
-              />
+              <LiveWorkshop clockHours={clockHours} variations={variations} />
             </Box>
           </Box>
 
@@ -167,7 +158,7 @@ export default function Workshop({ workshop, workshops }) {
           </Box>
           <Box mt={[5, 10]} mb={8}>
             {futureWorkshops.length > 0 && (
-              <TwoColContentListing
+              <TwoColContentListingWorkshop
                 title='More Virtual Workshops and Institutes from ASCD'
                 items={futureWorkshops}
                 limit={3}
@@ -223,33 +214,11 @@ export async function getStaticProps({ params }) {
     content_type: 'workshop',
   })
 
-  // const collections = await client.getEntries({
-  //   content_type: 'collection',
-  //   'fields.items.sys.id': data.items[0].sys.id,
-  //   include: 2,
-  // })
-
-  // const books = await client.getEntries({
-  //   content_type: 'book',
-  //   'sys.id[ne]': data.items[0].sys.id,
-  //   'fields.topic.sys.contentType.sys.id': 'categoryTopics',
-  //   'fields.topic.fields.title': data.items[0].fields.topic?.fields
-  //     ? data.items[0].fields.topic.fields.title
-  //     : '',
-  //   select:
-  //     'fields.title,fields.slug,fields.authors,fields.thumbnail,fields.description,fields.bookVersions,fields.memberBook',
-  //   include: 2,
-  //   limit: 8,
-  //   order: '-fields.datePublished',
-  // })
-
   return {
     props: {
       key: data.items[0].sys.id,
       workshop: data.items.length > 0 ? data.items[0] : null,
       workshops: workshops.items.length > 0 ? workshops.items : [],
-      // relatedBooks: books.items,
-      // relatedCollections: collections.items.length > 0 ? collections.items : [],
     },
     revalidate: 20,
   }

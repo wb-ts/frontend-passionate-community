@@ -2,12 +2,15 @@ import React from 'react'
 import {
   Box,
   Grid,
-  InputAdornment,
   makeStyles,
-  OutlinedInput,
   Typography,
+  Modal,
+  IconButton,
 } from '@material-ui/core'
-import { Send as SendIcon } from '@material-ui/icons'
+import hubspotFormIds from '@/const/hubspot-form-ids'
+import HubSpotForm from '@/components/molecules/hubspotform'
+import CtaButton from '@/components/atoms/ctabutton'
+import CloseIcon from '@material-ui/icons/Close'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,11 +35,38 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
+  modal: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.grey.dark,
+    height: '100vh',
+    width: '100vw',
+    position: 'absolute',
+    padding: theme.spacing(2, 0, 0, 0),
+    overflow: 'scroll',
+    [theme.breakpoints.up('md')]: {
+      width: '50vw',
+      height: '85vh',
+      borderRadius: '16px',
+      top: '15%',
+      left: '50%',
+      transform: 'translate(-50%, -10%)',
+      boxShadow: theme.shadows[5],
+    },
+  },
+  closeModalButton: {
+    marginRight: 5,
+    color: theme.palette.grey.dark,
+  },
 }))
 export default function NeverMiss() {
   const classes = useStyles()
-  const [email, setEmail] = React.useState('')
-
+  const [openModal, setOpenModal] = React.useState(false)
+  const _renderWorkshopForm = () => (
+    <Box pt={0} pb={10} px={[2, 10]}>
+      <h1>Sign Up</h1>
+      <HubSpotForm formId={hubspotFormIds.NEVER_MISS_WORKSHOP_FORM} />
+    </Box>
+  )
   return (
     <Box className={classes.container}>
       <Grid container spacing={3}>
@@ -57,27 +87,42 @@ export default function NeverMiss() {
             height='100%'
             justifyContent='center'
           >
-            <OutlinedInput
-              type='email'
-              data-testid='email-input'
-              id='outlined-adornment-weight'
-              placeholder='Your email address'
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <SendIcon color={'primary'} />
-                </InputAdornment>
-              }
-              className={classes.email}
-              aria-describedby='outlined-weight-helper-text'
-              inputProps={{
-                'aria-label': 'weight',
-              }}
+            <CtaButton
+              variant='contained'
+              color='primary'
+              width='100%'
+              size='large'
+              label='Sign up'
+              onclick={() => setOpenModal(true)}
             />
           </Box>
         </Grid>
       </Grid>
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        aria-labelledby='Workshop Signup'
+        aria-describedby='A pop-up form to sign up for the Workshops'
+      >
+        <Box className={classes.modal}>
+          <Box
+            display='flex'
+            alignItems='center'
+            justifyContent='flex-end'
+            mb={2}
+            pl={2}
+            pr={2}
+          >
+            <IconButton
+              aria-label='Close modal button'
+              className={classes.closeModalButton}
+            >
+              <CloseIcon size='small' onClick={() => setOpenModal(false)} />
+            </IconButton>
+          </Box>
+          {_renderWorkshopForm()}
+        </Box>
+      </Modal>
     </Box>
   )
 }

@@ -100,7 +100,6 @@ export default function ContentGrid({
       />
     ))
   }
-
   const _renderItems = (items, columnWidth) => {
     return items
       .filter((item) => {
@@ -113,19 +112,26 @@ export default function ContentGrid({
       .map((item, key) => {
         return (
           <Grid item xs={12} md={columnWidth} key={key}>
-            {variant === 'workshop' ? (
-              item.fields.variations.map((v, k) => (
-                <WorkshopListItem
-                  key={k}
-                  useMemberBookPrice
-                  cardData={workshopItemToCardData(item, v)}
-                />
-              ))
-            ) : (
-              <ContentCardListing item={item} />
-            )}
+            <ContentCardListing item={item} />
           </Grid>
         )
+      })
+  }
+
+  const _renderWorkshopItems = (items, columnWidth) => {
+    return items
+      .slice(0, `${contentLimit ? contentLimit : items.length}`)
+      .map((item) => {
+        return item?.fields?.variations.map((v) => {
+          return (
+            <Grid item xs={12} md={columnWidth} key={v.fields.variationId}>
+              <WorkshopListItem
+                useMemberBookPrice
+                cardData={workshopItemToCardData(item, v)}
+              />
+            </Grid>
+          )
+        })
       })
   }
 
@@ -163,7 +169,9 @@ export default function ContentGrid({
           </Box>
         </Grid>
       )}
-      {_renderItems(items.slice(0, gridLimit), columnWidth)}
+      {variant === 'workshop'
+        ? _renderWorkshopItems(items.slice(0, gridLimit), columnWidth)
+        : _renderItems(items.slice(0, gridLimit), columnWidth)}
       <Box my={10} textAlign='center'>
         {gridLimit < items.length && (
           <Button onClick={() => loadMore()} startIcon={<ArrowDownwardIcon />}>

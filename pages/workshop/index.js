@@ -73,7 +73,6 @@ export default function AuthorWorkshop({
       featuredWorkshop[0] && workshop?.sys?.id !== featuredWorkshop[0]?.sys.id
   )
   const dateFns = new DateFnsUtils()
-  const dateFormat = require('dateformat')
 
   const { userAccessData } = useContext(AppContext)
   const useMemberBookPrice = hasMemberBookPrice(userAccessData)
@@ -83,12 +82,17 @@ export default function AuthorWorkshop({
   ])
   // const [selectedEventTypes, setSelectedEventTypes] = useState(['All Events'])
   const [selectedTopics, setSelectedTopics] = useState(['All Topics'])
-  const [listOfGridWorkShops, setListOfGridWorkShops] = useState(otherWorkshops)
+  const [listOfGridWorkShops, setListOfGridWorkShops] = useState([])
   // const handleChangeEvents = (event) => {
   //   setSelectedEventTypes(event.target.value)
   // }
   const handleChangeTopics = (event) => {
     setSelectedTopics(event.target.value)
+  }
+  const handleClearFilters = () => {
+    // setSelectedEventTypes(['All Events'])
+    setSelectedTopics(['All Topics'])
+    setValue([new Date(), dateFns.addMonths(new Date(), 1)])
   }
 
   useEffect(() => {
@@ -118,17 +122,8 @@ export default function AuthorWorkshop({
         )
       )
       setListOfGridWorkShops(ows)
-    } else {
-      setListOfGridWorkShops(otherWorkshopsFiltered)
     }
   }, [value, selectedTopics])
-
-  const handleClearFilters = () => {
-    // setSelectedEventTypes(['All Events'])
-    setSelectedTopics(['All Topics'])
-    setValue([null, null])
-    setListOfGridWorkShops(otherWorkshops)
-  }
 
   const _renderPageContent = (content) => {
     return (
@@ -263,7 +258,7 @@ export default function AuthorWorkshop({
                       notched={false}
                       label='Date Range'
                       type='text'
-                      value={`${startValue} - ${endProps.inputProps.value}`}
+                      value={`${startValue} - ${endProps?.inputProps?.value}`}
                       endAdornment={<CalendarTodayIcon />}
                     />
                   )

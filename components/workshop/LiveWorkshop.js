@@ -114,7 +114,6 @@ export default function LiveWorkshop({ clockHours, variations }) {
         ? currentVariation.memberPrice
         : currentVariation.nonMemberPrice
     )
-    console.log('currentVariation ', currentVariation)
   }, [otherDates])
   return (
     <Box className={classes.liveWorkshopContainer}>
@@ -142,23 +141,28 @@ export default function LiveWorkshop({ clockHours, variations }) {
         </List>
       </Box>
       <Box display='flex' marginBottom={'32px'}>
-        <Select
-          className={classes.select}
-          value={otherDates}
-          displayEmpty
-          onChange={handleChange}
-          inputProps={{
-            classes: {
-              icon: classes.selectIcon,
-            },
-          }}
-        >
-          {variations.map((variation, idx) => (
-            <MenuItem value={variation.variationId} key={variation.variationId}>
-              <TextStyle variant='h7'>{variation.dateRange}</TextStyle>
-            </MenuItem>
-          ))}
-        </Select>
+        {variations.length > 1 && (
+          <Select
+            className={classes.select}
+            value={otherDates}
+            displayEmpty
+            onChange={handleChange}
+            inputProps={{
+              classes: {
+                icon: classes.selectIcon,
+              },
+            }}
+          >
+            {variations.map((variation, idx) => (
+              <MenuItem
+                value={variation.variationId}
+                key={variation.variationId}
+              >
+                <TextStyle variant='h7'>{variation.dateRange}</TextStyle>
+              </MenuItem>
+            ))}
+          </Select>
+        )}
       </Box>
       <Box display='flex' marginBottom='16px'>
         <AccessTimeIcon className={classes.itemIcon} />

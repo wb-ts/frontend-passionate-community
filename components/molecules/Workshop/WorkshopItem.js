@@ -103,11 +103,7 @@ export default function WorkshopItem({ cardData, useMemberBookPrice }) {
                     <TextStyle variant={'h2'}>{cardData.authorName}</TextStyle>
                   </Box>
                 )}
-                <TopicTag
-                  variant='special'
-                  label={cardData.topicTag}
-                  color={'black'}
-                />
+                <TopicTag textTransform='uppercase' label={cardData.topicTag} />
               </Box>
             )}
             <Box display='flex' justifyContent='space-between'>

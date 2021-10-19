@@ -18,9 +18,9 @@ import {
 } from '@material-ui/core'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import ExpandLess from '@material-ui/icons/ExpandLess'
-import CtaButton from '@/components/atoms/ctabutton'
+import CtaButton from '@/components/atoms/CtaButton'
 import { components } from '@/const/components'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router'
 import paths from '@/paths/path'
@@ -28,7 +28,7 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import HubSpotForm from '@/components/molecules/hubspotform'
 import CloseIcon from '@material-ui/icons/Close'
-import BannerMessage from '@/components/atoms/bannermessage'
+import BannerMessage from '@/components/atoms/BannerMessage'
 import CustomLink from '@/components/atoms/CustomLink'
 import hubspotFormIds from '@/const/hubspot-form-ids'
 
@@ -783,9 +783,7 @@ export async function getStaticProps({ params }) {
     'fields.slug': params.slug.join('/'),
     include: 3,
   })
-  if ('affiliates' === params.slug.join('/')) {
-    console.log(params.slug.join('/'))
-  }
+
   return {
     props: {
       page: data?.items[0] || null,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Box, Avatar } from '@material-ui/core'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import ShareButtons from '@/components/molecules/sharebuttons'
 import { AvatarGroup } from '@material-ui/lab'
 import CustomLink from '@/components/atoms/CustomLink'

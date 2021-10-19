@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles({
   list: {

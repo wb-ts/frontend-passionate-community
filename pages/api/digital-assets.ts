@@ -9,9 +9,8 @@ const handler: NextApiHandler = async (req, res) => {
     }
     const results = await query(
     `
-    SELECT *
-    FROM MEMBER_BOOK_DOWNLOAD_INFO
-    WHERE SHIP_MASTER_CUSTOMER_ID = ?
+    SELECT * FROM MEMBER_BOOK_DOWNLOAD_INFO WHERE SHIP_MASTER_CUSTOMER_ID = ? 
+    ORDER BY ORDER_DATE DESC
     `,
       userId
     )

@@ -1,4 +1,4 @@
-import FilterDropdown from '@/components/atoms/filterdropdown'
+import FilterDropdown from '@/components/atoms/FilterDropdown'
 import { Box, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import AccordionFAQ from '@/components/molecules/accordionfaq'
@@ -34,7 +34,7 @@ export default function AccordionList({
         .flat()
         .map((c) => c.fields.title)
         .reduce((unique, o) => {
-          if (!unique.some((obj) => obj === o)) {
+          if (!unique?.some((obj) => obj === o)) {
             unique.push(o)
           }
           return unique
@@ -56,11 +56,12 @@ export default function AccordionList({
           }
         })
         .reduce((unique, o) => {
-          if (!unique.some((obj) => obj.value === o.value)) {
+          if (!unique?.some((obj) => obj.value === o.value)) {
             unique.push(o)
           }
           return unique
         }, [])
+        .sort()
 
     const topicFilter =
       issues &&
@@ -68,7 +69,7 @@ export default function AccordionList({
         .map((issue) => issue.filterTopic)
         .flat()
         .reduce((unique, o) => {
-          if (!unique.some((obj) => obj.value === o.value)) {
+          if (!unique?.some((obj) => obj.value === o.value)) {
             unique.push(o)
           }
           return unique
@@ -126,7 +127,9 @@ export default function AccordionList({
     return items
       .filter((item) => {
         if (category !== `All ${filterType}`) {
-          if (!item.filterCategory.some((obj) => obj.fields.title === category))
+          if (
+            !item.filterCategory?.some((obj) => obj.fields.title === category)
+          )
             return false
         }
         return true

@@ -11,7 +11,7 @@ import VideoPlaylist from '@/components/organisms/videoplaylist'
 import ProfileHeader from '@/components/molecules/profileheader'
 import paths from '@/paths/path'
 import HorizontalScroll from '@/components/organisms/horizontalscroll'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import ContentList from '@/components/molecules/contentlist'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { useRouter } from 'next/router'
@@ -34,7 +34,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function AuthorDetails({ profile, videos, articles, books }) {
+export default function AuthorDetails({
+  profile,
+  videos,
+  articles,
+  blogs,
+  books,
+}) {
   const router = useRouter()
   if (router.isFallback) {
     return (
@@ -155,6 +161,26 @@ export default function AuthorDetails({ profile, videos, articles, books }) {
           </Container>
         </Box>
       )}
+      {isAuthor && blogs.length > 0 && (
+        <Box mt={10} className={classes.contentList}>
+          <Container maxWidth='lg'>
+            <Box py={10} className={classes.body}>
+              <ContentList
+                title={`Blogs by ${profile.fields.firstName}`}
+                ctaLabel='View all'
+                ctaLink={paths.search({
+                  types: ['blog', 'article'],
+                  authors: [
+                    `${profile.fields.firstName} ${profile.fields.lastName}`,
+                  ],
+                })}
+                items={blogs}
+                variant='blog'
+              />
+            </Box>
+          </Container>
+        </Box>
+      )}
       <Container maxWidth='lg'>
         {isAuthor && videos.length > 0 && (
           <Box mt={10} width='100%'>
@@ -270,6 +296,13 @@ export async function getStaticProps({ params }) {
     limit: 4,
   })
 
+  const blogs = await client.getEntries({
+    content_type: 'blog',
+    'fields.authors.sys.id': data.items[0].sys.id,
+    order: '-fields.date',
+    limit: 4,
+  })
+
   const bookData = await client.getEntries({
     content_type: 'book',
     'fields.authors.sys.id': data.items[0].sys.id,
@@ -285,6 +318,7 @@ export async function getStaticProps({ params }) {
       profile: data.items[0],
       videos: videos.items,
       articles: articles.items,
+      blogs: blogs.items,
       books: bookData.items,
     },
     revalidate: 20,

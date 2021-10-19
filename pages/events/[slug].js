@@ -3,7 +3,7 @@ import Layout from '@/components/layout'
 import HeroHalfHalf from '@/components/molecules/herohalfhalf'
 import { client } from '@/lib/contentful'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import CtaButton from '@/components/atoms/ctabutton'
+import CtaButton from '@/components/atoms/CtaButton'
 import TextCTA from '@/components/molecules/textcta'
 import { Box, Grid, Container, Divider, Button } from '@material-ui/core'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -12,9 +12,9 @@ import SEOHead from '@/const/head'
 import TwoColContentListing from '@/components/organisms/twocolcontentlisting'
 import ReactMarkdown from 'react-markdown'
 import { BLOCKS } from '@contentful/rich-text-types'
-import TextStyle from '../../components/atoms/textstyle'
-import { AppContext } from '@/context/state'
-import { hasMemberBookPrice } from '@/lib/access-validator'
+import TextStyle from '../../components/atoms/TextStyle'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 import { useRouter } from 'next/router'
 import { Skeleton } from '@material-ui/lab'
 import imageoptimization from '@/const/imageoptimization'
@@ -66,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 104,
     },
   },
+  priceLabel: {
+    textAlign: 'right',
+    marginTop: '-2.5rem',
+    fontWeight: '600',
+  },
 }))
 
 export default function Event({ event, events }) {
@@ -77,8 +82,7 @@ export default function Event({ event, events }) {
   }
   const classes = useStyles()
 
-  const { userAccessData } = useContext(AppContext)
-  const useMemberBookPrice = hasMemberBookPrice(userAccessData)
+  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
 
   const futureEvents = events
     .filter((item) => item?.fields?.slug !== event?.fields?.slug)
@@ -118,11 +122,7 @@ export default function Event({ event, events }) {
       currency: 'USD',
     })
     return (
-      <Box
-        style={{ textAlign: 'right', marginTop: '-2.5rem', fontWeight: '600' }}
-      >
-        Price: {formatter.format(price)}
-      </Box>
+      <Box className={classes.priceLabel}>Price: {formatter.format(price)}</Box>
     )
   }
 
@@ -237,7 +237,7 @@ export default function Event({ event, events }) {
                               imageoptimization.qualityValue
                             : '/images/ASCDImageFiller.png',
                           dataItemDescription: event?.fields?.description,
-                          dataItemPrice: useMemberBookPrice
+                          dataItemPrice: hasMemberBookPrice
                             ? event?.fields?.priceMember
                             : event?.fields?.nonMemberPrice,
                           dataItemCustom1Value: event?.fields?.taxJar?.fields
@@ -255,9 +255,17 @@ export default function Event({ event, events }) {
               <>
                 <Grid xs={12} md={6} item></Grid>
                 <Grid xs={12} md={6} item>
-                  {useMemberBookPrice
+                  {hasMemberBookPrice
                     ? _getPriceLabel(event?.fields?.priceMember)
                     : _getPriceLabel(event?.fields?.nonMemberPrice)}
+                </Grid>
+              </>
+            )}
+            {event?.fields?.eventId === 'symposium-new-era-of-education' && (
+              <>
+                <Grid xs={12} md={6} item></Grid>
+                <Grid xs={12} md={6} item>
+                  <Box className={classes.priceLabel}>Price: $79.00</Box>
                 </Grid>
               </>
             )}

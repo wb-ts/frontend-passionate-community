@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import CtaButton from '@/components/atoms/ctabutton'
-import FilterDropdown from '@/components/atoms/filterdropdown'
+import CtaButton from '@/components/atoms/CtaButton'
+import FilterDropdown from '@/components/atoms/FilterDropdown'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
 import {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Chip, Typography, Box } from '@material-ui/core'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import Image from 'material-ui-image'
 import { PropTypes } from 'prop-types'
 

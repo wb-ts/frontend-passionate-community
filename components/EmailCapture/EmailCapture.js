@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Box, Container, TextField, Grid, Button } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
 import { makeStyles } from '@material-ui/core/styles'
-import TextStyle from '../../components/atoms/textstyle'
+import TextStyle from '../../components/atoms/TextStyle'
 import ReactMarkdown from 'react-markdown'
 import { validateEmail } from '../../lib/utils'
 
@@ -38,14 +38,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     width: '402px',
-    height: '34px !important', 
-    overflow: 'hidden', 
-    textOverflow: 'ellipsis', 
+    height: '34px !important',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   },
   description: {
     width: '402px',
-    height: '200px !important', 
+    height: '200px !important',
     overflow: 'hidden',
   },
   userinput: {
@@ -80,8 +80,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.grey.medium,
   },
   button: {
-    marginRight: '-20px', 
-    marginLeft: '-20px', 
+    marginRight: '-20px',
+    marginLeft: '-20px',
     backgroundColor: 'transparent !important',
   },
 }))
@@ -89,19 +89,17 @@ const useStyles = makeStyles((theme) => ({
 export default function EmailCapture({
   title,
   description,
-  context = 'Workshop'
+  context = 'Workshop',
 }) {
   const classes = useStyles()
   const [emailSent, setEmailSent] = useState(false)
   const [emailAddress, setEmailAddress] = useState('')
   const promptForEmailAddress = 'Your email address'
 
-
   const send = async (emailAddress, context) => {
     if (validateEmail(emailAddress)) {
       setEmailSent(true)
-      try
-      {
+      try {
         const res = await fetch('/api/add-captured-email-address', {
           method: 'POST',
           headers: {
@@ -112,24 +110,26 @@ export default function EmailCapture({
             context,
           }),
         })
-  
+
         const json = await res.json()
         if (res.ok !== true) {
           setEmailSent(false)
           throw Error(json.message)
         }
-    } catch(e) {
+      } catch (e) {
         setEmailSent(false)
         console.log('Function send: ' + e.message)
       }
     }
   }
 
-  return (    
-    <Grid container className={classes.root} >
+  return (
+    <Grid container className={classes.root}>
       <Grid item xs={12} sm={6} className={classes.content}>
         <Box className={classes.contentBox}>
-          <TextStyle variant='h3' className={classes.title}>{title}</TextStyle>
+          <TextStyle variant='h3' className={classes.title}>
+            {title}
+          </TextStyle>
           <Box className={classes.description}>
             <TextStyle variant='subtitle2'>
               <ReactMarkdown>{description}</ReactMarkdown>
@@ -145,19 +145,24 @@ export default function EmailCapture({
             value={emailAddress}
             onChange={(e) => setEmailAddress(e.target.value)}
             InputProps={{
-              endAdornment: 
-                <Button 
+              endAdornment: (
+                <Button
                   disabled={emailAddress === '' || emailSent}
-                  className={classes.button} 
-                  endIcon={<SendIcon className={classes.icon} onClick={() => send(emailAddress, context)}
-                />}/>,
-              classes: {root: classes.email}
+                  className={classes.button}
+                  endIcon={
+                    <SendIcon
+                      className={classes.icon}
+                      onClick={() => send(emailAddress, context)}
+                    />
+                  }
+                />
+              ),
+              classes: { root: classes.email },
             }}
             InputLabelProps={{
-              classes: {root: classes.label}
+              classes: { root: classes.label },
             }}
-          >
-          </TextField>
+          ></TextField>
         </Box>
       </Grid>
     </Grid>

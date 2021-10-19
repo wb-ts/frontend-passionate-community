@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {},

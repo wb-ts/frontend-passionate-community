@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import paths from '@/paths/path'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import TextStyle from '../atoms/textstyle'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   tile: {

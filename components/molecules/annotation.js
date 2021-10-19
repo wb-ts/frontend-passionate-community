@@ -15,7 +15,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import dateFormat from 'dateformat'
 import clsx from 'clsx'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

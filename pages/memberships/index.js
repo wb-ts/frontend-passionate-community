@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { Box, Container } from '@material-ui/core'
 import TextCTA from '@/components/molecules/textcta'
 import HeroHalfHalf from '@/components/molecules/herohalfhalf'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import BecomeMember from '@/components/organisms/becomemember'
 import { makeStyles } from '@material-ui/core/styles'
 import paths from '@/paths/path'
@@ -52,13 +52,22 @@ export default function Memberships({ page, image }) {
           maxWidth={['100%', '1024px']}
           margin='auto'
         >
-          <HeroHalfHalf 
+          <HeroHalfHalf
             title='Become a member'
-            description='Join a community of life-changing educators who come together around a shared vision.'
-            image={image?.fields?.imageBynder 
-              ? image?.fields?.imageBynder[0]?.src + '?' + imageoptimization.qualityParameter + '=' + imageoptimization.qualityValue
-              : image?.fields?.imageContentful?.fields?.file?.url
-                ? image?.fields?.imageContentful?.fields?.file?.url + '?' + imageoptimization.qualityParameter + '=' + imageoptimization.qualityValue
+            description='Join a community of life-changing educators who come together around a shared vision. [Need to renew your membership? Click here.](/faq#how-do-i-renew-my-membership)'
+            image={
+              image?.fields?.imageBynder
+                ? image?.fields?.imageBynder[0]?.src +
+                  '?' +
+                  imageoptimization.qualityParameter +
+                  '=' +
+                  imageoptimization.qualityValue
+                : image?.fields?.imageContentful?.fields?.file?.url
+                ? image?.fields?.imageContentful?.fields?.file?.url +
+                  '?' +
+                  imageoptimization.qualityParameter +
+                  '=' +
+                  imageoptimization.qualityValue
                 : '/images/ASCDImageFiller.png'
             }
             imageAlt={image?.fields?.alternate}

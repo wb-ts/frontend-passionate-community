@@ -1,7 +1,7 @@
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import Topics from '@/components/molecules/Topics'
 import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import ShowMoreText from 'react-show-more-text'
 import { PropTypes } from 'prop-types'
 
@@ -36,7 +36,8 @@ export default function VirtualWorkshop({
   title,
   topicTag,
   description,
-  audience,
+  roles,
+  grades,
   topics,
   author,
 }) {
@@ -65,17 +66,27 @@ export default function VirtualWorkshop({
         </ShowMoreText>
       </Box>
 
-      <Box mt={3} data-testid='audience'>
+      <Box mt={3} data-testid='roles'>
         <Topics
-          title='Who should attend?'
+          title='Roles'
           titleVariant='h6'
           variant='basicSmall'
           mt={2}
-          topics={audience}
+          topics={roles}
           contentType='book'
         />
       </Box>
-      <Box mt={3} data-testid='topics'>
+      <Box mt={3} data-testid='grades'>
+        <Topics
+          title='Grade Levels'
+          titleVariant='h6'
+          variant='basicSmall'
+          mt={2}
+          topics={grades}
+          contentType='book'
+        />
+      </Box>
+      <Box mt={3} data-testid='topicsCovered'>
         <Topics
           title='Topics covered'
           titleVariant='h6'
@@ -111,7 +122,8 @@ VirtualWorkshop.propTypes = {
   title: PropTypes.string.isRequired,
   topicTag: PropTypes.string.isRequired,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  audience: PropTypes.arrayOf(PropTypes.string),
+  roles: PropTypes.arrayOf(PropTypes.string),
+  grades: PropTypes.arrayOf(PropTypes.string),
   topics: PropTypes.arrayOf(PropTypes.string),
   author: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 }

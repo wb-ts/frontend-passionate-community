@@ -1,9 +1,9 @@
 import React from 'react'
 import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import ViewAllCTA from '@/components/atoms/viewallcta'
-import CtaButton from '@/components/atoms/ctabutton'
-import TextStyle from '@/components/atoms/textstyle'
+import ViewAllCTA from '@/components/atoms/ViewAllCTA'
+import CtaButton from '@/components/atoms/CtaButton'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   textcta: {

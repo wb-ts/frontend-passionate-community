@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, CardContent, CardMedia, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import TextStyle from '@/components/atoms/textstyle'
-import ViewAllCTA from '@/components/atoms/viewallcta'
+import TextStyle from '@/components/atoms/TextStyle'
+import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 
 const useStyles = makeStyles((theme) => ({
   root: {

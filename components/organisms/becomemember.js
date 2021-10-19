@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Container, Grid } from '@material-ui/core'
 import MemberCard from '@/components/molecules/membercard'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   members: {
@@ -74,7 +74,6 @@ export default function BecomeMember({ ...props }) {
   const premium = [
     'Everything in Select plus:',
     'Four (4) additional member books - a total of 9 per year',
-    'FREE PD Online course led by ASCD expert author*',
     '$100 voucher for full-day virtual conference*',
     'Originally called Premium Online Membership',
   ]

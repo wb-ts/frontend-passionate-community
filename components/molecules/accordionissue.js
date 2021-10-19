@@ -10,8 +10,8 @@ import {
   Typography,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import CtaButton from '@/components/atoms/ctabutton'
-import TextStyle from '@/components/atoms/textstyle'
+import CtaButton from '@/components/atoms/CtaButton'
+import TextStyle from '@/components/atoms/TextStyle'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 

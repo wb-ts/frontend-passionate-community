@@ -5,7 +5,7 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import paths from '@/paths/path'
 import HorizontalCard from '@/components/molecules/horizontalcard'
-import TwoColumnHeader from '@/components/atoms/twocolumnheader'
+import TwoColumnHeader from '@/components/atoms/TwoColumnHeader'
 
 const useStyles = makeStyles((theme) => ({
   gridLeft: {

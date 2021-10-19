@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
 import IssueTile from '@/components/molecules/issuetile'
-import ViewAllCTA from '@/components/atoms/viewallcta'
+import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import CartTile from '@/components/molecules/carttile'
-import { AppContext } from '@/context/state'
-import { hasMemberBookPrice } from '@/lib/access-validator'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 import imageoptimization from '@/const/imageoptimization'
 import { getCartButtonCaptionLabel } from '@/lib/utils'
 import constSnipcart from '@/const/snipcart'
@@ -100,8 +100,7 @@ export default function HorizontalScroll({
   type,
 }) {
   const classes = useStyles(items.length)
-  const { userAccessData } = useContext(AppContext)
-  const useMemberBookPrice = hasMemberBookPrice(userAccessData)
+  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
 
   const scrollerRef = React.createRef()
 
@@ -255,7 +254,7 @@ export default function HorizontalScroll({
                   imageoptimization.qualityValue
                 : '/images/ASCDImageFiller.png',
               dataItemDescription: item.fields?.description,
-              dataItemPrice: useMemberBookPrice
+              dataItemPrice: hasMemberBookPrice
                 ? version.fields?.priceMember
                 : version.fields?.priceNonMember,
               dataItemCustom1Value: version?.fields?.taxJar?.fields?.taxJarId
@@ -286,7 +285,7 @@ export default function HorizontalScroll({
         <CartTile
           variant='collection'
           item={item}
-          useMemberBookPrice={useMemberBookPrice}
+          hasMemberBookPrice={hasMemberBookPrice}
           snipcart={{
             label: 'Add to Cart',
             dataItemId: item.fields?.productNumber,
@@ -308,7 +307,7 @@ export default function HorizontalScroll({
                 imageoptimization.qualityValue
               : '/images/ASCDImageFiller.png',
             dataItemDescription: item.fields?.description,
-            dataItemPrice: useMemberBookPrice
+            dataItemPrice: hasMemberBookPrice
               ? item.fields?.memberDiscountedPrice
               : item.fields?.discountedPrice,
             dataItemCustom1Value: item?.fields?.taxJar?.fields?.taxJarId

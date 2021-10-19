@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import paths from '@/paths/path'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   tile: {

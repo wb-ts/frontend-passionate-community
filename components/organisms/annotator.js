@@ -16,8 +16,8 @@ import clsx from 'clsx'
 import Annotation from '@/components/molecules/annotation'
 import useSWR, { mutate } from 'swr'
 import axios from 'axios'
-import TextStyle from '@/components/atoms/textstyle'
-import NoAnnotations from '@/components/atoms/noannotations'
+import TextStyle from '@/components/atoms/TextStyle'
+import NoAnnotations from '@/components/atoms/NoAnnotations'
 
 const useStyles = makeStyles((theme) => ({
   sidelist: {

@@ -1,12 +1,11 @@
-/* eslint-disable prettier/prettier */
 import React from 'react'
 import { Box } from '@material-ui/core'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import { makeStyles } from '@material-ui/core/styles'
 import TopicTag from '@/components/molecules/TopicTag'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   root: {

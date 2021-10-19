@@ -1,4 +1,13 @@
 module.exports = {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Important: return the modified config
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader',
+    })
+    return config
+  },
   images: {
     domains: ['images.ctfassets.net'],
   },
@@ -6,6 +15,12 @@ module.exports = {
 
   async redirects() {
     return [
+      {
+        source: '/i3PDdigitaltools',
+        destination:
+          'https://library.ascd.org/m/3e68d819b80d95fd/original/i3PDdigitaltools.zip',
+        permanent: true,
+      },
       {
         source:
           '/books/the-big-picture%3Fchapter=foreward-on-being-bold-by-deborah-meier',

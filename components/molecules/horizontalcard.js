@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/textstyle'
-import ViewAllCTA from '@/components/atoms/viewallcta'
+import TextStyle from '@/components/atoms/TextStyle'
+import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import Image from 'material-ui-image'
 import imageoptimization from '@/const/imageoptimization'
 
@@ -152,6 +152,8 @@ export default function HorizontalCard({
     ? `${image.fields.imageBynder[0]?.src}?${imageoptimization.qualityParameter}=${imageoptimization.qualityValue}`
     : image?.fields?.imageContentful?.fields?.file?.url
     ? `${image?.fields?.imageContentful?.fields?.file?.url}?${imageoptimization.qualityParameter}=${imageoptimization.qualityValue}`
+    : image
+    ? image
     : '/images/ASCDImageFiller.png'
 
   return (

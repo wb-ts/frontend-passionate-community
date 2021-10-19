@@ -18,12 +18,12 @@ import CustomLink from '@/components/atoms/CustomLink'
 import NLink from 'next/link'
 import SendIcon from '@material-ui/icons/Send'
 import Image from 'material-ui-image'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import React, { useState } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
 import hubspotFormIds from '@/const/hubspot-form-ids'
 import HubSpotForm from '@/components/molecules/hubspotform'
-import CtaButton from '@/components/atoms/ctabutton'
+import CtaButton from '@/components/atoms/CtaButton'
 
 const useStyles = makeStyles((theme) => ({
   greyBg: {

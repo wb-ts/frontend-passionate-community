@@ -13,8 +13,10 @@ import BookToc from '@/components/organisms/BookToc'
 import ChapterPreview from '@/components/organisms/ChapterPreview'
 import AlternateRows from '@/components/molecules/alternaterows'
 import ArticleAuthors from '@/components/organisms/articleaauthors'
-import { AppContext } from '@/context/state'
-import { hasMemberBookPrice, hasAccessToBook } from '@/lib/access-validator'
+import useUserAccount from '../../lib/hooks/useUserAccount'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+import { hasAccessToBook } from '../../lib/access-validator'
 import { useRouter } from 'next/router'
 import { Skeleton } from '@material-ui/lab'
 import { getCartButtonCaptionLabel } from '@/lib/utils'
@@ -55,11 +57,11 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
     )
   }
 
-  const { userAccessData } = useContext(AppContext)
-  const useMemberBookPrice = hasMemberBookPrice(userAccessData)
+  const { userAccountAccess } = useUserAccount()
+  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
   const hasMemberBookAccess = hasAccessToBook(
     book.fields.memberBook,
-    userAccessData
+    userAccountAccess
   )
 
   const classes = useStyles()
@@ -135,7 +137,7 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
                 chapters={book.fields.chapters.filter((book) => book.fields)}
                 productNumber={bookVersion?.fields?.productNumber}
                 price={
-                  useMemberBookPrice
+                  hasMemberBookPrice
                     ? bookVersion?.fields?.priceMember
                     : bookVersion?.fields?.priceNonMember
                 }

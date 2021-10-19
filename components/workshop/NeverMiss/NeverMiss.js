@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import hubspotFormIds from '@/const/hubspot-form-ids'
 import HubSpotForm from '@/components/molecules/hubspotform'
-import CtaButton from '@/components/atoms/ctabutton'
+import CtaButton from '@/components/atoms/CtaButton'
 import CloseIcon from '@material-ui/icons/Close'
 
 const useStyles = makeStyles((theme) => ({

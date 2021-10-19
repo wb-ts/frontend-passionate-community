@@ -1,29 +1,27 @@
-import Layout from '@/components/layout'
-import { Button, Box, Container } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import Layout from '../../components/layout'
+import { Box, Container } from '@material-ui/core'
 import Head from 'next/head'
-import Banner from '@/components/molecules/banner'
-import { makeStyles } from '@material-ui/core/styles'
-import React, { useContext, useEffect, useState } from 'react'
+import Banner from '../../components/molecules/banner'
 import { DataGrid } from '@material-ui/data-grid'
-import { AppContext } from '@/context/state'
+import useUserAccount from '../../lib/hooks/useUserAccount'
 import Link from 'next/link'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDropDown'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    table: {
-      minWidth: 700,
+const columns = [
+  {
+    field: 'date',
+    headerName: 'Date',
+    width: 150,
+    renderCell: (params) => {
+      let d = params.value
+      let date = new Date(d)
+      var day = ('0' + date.getDate()).slice(-2)
+      var month = ('0' + (date.getMonth() + 1)).slice(-2)
+      var year = date.getFullYear()
+      return month + '-' + day + '-' + year
     },
   },
-}))
-
-const columns = [
-  //{ field: 'id', headerName: 'Product ID', width: 150 },
   {
     field: 'shortName',
     headerName: 'Title',
@@ -33,8 +31,7 @@ const columns = [
   {
     field: 'url',
     headerName: 'Downloads',
-    width: 250,
-    editable: true,
+    width: 200,
     renderCell: (params) => (
       <h4 style={{ fontWeight: '600' }}>
         <Link
@@ -53,22 +50,21 @@ const columns = [
 ]
 
 export default function UserDashboard() {
-  const classes = useStyles()
-  const [rows, setRows] = React.useState([])
-  const { userMasterId } = useContext(AppContext)
+  const [rows, setRows] = useState()
+  const { userAccountUser } = useUserAccount()
 
   useEffect(() => {
-    if (userMasterId !== undefined) {
-      fetch(`/api/digital-assets?userId=${userMasterId}`)
+    if (userAccountUser?.masterCustomerId) {
+      fetch(`/api/digital-assets?userId=${userAccountUser.masterCustomerId}`)
         .then(function (response) {
           return response.json()
         })
         .then(function (data) {
           const items = data
           const rows = items.length
-            ? items.map((v, index) => {
+            ? items.map((v) => {
                 return {
-                  id: `${v?.PRODUCT_ID}_${index}`,
+                  id: v?.PRODUCT_ID,
                   shortName: v?.SHORT_NAME,
                   url: v?.URL,
                 }
@@ -76,20 +72,10 @@ export default function UserDashboard() {
             : {}
           setRows(rows)
         })
+    } else {
+      setRows()
     }
-
-    /*if (tp) {
-      if (!tp.user.isUserValid()) {
-        tp.pianoId.show({
-          showCloseButton: false,
-          loggedIn: function () {
-            // Once user logs in - refresh the page
-            location.reload()
-          },
-        })
-      }
-    }*/
-  }, [userMasterId])
+  }, [userAccountUser?.masterCustomerId])
 
   return (
     <Layout>
@@ -99,7 +85,7 @@ export default function UserDashboard() {
       <Banner header1='My Downloads' />
       <Container>
         <Box mt={13} mb={13}>
-          {rows.length > 0 && (
+          {rows && (
             <div style={{ height: '30vw', width: '100%' }}>
               <DataGrid
                 rows={rows}

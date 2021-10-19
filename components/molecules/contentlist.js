@@ -2,8 +2,8 @@ import React from 'react'
 import { Box, Divider, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import paths from '@/paths/path'
-import TextStyle from '@/components/atoms/textstyle'
-import ViewAllCTA from '@/components/atoms/viewallcta'
+import TextStyle from '@/components/atoms/TextStyle'
+import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import HorizontalCard from '@/components/molecules/horizontalcard'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
@@ -42,6 +42,8 @@ const _renderItems = (items, pathsVariant, noImage, lines) => {
             date={
               item.fields.issueDate
                 ? timeAgo.format(Date.parse(item.fields.issueDate))
+                : item.fields.date
+                ? timeAgo.format(Date.parse(item.fields.date))
                 : ''
             }
             ctaLink={

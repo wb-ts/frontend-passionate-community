@@ -4,11 +4,9 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.css$': '<rootDir>/__test-transforms__/cssTransform.js',
   },
-  transformIgnorePatterns: [
-    '/node_modules/',
-    '^.+\\.module\\.(css|sass|scss)$',
-  ],
+  transformIgnorePatterns: ['^.+\\.module\\.(css|sass|scss)$'],
   moduleNameMapper: {
+    '^react-markdown$': 'react-markdown/dist/cjs',
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     '^@/components(.*)$': ['<rootDir>/components$1'],
     '^@/lib(.*)$': ['<rootDir>/lib$1'],

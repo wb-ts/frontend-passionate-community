@@ -13,6 +13,8 @@ import { AppProvider } from '@/context/state'
 import analytics from '@/const/analytics'
 import SnipcartManager from '@/components/Snipcart/SnipcartManager'
 import PianoManager from '@/components/piano/PianoManager'
+import { ApolloProvider } from '@apollo/client'
+import { client } from '../lib/apollo-client'
 
 Router.events.on('routeChangeComplete', () =>
   typeof window !== 'undefined' && typeof window.tp !== 'undefined'
@@ -66,11 +68,13 @@ function App({ Component, pageProps }) {
       <StylesProvider generateClassName={generateClassName}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <AppProvider>
-            <Component {...pageProps} />
-            <SnipcartManager />
-            <PianoManager />
-          </AppProvider>
+          <ApolloProvider client={client}>
+            <AppProvider>
+              <Component {...pageProps} />
+              <SnipcartManager />
+              <PianoManager />
+            </AppProvider>
+          </ApolloProvider>
         </ThemeProvider>
       </StylesProvider>
     </React.Fragment>

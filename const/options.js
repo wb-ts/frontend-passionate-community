@@ -1,5 +1,5 @@
 import { INLINES, BLOCKS } from '@contentful/rich-text-types'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import { Link, Box } from '@material-ui/core'
 import { components } from '@/const/components'
 import imageoptimization from '@/const/imageoptimization'

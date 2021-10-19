@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import YouTubeIcon from '@material-ui/icons/YouTube'
 import InstagramIcon from '@material-ui/icons/Instagram'
 // import EmailIcon from '@material-ui/icons/Email'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import Link from 'next/link'
 import {
   EmailIcon,

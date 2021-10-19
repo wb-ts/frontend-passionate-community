@@ -11,10 +11,10 @@ import Banner from '@/components/molecules/banner'
 import _ from 'lodash'
 import { sortBy } from 'lodash'
 import { useEffect, useState } from 'react'
-import FilterDropdown from '@/components/atoms/filterdropdown'
+import FilterDropdown from '@/components/atoms/FilterDropdown'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
 import Directory from '@/components/molecules/directory'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,16 +58,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function AllAuthors({ authors, profileCategories, topicCategories, SEO, hasQueryParamCategoryProfiles, hasQueryParamCategoryTopics }) {
+export default function AllAuthors({
+  authors,
+  profileCategories,
+  topicCategories,
+  SEO,
+  hasQueryParamCategoryProfiles,
+  hasQueryParamCategoryTopics,
+}) {
   const classes = useStyles()
 
   const [people, setPeople] = useState([])
   const [authorsByExpertise, setAuthorsByExpertise] = useState([])
 
-  const sortedAuthors = sortBy(!hasQueryParamCategoryProfiles 
-                                ? (!hasQueryParamCategoryTopics ? authors : authorsByExpertise) 
-                                : people, (item) =>
-    item?.fields?.lastName?.trim().toUpperCase()
+  const sortedAuthors = sortBy(
+    !hasQueryParamCategoryProfiles
+      ? !hasQueryParamCategoryTopics
+        ? authors
+        : authorsByExpertise
+      : people,
+    (item) => item?.fields?.lastName?.trim().toUpperCase()
   )
 
   const result = _(sortedAuthors)
@@ -91,21 +101,18 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
     let authorsFilteredByExpertise = []
     let filteredAuthors = []
 
-    const givenProfileCategoryIds = profileCategories?.length 
-      ? (profileCategories
-          ?.map(el => el.sys.id)
-        )
+    const givenProfileCategoryIds = profileCategories?.length
+      ? profileCategories?.map((el) => el.sys.id)
       : []
 
     const givenTopicCategoryIds = topicCategories?.length
-      ? (topicCategories
-          ?.map(el => el.sys.id)
-        )
+      ? topicCategories?.map((el) => el.sys.id)
       : []
-      
+
     if (authors?.length) {
       if (hasQueryParamCategoryProfiles) {
-        filteredAuthors = authors.filter(author => author.fields.profileType)
+        filteredAuthors = authors
+          .filter((author) => author.fields.profileType)
           .filter((a) => {
             let match = false
             a.fields.profileType.forEach((e) => {
@@ -119,11 +126,14 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
       }
 
       if (hasQueryParamCategoryTopics) {
-        authorsFilteredByExpertise = (filteredAuthors.length 
-          ? 
-            filteredAuthors 
-          : (hasQueryParamCategoryProfiles ? filteredAuthors : authors))
-          .filter(author => author?.fields?.expertise)
+        authorsFilteredByExpertise = (
+          filteredAuthors.length
+            ? filteredAuthors
+            : hasQueryParamCategoryProfiles
+            ? filteredAuthors
+            : authors
+        )
+          .filter((author) => author?.fields?.expertise)
           .filter((a) => {
             let match = false
             a.fields.expertise.forEach((e) => {
@@ -140,8 +150,18 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
       }
     }
 
-    const topicsFilter = (authorsFilteredByExpertise?.length ? authorsFilteredByExpertise : (filteredAuthors?.length ? filteredAuthors : authors))
-      .map((myItem) => filteredAuthors?.length ? myItem.fields.profileType : myItem.fields.expertise)
+    const topicsFilter = (
+      authorsFilteredByExpertise?.length
+        ? authorsFilteredByExpertise
+        : filteredAuthors?.length
+        ? filteredAuthors
+        : authors
+    )
+      .map((myItem) =>
+        filteredAuthors?.length
+          ? myItem.fields.profileType
+          : myItem.fields.expertise
+      )
       .flat()
       .map((exp) => exp?.fields?.title)
       .reduce((unique, o) => {
@@ -210,11 +230,17 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
           .filter((subitem) => {
             if (topic !== (people?.length ? `All Types` : `All Topics`)) {
               if (
-                !(people?.length ? subitem.fields.profileType : subitem.fields.expertise) ||
-                ((people?.length ? subitem.fields.profileType : subitem.fields.expertise) &&
-                  !(people?.length ? subitem.fields.profileType : subitem.fields.expertise).some(
-                    (obj) => obj.fields?.title === topic
-                  ))
+                !(people?.length
+                  ? subitem.fields.profileType
+                  : subitem.fields.expertise) ||
+                ((people?.length
+                  ? subitem.fields.profileType
+                  : subitem.fields.expertise) &&
+                  !(
+                    people?.length
+                      ? subitem.fields.profileType
+                      : subitem.fields.expertise
+                  ).some((obj) => obj.fields?.title === topic))
               )
                 return false
             }
@@ -262,9 +288,15 @@ export default function AllAuthors({ authors, profileCategories, topicCategories
 
 export async function getServerSideProps(context) {
   const maxEntries = 1000
-  const categoryProfiles = context.query.categoryProfiles && context.query.categoryProfiles.length ? context.query.categoryProfiles : ''
+  const categoryProfiles =
+    context.query.categoryProfiles && context.query.categoryProfiles.length
+      ? context.query.categoryProfiles
+      : ''
   const hasKeyCategoryProfiles = context.query.categoryProfiles !== undefined
-  const categoryTopics = context.query.categoryTopics && context.query.categoryTopics.length ? context.query.categoryTopics : ''
+  const categoryTopics =
+    context.query.categoryTopics && context.query.categoryTopics.length
+      ? context.query.categoryTopics
+      : ''
   const hasKeyCategoryTopics = context.query.categoryTopics !== undefined
 
   const profileCategories = await client.getEntries({

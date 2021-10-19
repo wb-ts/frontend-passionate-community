@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import useSWR from 'swr'
 import Axios from 'axios'
 

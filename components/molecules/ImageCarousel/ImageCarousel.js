@@ -3,7 +3,7 @@ import { Box, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import Image from 'material-ui-image'
 
 const useStyles = makeStyles((theme) => ({

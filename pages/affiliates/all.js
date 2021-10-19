@@ -10,7 +10,7 @@ import { Box, Container } from '@material-ui/core'
 import Banner from '@/components/molecules/banner'
 import { sortBy } from 'lodash'
 import { useState } from 'react'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import Directory from '@/components/molecules/directory'
 
 const useStyles = makeStyles((theme) => ({

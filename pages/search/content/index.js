@@ -238,6 +238,19 @@ function _indexPublications(data) {
   }))
   return _indexContentToAlgolia(contentToIndex)
 }
+function _indexEvents(data) {
+  const contentToIndex = data.map((item) => ({
+    objectID: item.sys.id,
+    type: 'event',
+    url: paths.event({ slug: item.fields.slug }),
+    title: item.fields.title,
+    content: item.fields.description ? item.fields.description : '' + ' ' + item.fields.eventDetails ? documentToPlainTextString(item.fields.body) : '',
+    topic: _helperGetTopics(item.fields.topic, item.fields.topicSecondary),
+    dateTimeStamp: item.fields.dateTime,
+    thumbnail: _helperGetImage(item.fields.thumbnail),
+  }))
+  return _indexContentToAlgolia(contentToIndex)
+}
 function _helperGetImage(image) {
   const imageUrl = image?.fields?.imageBynder
     ? image?.fields?.imageBynder[0]?.src
@@ -375,6 +388,9 @@ export default function SearchContent({ importComplete }) {
                 </li>
                 <li>
                   <code>&amp;batch=10</code> - Collections
+                </li>
+                <li>
+                  <code>&amp;batch=11</code> - Events
                 </li>
               </ul>
             </Typography>
@@ -594,7 +610,30 @@ export async function getServerSideProps(context) {
         _indexChapters(items)
         break
       case '10':
-      default:
+      case '11':
+        //Index Events
+        contentType = 'event'
+        offset = 0
+        items = []
+        processedEntries = null
+        while (processedEntries !== 0) {
+          const entries = await client.getEntries({
+            content_type: contentType,
+            'fields.dateTime[gte]': new Date().toISOString(),
+            skip: offset,
+            limit: maxEntries,
+          })
+
+          processedEntries = entries.items.length
+
+          if (processedEntries > 0) {
+            offset += processedEntries
+            items.push(...entries.items)
+          }
+        }
+        _indexEvents(items)
+        break;
+        default:
         // Index Collections.
         contentType = 'collection'
         offset = 0

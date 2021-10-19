@@ -1,20 +1,26 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { AppContext } from '@/context/state'
-import { hasMemberBookPrice } from '@/lib/access-validator'
-import { getSnipcartClient, getProductFromSnipcart } from '@/lib/utils'
+import React, { useState, useEffect } from 'react'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+import useUserAccount from '../../lib/hooks/useUserAccount'
+import {
+  getSnipcartClient,
+  getProductFromSnipcart,
+  encodeSnipcartOrderValidationUrl,
+} from '../../lib/utils'
 import { fetchProductPricesByProductNumbers } from '@/lib/contentful'
 import ModalMessageBox from '@/components/organisms/ModalMessageBox'
-
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 /**
  * Snipcart is a third party app service that we are using for buying items such as books.
- * This is used to manage the interaction with the snipcart and the user account information.
+ * This is used to manage the interaction with the snipcart and the userAccountUser account information.
  * There is nothing to display on the site, this component is just used to update snipcart state.
  *
  *
  * @return {Component}
  */
 const SnipcartManager = () => {
-  const { user, userAccessData } = useContext(AppContext)
+  const { userAccountUser } = useUserAccount()
+  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
   const [snipcartClient, setSnipcartClient] = useState(getSnipcartClient())
   const [currentPianoId, setCurrentPianoId] = useState()
   const [openModal, setOpenModal] = useState(false)
@@ -36,23 +42,22 @@ const SnipcartManager = () => {
   // Use Snipcart item event callback to set an array of back order product numbers to
   // the cart's metadata (i.e., key back-order-items)
 
-  /* Removed until finance is ready for backorder/preorder 
   useEffect(() => {
     if (snipcartClient) {
       //Snipcart item.added
-      Snipcart.events.on('item.added', (item) => {
+      snipcartClient.events.on('item.added', (item) => {
         processCartItemForBackOrder(item)
       })
       //Snipcart item.updated
-      Snipcart.events.on('item.updated', (item) => {
+      snipcartClient.events.on('item.updated', (item) => {
         processCartItemForBackOrder(item)
       })
       //Snipcart item.removed
-      Snipcart.events.on('item.removed', (item) => {
+      snipcartClient.events.on('item.removed', (item) => {
         processCartItemForBackOrder(item, true)
       })
     }
-  }, [snipcartClient]) */
+  }, [snipcartClient])
 
   useEffect(() => {
     if (snipcartClient) {
@@ -67,14 +72,14 @@ const SnipcartManager = () => {
     }
   }, [snipcartClient])
 
-  // Set the piano id if user id changes
+  // Set the piano id if userAccountUser id changes
   useEffect(() => {
-    if (user?.id !== currentPianoId) {
-      setCurrentPianoId(user?.id)
+    if (userAccountUser?.uid !== currentPianoId) {
+      setCurrentPianoId(userAccountUser?.uid)
     }
-  }, [user])
+  }, [userAccountUser])
 
-  // Update Piano user id if it doenst match current snipcart info
+  // Update Piano userAccountUser id if it doenst match current snipcart info
   useEffect(() => {
     if (snipcartClient) {
       const metadata = snipcartClient?.store?.getState()?.cart?.metadata
@@ -102,7 +107,7 @@ const SnipcartManager = () => {
     if (cartItems?.length > 0) {
       updateProductPrices(cartItems)
     }
-  }, [userAccessData])
+  }, [hasMemberBookPrice])
 
   const addPianoIdUid = (id) => {
     snipcartClient.api.cart
@@ -131,11 +136,10 @@ const SnipcartManager = () => {
 
     fetchProductPricesByProductNumbers(productNumbers)
       .then((response) => {
-        const useMemberBookPrice = hasMemberBookPrice(userAccessData)
         const bookPrices = []
 
         response.items.forEach((product) => {
-          const newPrice = useMemberBookPrice
+          const newPrice = hasMemberBookPrice
             ? product.fields.priceMember
             : product.fields.priceNonMember
           const item = cartItemsInfo.find(
@@ -144,7 +148,7 @@ const SnipcartManager = () => {
           if (newPrice !== item?.price) {
             bookPrices.push({
               uniqueId: item?.uniqueId,
-              price: useMemberBookPrice
+              price: hasMemberBookPrice
                 ? product.fields.priceMember
                 : product.fields.priceNonMember,
             })
@@ -155,7 +159,7 @@ const SnipcartManager = () => {
         }
       })
       .catch((e) => {
-        throw Error(
+        console.warn(
           `Unable to update product prices in snipcart. | ${e.message}`
         )
       })
@@ -168,19 +172,19 @@ const SnipcartManager = () => {
       if (!backOrderItems.length) {
         backOrderItems = null
       }
-      snipcartClient.api.cart
-        .update({
-          metadata: {
-            'piano-id-uid': id,
-            // Removed until finance is ready for backorder/preorder  'back-order-items': backOrderItems,
-          },
-        })
-        .catch((e) => {
-          throw Error(
-            `Unable to add back order items to snipcart. | ${e.message}`
-          )
-        })
     }
+    snipcartClient.api.cart
+      .update({
+        metadata: {
+          'piano-id-uid': id,
+          'back-order-items': backOrderItems,
+        },
+      })
+      .catch((e) => {
+        throw Error(
+          `Unable to add back order items to snipcart. | ${e.message}`
+        )
+      })
   }
 
   const getProductInventory = async (id) => {
@@ -196,67 +200,68 @@ const SnipcartManager = () => {
   }
 
   const processCartItemForBackOrder = (item, isRemoval = false) => {
+    const processInventory = (inventory) => {
+      let backOrderItems = []
+      const cart = snipcartClient?.store?.getState()?.cart
+      const cartMetadata = cart?.metadata
+      if (isRemoval) {
+        if (cartMetadata && cartMetadata['back-order-items']) {
+          backOrderItems = cartMetadata['back-order-items']
+          setCartMetadata(
+            !cartMetadata['piano-id-uid'] ? null : cartMetadata['piano-id-uid'],
+            updatedArray(backOrderItems, item.id)
+          )
+        }
+      } else if (
+        Number.parseInt(item.quantity) > Number.parseInt(inventory?.stock || 0)
+      ) {
+        if (!cartMetadata) {
+          backOrderItems = [...backOrderItems, item.id]
+          setCartMetadata(
+            !currentPianoId ? null : currentPianoId,
+            backOrderItems
+          )
+          setbackOrderItemlist(getProductNames(backOrderItems, cart?.items))
+          setOpenModal(true)
+        } else if (!cartMetadata['back-order-items']) {
+          backOrderItems = [...backOrderItems, item.id]
+          setCartMetadata(
+            !cartMetadata['piano-id-uid'] ? null : cartMetadata['piano-id-uid'],
+            backOrderItems
+          )
+          setbackOrderItemlist(getProductNames(backOrderItems, cart?.items))
+          setOpenModal(true)
+        } else if (!cartMetadata['back-order-items'].includes(item.id)) {
+          backOrderItems = [...cartMetadata['back-order-items'], item.id]
+          setCartMetadata(
+            !cartMetadata['piano-id-uid'] ? null : cartMetadata['piano-id-uid'],
+            backOrderItems
+          )
+          setbackOrderItemlist(getProductNames(backOrderItems, cart?.items))
+          setOpenModal(true)
+        }
+      } else {
+        if (cartMetadata && cartMetadata['back-order-items']) {
+          backOrderItems = cartMetadata['back-order-items']
+          setCartMetadata(
+            !cartMetadata['piano-id-uid'] ? null : cartMetadata['piano-id-uid'],
+            updatedArray(backOrderItems, item.id)
+          )
+        } else {
+          setCartMetadata(
+            !cartMetadata['piano-id-uid'] ? null : cartMetadata['piano-id-uid'],
+            updatedArray(backOrderItems, item.id)
+          )
+        }
+      }
+    }
     getProductInventory(item.id)
       .then((inventory) => {
-        let backOrderItems = []
-        const cart = snipcartClient?.store?.getState()?.cart
-        const cartMetadata = cart?.metadata
-        if (isRemoval) {
-          if (cartMetadata && cartMetadata['back-order-items']) {
-            backOrderItems = cartMetadata['back-order-items']
-            setCartMetadata(
-              !cartMetadata['piano-id-uid']
-                ? null
-                : cartMetadata['piano-id-uid'],
-              updatedArray(backOrderItems, item.id)
-            )
-          }
-        } else if (
-          Number.parseInt(item.quantity) > Number.parseInt(inventory.stock)
-        ) {
-          if (!cartMetadata) {
-            backOrderItems = [...backOrderItems, item.id]
-            setCartMetadata(
-              !currentPianoId ? null : currentPianoId,
-              backOrderItems
-            )
-            setbackOrderItemlist(getProductNames(backOrderItems, cart?.items))
-            setOpenModal(true)
-          } else if (!cartMetadata['back-order-items']) {
-            backOrderItems = [...backOrderItems, item.id]
-            setCartMetadata(
-              !cartMetadata['piano-id-uid']
-                ? null
-                : cartMetadata['piano-id-uid'],
-              backOrderItems
-            )
-            setbackOrderItemlist(getProductNames(backOrderItems, cart?.items))
-            setOpenModal(true)
-          } else if (!cartMetadata['back-order-items'].includes(item.id)) {
-            backOrderItems = [...cartMetadata['back-order-items'], item.id]
-            setCartMetadata(
-              !cartMetadata['piano-id-uid']
-                ? null
-                : cartMetadata['piano-id-uid'],
-              backOrderItems
-            )
-            setbackOrderItemlist(getProductNames(backOrderItems, cart?.items))
-            setOpenModal(true)
-          }
-        } else {
-          if (cartMetadata && cartMetadata['back-order-items']) {
-            backOrderItems = cartMetadata['back-order-items']
-            setCartMetadata(
-              !cartMetadata['piano-id-uid']
-                ? null
-                : cartMetadata['piano-id-uid'],
-              updatedArray(backOrderItems, item.id)
-            )
-          }
-        }
+        processInventory(inventory)
       })
       .catch((e) => {
-        throw Error(e.message)
+        console.warn(e.message)
+        processInventory()
       })
   }
 
@@ -319,3 +324,86 @@ const SnipcartManager = () => {
 }
 
 export default SnipcartManager
+
+/**
+ * add items to cart.
+ */
+export const addItemsToCart = async (items) => {
+  //make product items from items based on the interface product definition
+  //https://docs.snipcart.com/v3/sdk/reference#core-models-ProductDefinition
+  //it also matches with SnipcartButton props
+  const productItems = items.map((item) => {
+    const description = documentToPlainTextString(item.dataItemDescription)
+    const productItem = {
+      id: item.dataItemId,
+      price: item.dataItemPrice,
+      fileGuid: item.digitalFileGuid,
+      weight: item.dataItemPrice,
+      customFields: [
+        {
+          name: 'TaxJarCategory',
+          value: item.dataItemCustom1Value,
+          type: 'hidden',
+          required: 'false',
+        },
+        {
+          name: 'RoyaltyFlag',
+          value: item.dataItemCustom2Value,
+          type: 'hidden',
+          required: 'false',
+          options: 'true|false',
+        },
+        {
+          name: 'Authors',
+          value: item?.dataItemCustom3Value?.join(),
+          type: 'hidden',
+          required: 'false',
+        },
+        {
+          name: 'PreOrder',
+          value: item.dataItemCustom4Value,
+          type: 'hidden',
+          required: 'false',
+          options: 'true|false',
+        },
+      ],
+      url: encodeSnipcartOrderValidationUrl(
+        item.dataItemId,
+        item.dataItemPrice,
+        item.digitalFileGuid
+      ),
+      description: item
+        ? description.substring(0, description.indexOf('.') + 1)
+        : false,
+      image: item.dataItemImage,
+      name: item.dataItemName,
+      quantity: item.dataItemQuantity,
+    }
+    return productItem
+  })
+  try {
+    const snipcartClient = getSnipcartClient()
+    //get the current items in the cart
+    const currentItems = snipcartClient.store.getState().cart.items.items
+    for (const productItem of productItems) {
+      //check new item exists in the current cart
+      const existingItem = currentItems.find(
+        (currentItem) => currentItem.id === productItem.id
+      )
+      if (existingItem) {
+        //if the new item exists in the cart, increase the quantity only
+        const result = await snipcartClient.api.cart.items.update({
+          ...existingItem,
+          quantity: existingItem.quantity + productItem.quantity,
+        })
+      } else {
+        //if the new item does not exist, add the new item
+        const result = await snipcartClient.api.cart.items.add(productItem)
+      }
+    }
+    //open the cart modal
+    snipcartClient.api.theme.cart.open()
+  } catch (error) {
+    console.log('error ', error)
+  }
+}

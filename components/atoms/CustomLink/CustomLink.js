@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import NextLink from 'next/link'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -73,11 +74,22 @@ export default function CustomLink({
   ) : (
     <a
       className={LinkSize(size)}
-      onClick={() => clickAction()}
+      onClick={() => (clickAction ? clickAction() : void 0)}
       scroll={scroll}
       shallow={shallow}
     >
       {props.children ? <>{props.children}</> : <>{label}</>}
     </a>
   )
+}
+
+CustomLink.propTypes = {
+  label: PropTypes.string,
+  href: PropTypes.string,
+  size: PropTypes.string,
+  clickAction: PropTypes.func,
+  scroll: PropTypes.bool,
+  shallow: PropTypes.bool,
+  color: PropTypes.string,
+  colorHover: PropTypes.string,
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactMarkdown from 'react-markdown'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Grid,
@@ -10,10 +11,9 @@ import {
   Avatar,
 } from '@material-ui/core'
 
-import TextStyle from '@/components/atoms/textstyle'
-import ViewAllCTA from '@/components/atoms/viewallcta'
+import TextStyle from '@/components/atoms/TextStyle'
+import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import paths from '@/paths/path'
-import ReactMarkdown from 'react-markdown'
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({

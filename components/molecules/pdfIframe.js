@@ -1,6 +1,6 @@
 import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import React, { useEffect, useRef, useState } from 'react'
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
 }))
-
 
 export default function PdfIframe({ title, pdf }) {
   const classes = useStyles()

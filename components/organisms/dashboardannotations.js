@@ -11,8 +11,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import useSWR, { mutate } from 'swr'
 import axios from 'axios'
-import DashboardNote from '@/components/molecules/dashboardnote'
-import NoAnnotations from '@/components/atoms/noannotations'
+import DashboardNote from '../molecules/dashboardnote'
+import NoAnnotations from '../atoms/NoAnnotations'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -65,12 +65,12 @@ export default function DashboardAnnotations({ userId, open, toggleOpen }) {
   }
 
   return (
-    <Drawer anchor='right' open={open} onClose={toggleOpen(false)}>
+    <Drawer anchor='right' open={open} onClose={() => toggleOpen(false)}>
       <div
         className={classes.list}
         role='presentation'
-        onClick={toggleOpen(false)}
-        onKeyDown={toggleOpen(false)}
+        onClick={() => toggleOpen(false)}
+        onKeyDown={() => toggleOpen(false)}
       >
         <Box display='flex' alignItems='center' p={2}>
           <IconButton

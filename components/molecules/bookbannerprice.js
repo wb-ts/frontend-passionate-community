@@ -3,7 +3,7 @@ import { Box, FormControl, MenuItem, Select } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CustomLink from '@/components/atoms/CustomLink'
 import paths from '@/paths/path'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -36,7 +36,7 @@ export default function BookBannerPrice({
   version,
   versions,
   onchange,
-  useMemberBookPrice,
+  hasMemberBookPrice,
 }) {
   const classes = useStyles()
 
@@ -74,7 +74,7 @@ export default function BookBannerPrice({
             <Box mr={1}>
               <TextStyle variant='strikeThrough'>
                 $
-                {useMemberBookPrice
+                {hasMemberBookPrice
                   ? collection?.fields?.memberOriginalPrice
                   : collection?.fields?.originalPrice}
               </TextStyle>
@@ -82,7 +82,7 @@ export default function BookBannerPrice({
             <Box>
               <TextStyle variant='h3' color='#0C8671'>
                 $
-                {useMemberBookPrice
+                {hasMemberBookPrice
                   ? collection?.fields?.memberDiscountedPrice
                   : collection?.fields?.discountedPrice}
               </TextStyle>
@@ -91,7 +91,7 @@ export default function BookBannerPrice({
         ) : (
           <TextStyle variant='h3'>
             $
-            {useMemberBookPrice
+            {hasMemberBookPrice
               ? version?.fields?.priceMember
               : version?.fields?.priceNonMember}
           </TextStyle>
@@ -116,7 +116,7 @@ export default function BookBannerPrice({
           </FormControl>
         )}
       </Box>
-      {!useMemberBookPrice ? (
+      {!hasMemberBookPrice ? (
         collection ? (
           <Box display='flex' justifyContent='left' alignItems='center'>
             <Box mr={1}>

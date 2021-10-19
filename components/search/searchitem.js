@@ -4,9 +4,9 @@ import { Box, Typography, Button } from '@material-ui/core'
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import ReplyIcon from '@material-ui/icons/Reply'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import { AppContext } from '@/context/state'
-import { hasMemberBookPrice } from '@/lib/access-validator'
-import TextStyle from '@/components/atoms/textstyle'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+import TextStyle from '@/components/atoms/TextStyle'
 import paths from '@/paths/path'
 import CustomLink from '@/components/atoms/CustomLink'
 import imageoptimization from '@/const/imageoptimization'
@@ -227,10 +227,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchItem({ hit, props }) {
   // @TODO - use highlight.
   const classes = useStyles()
-  const { userAccessData } = useContext(AppContext)
-  const useMemberBookPrice = hasMemberBookPrice(userAccessData)
+  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
   const dateFormat = require('dateformat')
-
   const dt =
     new Date(hit.dateTimeStamp + 'T00:00:00').toString() == 'Invalid Date'
       ? new Date(hit.dateTimeStamp)
@@ -290,7 +288,7 @@ export default function SearchItem({ hit, props }) {
               <SnipcartButton
                 className={classes.searchResultsCardContentCta}
                 snipcart={{
-                    label: cartButtonCaptionLabel,
+                  label: cartButtonCaptionLabel,
                   dataItemId: hit.productNumber,
                   dataItemName: hit.title,
                   dataItemAuthors: hit.author ? hit.author : '',
@@ -299,10 +297,10 @@ export default function SearchItem({ hit, props }) {
                   dataItemDescription: hit.description,
                   dataItemPrice:
                     hit.type === 'collection'
-                      ? useMemberBookPrice
+                      ? hasMemberBookPrice
                         ? hit.memberDiscountedPrice
                         : hit.discountedPrice
-                      : useMemberBookPrice
+                      : hasMemberBookPrice
                       ? hit.priceMember
                       : hit.priceNonmember,
                   dataItemCustom1Value: hit?.taxJarId ? hit.taxJarId : '',
@@ -310,13 +308,14 @@ export default function SearchItem({ hit, props }) {
                     ? hit?.royaltyFlag
                     : false,
                   dataItemCustom3Value: hit?.authorInfo ? hit?.authorInfo : '',
-					        dataItemCustom4Value: cartButtonCaptionLabel === constSnipcart.BTN_LABEL_PREORDER,
+                  dataItemCustom4Value:
+                    cartButtonCaptionLabel === constSnipcart.BTN_LABEL_PREORDER,
                   digitalFileGuid: hit.digitalFileGuid,
                   productReleaseDate: hit.dateTimeStamp,
                 }}
               />
               {hit.type === 'collection' ? (
-                useMemberBookPrice ? (
+                hasMemberBookPrice ? (
                   <Box>
                     <Box
                       display='flex'
@@ -410,7 +409,7 @@ export default function SearchItem({ hit, props }) {
                     </Box>
                   </Box>
                 )
-              ) : useMemberBookPrice ? (
+              ) : hasMemberBookPrice ? (
                 <Box>
                   <TextStyle variant='h3'>$ {hit.priceMember}</TextStyle>
                   <TextStyle variant='subtitle2'>

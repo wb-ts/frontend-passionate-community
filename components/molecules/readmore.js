@@ -3,7 +3,7 @@ import { Box, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
 

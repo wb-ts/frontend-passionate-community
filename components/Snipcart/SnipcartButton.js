@@ -24,55 +24,6 @@ export default function SnipcartButton({
       : ''
     : ''
   return (
-    <button
-      className={`snipcart-add-item ${className}`}
-      data-item-id={snipcart.dataItemId}
-      data-item-price={snipcart.dataItemPrice}
-      data-item-file-guid={snipcart.digitalFileGuid}
-      data-item-weight={snipcart.dataItemPrice}
-      data-item-custom1-name='TaxJarCategory'
-      data-item-custom1-value={snipcart.dataItemCustom1Value}
-      data-item-custom1-type='hidden'
-      data-item-custom1-required='false'
-      data-item-custom2-name='RoyaltyFlag'
-      data-item-custom2-value={snipcart.dataItemCustom2Value}
-      data-item-custom2-type='hidden'
-      data-item-custom2-required='false'
-      data-cart-custom2-options='true|false'
-      data-item-custom3-name='Authors'
-      data-item-custom3-value={snipcart.dataItemCustom3Value}
-      data-item-custom3-type='hidden'
-      data-item-custom3-required='false'
-      data-item-custom4-name='PreOrder'
-      data-item-custom4-value={snipcart.dataItemCustom4Value}
-      data-item-custom4-type='hidden'
-      data-item-custom4-required='false'
-      data-cart-custom4-options='true|false'
-      data-item-url={encodeSnipcartOrderValidationUrl(
-        snipcart.dataItemId,
-        snipcart.dataItemPrice,
-        snipcart.digitalFileGuid
-      )}
-      data-item-description={
-        snipcart
-          ? description.substring(0, description.indexOf('.') + 1)
-          : false
-      }
-      data-item-image={snipcart.dataItemImage}
-      data-item-name={snipcart.dataItemName}
-      data-item-quantity={snipcart.dataItemQuantity}
-      onClick={() => (onclick ? onclick() : void 0)}
-    >
-      {
-        snipcart.label.indexOf(constSnipcart.BTN_LABEL_PREORDER) === -1
-          ? snipcart.label
-          : 'Add to Cart' /* Removed until finance is ready for backorder/preorder '\u26A0 ' + snipcart.label*/
-      }
-    </button>
-  )
-}
-
-/* Removed until finance is ready for backorder/preorder
     <Tooltip
       title={
         snipcart.dataItemCustom4Value
@@ -85,5 +36,49 @@ export default function SnipcartButton({
           : ''
       }
     >
+      <button
+        className={`snipcart-add-item ${className}`}
+        data-item-id={snipcart.dataItemId}
+        data-item-price={snipcart.dataItemPrice}
+        data-item-file-guid={snipcart.digitalFileGuid}
+        data-item-weight={snipcart.dataItemPrice}
+        data-item-custom1-name='TaxJarCategory'
+        data-item-custom1-value={snipcart.dataItemCustom1Value}
+        data-item-custom1-type='hidden'
+        data-item-custom1-required='false'
+        data-item-custom2-name='RoyaltyFlag'
+        data-item-custom2-value={snipcart.dataItemCustom2Value}
+        data-item-custom2-type='hidden'
+        data-item-custom2-required='false'
+        data-cart-custom2-options='true|false'
+        data-item-custom3-name='Authors'
+        data-item-custom3-value={snipcart.dataItemCustom3Value}
+        data-item-custom3-type='hidden'
+        data-item-custom3-required='false'
+        data-item-custom4-name='PreOrder'
+        data-item-custom4-value={snipcart.dataItemCustom4Value}
+        data-item-custom4-type='hidden'
+        data-item-custom4-required='false'
+        data-cart-custom4-options='true|false'
+        data-item-url={encodeSnipcartOrderValidationUrl(
+          snipcart.dataItemId,
+          snipcart.dataItemPrice,
+          snipcart.digitalFileGuid
+        )}
+        data-item-description={
+          snipcart
+            ? description.substring(0, description.indexOf('.') + 1)
+            : false
+        }
+        data-item-image={snipcart.dataItemImage}
+        data-item-name={snipcart.dataItemName}
+        data-item-quantity={snipcart.dataItemQuantity}
+        onClick={() => (onclick ? onclick() : void 0)}
+      >
+        {snipcart.label.indexOf(constSnipcart.BTN_LABEL_PREORDER) === -1
+          ? snipcart.label
+          : '\u26A0 ' + snipcart.label}
+      </button>
     </Tooltip>
-    */
+  )
+}

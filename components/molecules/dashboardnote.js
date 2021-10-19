@@ -24,7 +24,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Image from 'material-ui-image'
-import DaysAgo from '@/components/atoms/daysago'
+import DaysAgo from '@/components/atoms/DaysAgo'
 import { useRouter } from 'next/router'
 import paths from '@/paths/path'
 
@@ -72,9 +72,8 @@ export default function DashboardNote({ notes, key, deleteAction }) {
   const router = useRouter()
 
   const [anchorEl, setAnchorEl] = useState(null)
-  const [openDeleteConfirmation, setOpenDeleteConfirmation] = React.useState(
-    false
-  )
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] =
+    React.useState(false)
 
   const confirmDelete = (e) => {
     e.stopPropagation()

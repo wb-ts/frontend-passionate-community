@@ -5,8 +5,8 @@ import { client } from 'lib/contentful'
 import SEOHead from '@/const/head'
 import paths from '@/paths/path'
 import Image from 'material-ui-image'
-import TextStyle from '@/components/atoms/textstyle'
-import TOCNav from '@/components/atoms/tocnav'
+import TextStyle from '@/components/atoms/TextStyle'
+import TOCNav from '@/components/atoms/TOCNav'
 import Layout from '@/components/layout'
 import HeroArticle from '@/components/molecules/heroarticle'
 import ArticleEndnote from '@/components/molecules/articleendnote'
@@ -23,10 +23,10 @@ import ArticleAuthors from '@/components/organisms/articleaauthors'
 import { components } from '@/const/components'
 import PdfIframe from '@/components/molecules/pdfIframe'
 import PdfTitleBar from '@/components/molecules/pdftitlebar'
-import { AppContext } from '@/context/state'
 import CustomLink from '@/components/atoms/CustomLink'
 import { Skeleton } from '@material-ui/lab'
 import imageoptimization from '@/const/imageoptimization'
+import useUserAccount from '../../../lib/hooks/useUserAccount'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -110,13 +110,9 @@ function ArticleBody({ refresherKey, children }) {
   )
 }
 
-const expressArticleTag = async (tp, user, bExpress) => {
-  try {
-    if (bExpress && user.id) {
-      await tp.push(['setTags', ['express']])
-    }
-  } catch (e) {
-    throw Error(e.message)
+const expressArticleTag = (tp, user, bExpress) => {
+  if (bExpress && user.uid) {
+    tp.push(['setTags', ['express']])
   }
 }
 
@@ -132,13 +128,13 @@ export default function Article({ article, issue, relatedArticles }) {
   const [sidebar, setSidebar] = useState(false)
   const dateFormat = require('dateformat')
 
-  const { user } = useContext(AppContext)
+  const { userAccountUser } = useUserAccount()
 
   let tp = null
   if (typeof window !== 'undefined' && typeof window.tp !== 'undefined') {
     tp = window.tp
     if (tp) {
-      expressArticleTag(tp, user, article.fields.express)
+      expressArticleTag(tp, userAccountUser, article.fields.express)
     }
   }
 
@@ -582,9 +578,9 @@ export default function Article({ article, issue, relatedArticles }) {
                 </Box>
               )}
 
-              {user && user.id && (
+              {userAccountUser && userAccountUser.uid && (
                 <Annotator
-                  userId={user.id}
+                  userId={userAccountUser.uid}
                   contentId={article.sys.id}
                   contentTitle={article.fields.title}
                   contentImgSrc={

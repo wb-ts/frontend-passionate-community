@@ -8,9 +8,9 @@ import {
   CardMedia,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import FilterDropdown from '@/components/atoms/filterdropdown'
+import FilterDropdown from '@/components/atoms/FilterDropdown'
 import Image from 'material-ui-image'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import paths from '@/paths/path'
 import imageoptimization from '@/const/imageoptimization'
 

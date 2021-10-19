@@ -1,9 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Container, Box, Grid, Button } from '@material-ui/core'
-import CtaItem from '@/components/atoms/ctaitem'
-import TextStyle from '@/components/atoms/textstyle'
-import CtaButton from '@/components/atoms/ctabutton'
+import CtaItem from '@/components/atoms/CtaItem'
+import TextStyle from '@/components/atoms/TextStyle'
+import CtaButton from '@/components/atoms/CtaButton'
 import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router'
 

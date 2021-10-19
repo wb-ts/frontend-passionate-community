@@ -4,19 +4,19 @@ import { makeStyles } from '@material-ui/core/styles'
 import Image from 'material-ui-image'
 import CustomLink from '@/components/atoms/CustomLink'
 import paths from '@/paths/path'
-import FilterDropdown from '@/components/atoms/filterdropdown'
+import FilterDropdown from '@/components/atoms/FilterDropdown'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import BookBannerPrice from '@/components/molecules/bookbannerprice'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 import LoyaltySharpIcon from '@material-ui/icons/LoyaltySharp'
 import { useRouter } from 'next/router'
-import { AppContext } from '@/context/state'
-import { hasMemberBookPrice } from '@/lib/access-validator'
 import imageoptimization from '@/const/imageoptimization'
 import ImageCarousel from '@/components/molecules/ImageCarousel'
 import { getCartButtonCaptionLabel } from '@/lib/utils'
 import constSnipcart from '@/const/snipcart'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -79,8 +79,8 @@ export default function BookBanner({
         : book.fields.bookVersions[0]
       : ''
   )
-  const { userAccessData } = useContext(AppContext)
-  const useMemberBookPrice = hasMemberBookPrice(userAccessData)
+
+  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
 
   useEffect(() => {
     if (productNumber && !isCollection) {
@@ -208,7 +208,7 @@ export default function BookBanner({
             version={!isCollection ? version : ''}
             versions={!isCollection ? book.fields.bookVersions : ''}
             onchange={(pn) => changeVersion(pn)}
-            useMemberBookPrice={useMemberBookPrice}
+            hasMemberBookPrice={hasMemberBookPrice}
           />
         </Box>
         <Box my={1} display='flex' alignItems='center'>
@@ -230,7 +230,7 @@ export default function BookBanner({
                 dataItemUrl: book.fields.slug,
                 dataItemImage: imgUrl,
                 dataItemDescription: book.fields.description,
-                dataItemPrice: useMemberBookPrice
+                dataItemPrice: hasMemberBookPrice
                   ? version.fields?.priceMember
                   : version.fields?.priceNonMember,
                 dataItemCustom1Value: version?.fields?.taxJar?.fields?.taxJarId
@@ -262,7 +262,7 @@ export default function BookBanner({
                 dataItemUrl: book.fields.slug,
                 dataItemImage: imgUrl,
                 dataItemDescription: book.fields.description,
-                dataItemPrice: useMemberBookPrice
+                dataItemPrice: hasMemberBookPrice
                   ? book.fields?.memberDiscountedPrice
                   : book.fields?.discountedPrice,
                 dataItemCustom1Value: book?.fields?.taxJar?.fields?.taxJarId

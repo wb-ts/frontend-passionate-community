@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 

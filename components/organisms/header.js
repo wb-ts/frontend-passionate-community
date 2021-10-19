@@ -24,10 +24,8 @@ import Image from 'material-ui-image'
 import dynamic from 'next/dynamic'
 import { AppContext } from '@/context/state'
 import NavMenu from '@/components/molecules/navmenu'
-
-const PianoProfile = dynamic(() => import('@/components/piano/pianoprofile'), {
-  ssr: false,
-})
+import UserAccountToolbarMenu from '../UserAccount'
+import { pianoLogInHandler, pianoLogOutHandler } from '../piano/PianoManager'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,17 +139,8 @@ export default function Header() {
   const router = useRouter()
   const { mobileView, drawerOpen } = state
 
-  const {
-    user,
-    topics,
-    setTopics,
-    grades,
-    setGrades,
-    subjects,
-    setSubjects,
-    roles,
-    setRoles,
-  } = useContext(AppContext)
+  const { setTopics, grades, setGrades, subjects, setSubjects } =
+    useContext(AppContext)
 
   useEffect(() => {
     const setResponsiveness = () => {
@@ -242,7 +231,7 @@ export default function Header() {
                 />
               </Link>
             </Box>
-            <NavMenu isLoggedIn={user.id} />
+            <NavMenu />
           </Grid>
           <Grid item md={4}>
             <Box display='flex' alignItems='center' justifyContent='flex-end'>
@@ -291,7 +280,11 @@ export default function Header() {
                   <span className='snipcart-total-price'>$0.00</span> */}
                 </IconButton>
               </Box>
-              <PianoProfile />
+              <UserAccountToolbarMenu
+                loginHandler={pianoLogInHandler}
+                logoutHandler={pianoLogOutHandler}
+              />
+              `
             </Box>
           </Grid>
         </Grid>
@@ -345,7 +338,11 @@ export default function Header() {
                 <ShoppingCartIcon />
               </Badge> */}
             </IconButton>
-            <PianoProfile mobile />
+            <UserAccountToolbarMenu
+              loginHandler={pianoLogInHandler}
+              logoutHandler={pianoLogOutHandler}
+              mobile
+            />
           </Grid>
         </Grid>
 
@@ -411,7 +408,7 @@ export default function Header() {
               background={'transparent'}
             />
           </Box>
-          <NavMenu mobile isLoggedIn={user.id} />
+          <NavMenu mobile />
         </Drawer>
       </Toolbar>
     )

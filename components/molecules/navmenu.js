@@ -4,7 +4,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import WidgetsIcon from '@material-ui/icons/Widgets'
 import EventAvailableIcon from '@material-ui/icons/EventAvailable'
 import ContactsIcon from '@material-ui/icons/Contacts'
-import CtaButton from '@/components/atoms/ctabutton'
+import CtaButton from '@/components/atoms/CtaButton'
 import NavMenuItem from './navmenuitem'
 import paths from '@/paths/path'
 
@@ -184,7 +184,7 @@ export default function NavMenu({ mobile }) {
           href: '/services',
         },
         {
-          label: 'Author Workshops',
+          label: 'Workshops',
           href: '/workshops',
         },
         {

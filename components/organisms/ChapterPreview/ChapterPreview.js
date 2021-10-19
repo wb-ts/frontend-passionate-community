@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import { Box, Grid, IconButton, Modal, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import imageoptimization from '@/const/imageoptimization'
 import constSnipcart from '@/const/snipcart'
 import ReactToPrint from 'react-to-print'
-import { AppContext } from '@/context/state'
+import useUserAccount from '../../../lib/hooks/useUserAccount'
 
 const useStyles = makeStyles((theme) => ({
   tocLink: {
@@ -270,7 +270,7 @@ const ChapterPreview = ({
   const [open, setOpen] = useState(false)
   const [currentChapter, setCurrentChapter] = useState()
   const [currentChapterIndex, setCurrentChapterIndex] = useState()
-  const { user } = useContext(AppContext)
+  const { userAccountUser } = useUserAccount()
 
   const hasAccessToChapter = (chapter) =>
     (hasMemberBookAccess && chapter) || chapter?.fields.freeChapter
@@ -332,7 +332,7 @@ const ChapterPreview = ({
               }}
             >
               <TextStyle variant='subtitle3'>
-                Printed by {user.name} for personal use only
+                Printed by {userAccountUser?.name} for personal use only
               </TextStyle>
             </footer>
           </td>
@@ -485,7 +485,7 @@ const ChapterPreview = ({
               height={['83vh', 'auto']}
               ref={topRef}
             >
-              {user.name ? (
+              {userAccountUser?.name ? (
                 <Box width='100%' display='flex' justifyContent='flex-end'>
                   <ReactToPrint
                     copyStyles='true'

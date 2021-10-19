@@ -9,8 +9,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/textstyle'
-import CtaButton from '@/components/atoms/ctabutton'
+import TextStyle from '@/components/atoms/TextStyle'
+import CtaButton from '@/components/atoms/CtaButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {

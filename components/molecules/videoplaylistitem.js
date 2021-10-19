@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import paths from '@/paths/path'
 import TopicTag from '@/components/molecules/TopicTag'
-import DaysAgo from '@/components/atoms/daysago'
+import DaysAgo from '@/components/atoms/DaysAgo'
 // import ViewCount from '@/components/molecules/viewcount'
 import imageoptimization from '@/const/imageoptimization'
 

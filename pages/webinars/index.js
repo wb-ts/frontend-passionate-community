@@ -8,8 +8,8 @@ import PodcastThumbnail from '@/components/molecules/podcastthumbnail'
 import paths from '@/paths/path'
 import ContentGrid from '@/components/organisms/contentgrid'
 import TextCTA from '@/components/molecules/textcta'
-import ViewAllCTA from '@/components/atoms/viewallcta'
-import TextStyle from '@/components/atoms/textstyle'
+import ViewAllCTA from '@/components/atoms/ViewAllCTA'
+import TextStyle from '@/components/atoms/TextStyle'
 import MediaBanner from '@/components/molecules/mediabanner'
 
 export default function Webinars({ webinars, SEO }) {

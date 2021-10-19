@@ -21,7 +21,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import TextStyle from '@/components/atoms/textstyle'
+import TextStyle from '@/components/atoms/TextStyle'
 import options from '@/const/options'
 import imageoptimization from '@/const/imageoptimization'
 

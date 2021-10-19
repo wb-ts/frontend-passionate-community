@@ -16,6 +16,7 @@ import { Skeleton } from '@material-ui/lab'
 import {
   workshopItemToCardData1,
   workshopItemToCardData,
+  bookVersionToSnipcart,
 } from '@/lib/data-transformations'
 import { AppContext } from '@/context/state'
 import { validatePaidMembership } from '@/lib/access-validator'
@@ -91,6 +92,10 @@ export default function Workshop({ workshop, workshops }) {
       }
     })
 
+  const bookCartItems = workshop?.fields?.materials.map((book) =>
+    bookVersionToSnipcart(book)
+  )
+
   if (router.isFallback) {
     return (
       <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
@@ -107,13 +112,15 @@ export default function Workshop({ workshop, workshops }) {
     topicTag,
     description,
     topics,
-    audience,
+    roles,
+    grades,
     authorName,
     authorDescription,
     variations,
     clockHours,
   } = workshopItemToCardData1(workshop)
   useEffect(() => {
+    console.log('workshop ', workshop)
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
       const variant = url.searchParams.get('variant')
@@ -135,13 +142,19 @@ export default function Workshop({ workshop, workshops }) {
                 title={title}
                 topicTag={topicTag}
                 description={description}
-                audience={audience}
+                roles={roles}
+                grades={grades}
                 topics={topics}
                 author={authorDescription}
               />
             </Box>
             <Box className={classes.liveWorkshop}>
-              <LiveWorkshop clockHours={clockHours} variations={variations} />
+              <LiveWorkshop
+                clockHours={clockHours}
+                variations={variations}
+                mediaImg={mediaImg}
+                bookCartItems={bookCartItems}
+              />
             </Box>
           </Box>
 

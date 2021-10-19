@@ -8,23 +8,22 @@ import HorizontalScroll from '@/components/organisms/horizontalscroll'
 import paths from '@/paths/path'
 import TextCTA from '@/components/molecules/textcta'
 import AccordionList from '@/components/organisms/accordionlist'
+import _ from 'lodash'
 
 export default function WriteEL({ topics, publications, SEO }) {
   const dateFormat = require('dateformat')
 
-  let issues = topics
-    .filter((topic) => {
-      return topic && new Date(topic.fields.deadlineDate) >= new Date()
-    })
-    .map((topic) => {
-      return {
-        title: topic.fields.title,
-        deadline: dateFormat(topic.fields.deadlineDate, 'UTC:mmmm d, yyyy'),
-        details: topic.fields.description,
-        filterDate: topic.fields.magazineDate,
-        filterTopic: topic.fields.topic.fields.title,
-      }
-    })
+  const sortedIssues = _.reverse(_.sortBy(topics, ['fields.deadlineDate']))
+
+  let issues = sortedIssues.map((topic) => {
+    return {
+      title: topic.fields.title,
+      deadline: dateFormat(topic.fields.deadlineDate, 'UTC:mmmm d, yyyy'),
+      details: topic.fields.description,
+      filterDate: topic.fields.magazineDate,
+      filterTopic: topic.fields.topic.fields.title,
+    }
+  })
 
   return (
     <Layout>

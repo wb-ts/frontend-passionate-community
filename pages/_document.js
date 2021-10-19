@@ -225,6 +225,42 @@ export default class MyDocument extends Document {
               </div>
             </div>
           </cart-summary>
+          <billing section='bottom'>
+            <fieldset
+              id='snipcart-job-title-field'
+              className='snipcart-form__set'
+            >
+              <div className='snipcart-form__field'>
+                <hr className='snipcart-form__separator'></hr>
+                <br></br>
+                <snipcart-label class='snipcart__font--tiny' for='roleCategory'>
+                  Role
+                </snipcart-label>
+                <snipcart-select
+                  name='roleCategory'
+                  class='snipcart-form__select  snipcart__font--secondary snipcart__font--bold'
+                >
+                  <option value=''></option>
+                  <option value='Department Head'>Department Head</option>
+                  <option value='Professional Development Director'>
+                    Professional Development Director
+                  </option>
+                  <option value='Curriculum Director'>
+                    Curriculum Director
+                  </option>
+                  <option value='Para-Professional'>Para-Professional</option>
+                  <option value='Counselor'>Counselor</option>
+                  <option value='Teacher'>Teacher</option>
+                  <option value='Superintendent'>Superintendent</option>
+                  <option value='Student'>Student</option>
+                  <option value='Principal'>Principal</option>
+                  <option value='Coach'>Coach</option>
+                  <option value='Admin'>Admin</option>
+                </snipcart-select>
+                <br></br>
+              </div>
+            </fieldset>
+          </billing>
         </div>
       </Html>
     )

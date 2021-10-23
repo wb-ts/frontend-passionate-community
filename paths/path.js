@@ -11,6 +11,11 @@ export default {
 
   webinars: '/webinars',
 
+  //account
+  account({ slug }) {
+    return `/account/${slug}`
+  },
+
   // EL.
   el({ slug }) {
     return `/el/${slug}`
@@ -53,7 +58,11 @@ export default {
 
   // Workshops.
   workshop({ slug }) {
-    return `/workshop/${slug}`
+    if (slug) {
+      return `/workshop/${slug}`
+    } else {
+      return '/workshop'
+    }
   },
 
   // FAQs.

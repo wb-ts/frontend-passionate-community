@@ -36,7 +36,11 @@ export default function TwoColContentListingWorkshop({
   const classes = useStyles()
   const isEvents = variant === 'event'
   const isWorkshops = variant === 'workshop'
-  const ctaLink = isEvents ? paths.events : isWorkshops ? paths.workshop : null
+  const ctaLink = isEvents
+    ? paths.events
+    : isWorkshops
+    ? paths.workshop({ slug: '' })
+    : null
   const dateFormat = require('dateformat')
 
   return (

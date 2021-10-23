@@ -16,7 +16,14 @@ import { documentToPlainTextString } from '@contentful/rich-text-plain-text-rend
 import TextStyle from '@/components/atoms/TextStyle'
 import imageoptimization from '@/const/imageoptimization'
 import { components } from '@/const/components'
+import { makeStyles } from '@material-ui/core/styles'
 
+const useStyles = makeStyles((theme) => ({
+  navBtn: {
+    marginLeft: theme.spacing(8),
+    marginRight: theme.spacing(8),
+  },
+}))
 export default function Books({
   books,
   featuredCollection,
@@ -24,6 +31,7 @@ export default function Books({
   SEO,
 }) {
   const router = useRouter()
+  const classes = useStyles()
 
   const featuredBooks = JSON.parse(JSON.stringify(books)).filter((book) => {
     const bookVersion = book?.fields.bookVersions?.find(
@@ -222,6 +230,7 @@ export default function Books({
                 }),
               },
             ]}
+            className={classes.navBtn}
           />
         </Box>
       </Container>

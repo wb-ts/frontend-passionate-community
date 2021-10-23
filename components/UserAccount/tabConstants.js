@@ -1,0 +1,5 @@
+export const PAYMENTS = 'payments'
+export const ORDERS = 'orders'
+export const LEARNING = 'learning'
+export const PREFERENCES = 'preferences'
+export const NOTES = 'notes'

@@ -10,10 +10,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'row',
     },
   },
-  btn: {
-    marginLeft: theme.spacing(8),
-    marginRight: theme.spacing(8),
-  },
+
   divider: {
     height: '1px',
     margin: '16px 0px',
@@ -28,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function HorizontalNav({ items }) {
+export default function HorizontalNav({ items, main, tab, selected }) {
   const classes = useStyles()
 
   return (
@@ -66,7 +63,7 @@ export default function HorizontalNav({ items }) {
           <>
             <Button
               key={`horizontal-nav-${key}`}
-              className={classes.btn}
+              className={item.url.includes(tab) ? `${selected}` : `${main}`}
               href={item.url}
               variant='textPrimary'
             >

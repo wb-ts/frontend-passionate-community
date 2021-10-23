@@ -68,7 +68,7 @@ export default function VirtualWorkshop({
 
       <Box mt={3} data-testid='roles'>
         <Topics
-          title='Roles'
+          title='Who should attend?'
           titleVariant='h6'
           variant='basicSmall'
           mt={2}

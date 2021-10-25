@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function HorizontalNav({ items, main, tab, selected }) {
+export default function HorizontalNav({ items, mainBtn, selectedBtn }) {
   const classes = useStyles()
 
   return (
@@ -63,7 +63,7 @@ export default function HorizontalNav({ items, main, tab, selected }) {
           <>
             <Button
               key={`horizontal-nav-${key}`}
-              className={item.url.includes(tab) ? `${selected}` : `${main}`}
+              className={item.selected ? `${selectedBtn}` : `${mainBtn}`}
               href={item.url}
               variant='textPrimary'
             >

@@ -13,7 +13,11 @@ export default {
 
   //account
   account({ slug }) {
-    return `/account/${slug}`
+    if (slug) {
+      return `/account/${slug}`
+    } else {
+      return '/account'
+    }
   },
 
   // EL.

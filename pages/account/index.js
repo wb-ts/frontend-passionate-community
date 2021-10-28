@@ -1,47 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Box, Container } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
 import AccountBanner from '@/components/molecules/Banners/AccountBanner'
-import { useRouter } from 'next/router'
-import useUserAccount from '../../lib/hooks/useUserAccount'
+import useUserAccessById from '../../lib/hooks/useUserAccessById'
 import PaymentsTab from '@/components/UserAccount/PaymentsTab'
+import { PAYMENTS } from '@/components/UserAccount/tabConstants'
 
-import {
-  PAYMENTS,
-  ORDERS,
-  LEARNING,
-  PREFERENCES,
-  NOTES,
-} from '@/components/UserAccount/tabConstants'
-import path from '../../paths/path'
-
-const useStyles = makeStyles((theme) => ({}))
-export default function MainTab({ tab }) {
-  const router = useRouter()
-  const classes = useStyles()
-  const { userAccountUser } = useUserAccount()
-  console.log('useraccount ', userAccountUser)
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href)
-    }
-  }, [])
+export default function MainTab() {
+  const {
+    userName,
+    membershipName,
+    autoRenew,
+    expireDate,
+    price,
+    period,
+    description,
+  } = useUserAccessById()
 
   return (
     <Layout>
       <Box>
         <AccountBanner
           tab={PAYMENTS}
-          title={userAccountUser ? userAccountUser.name : 'Please log in'}
+          title={userName ? userName : 'Please log in'}
         />
       </Box>
-
       <Container maxWidth='lg'>
         <Box mt={8} mb={10}>
-          <PaymentsTab />
+          <PaymentsTab
+            membershipName={membershipName}
+            autoRenew={autoRenew}
+            expireDate={expireDate}
+            price={price}
+            period={period}
+            description={description}
+          />
         </Box>
       </Container>
     </Layout>

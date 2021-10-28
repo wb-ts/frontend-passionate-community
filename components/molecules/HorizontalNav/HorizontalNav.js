@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, Divider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import TextStyle from '@/components/atoms/TextStyle'
+import { PropTypes } from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +67,7 @@ export default function HorizontalNav({ items, mainBtn, selectedBtn }) {
               className={item.selected ? `${selectedBtn}` : `${mainBtn}`}
               href={item.url}
               variant='textPrimary'
+              data-testid={`horizontalNav-${key}`}
             >
               <TextStyle variant='subtitle2'>{item.label}</TextStyle>
             </Button>
@@ -76,4 +78,16 @@ export default function HorizontalNav({ items, mainBtn, selectedBtn }) {
       })}
     </Box>
   )
+}
+
+HorizontalNav.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      url: PropTypes.string,
+      selected: PropTypes.bool,
+    })
+  ),
+  mainBtn: PropTypes.string,
+  selectedBtn: PropTypes.string,
 }

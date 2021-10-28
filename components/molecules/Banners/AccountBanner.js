@@ -1,8 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Box, Grid } from '@material-ui/core'
+import { Box, alpha, Container } from '@material-ui/core'
+
 import TextStyle from '@/components/atoms/TextStyle'
-import HorizontalNav from '@/components/molecules/horizontalnav'
+import HorizontalNav from '@/components/molecules/HorizontalNav'
 import path from '../../../paths/path'
 import {
   PAYMENTS,
@@ -15,12 +16,18 @@ const useStyles = makeStyles((theme) => ({
   welcome: {
     backgroundColor: (props) => theme.palette.grey.extraLight,
     width: '100%',
+    paddingBottom: theme.spacing(7),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: theme.spacing(7),
+    background:
+      'linear-gradient(to bottom left,' +
+      theme.palette.grey.extraLight +
+      ' 50%,' +
+      alpha(theme.palette.background.light, 0.4) +
+      ' 50%)',
     [theme.breakpoints.up('md')]: {
-      height: 220,
+      height: 306,
+      borderBottomLeftRadius: 180,
       paddingBottom: 0,
     },
     borderBottomLeftRadius: 48,
@@ -39,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     background: theme.palette.primary.main,
     color: theme.palette.text.secondary,
+    borderRadius: '4px',
     '&:hover': {
       background: theme.palette.primary.main,
     },
@@ -50,7 +58,10 @@ export default function AccountBanner({ title, tab }) {
   return (
     <>
       <Box className={classes.welcome}>
-        <TextStyle variant='h1'>{title}</TextStyle>
+        <Container>
+          <TextStyle variant='h3'>Welcome,</TextStyle>
+          <TextStyle variant='h1'>{title}</TextStyle>
+        </Container>
       </Box>
       <Box mt={1} pr={4}>
         <HorizontalNav

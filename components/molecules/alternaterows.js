@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 const _dataRow = (key, value, index, classes) => {
   return (
     <Box
+      key={key}
       className={index % 2 ? '' : classes.infoRow}
       display='flex'
       justifyContent='space-between'

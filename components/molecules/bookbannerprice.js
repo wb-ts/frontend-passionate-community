@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, FormControl, MenuItem, Select } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CustomLink from '@/components/atoms/CustomLink'
@@ -40,19 +40,15 @@ export default function BookBannerPrice({
 }) {
   const classes = useStyles()
 
-  const [currentVersion, setCurrentVersion] = React.useState(null)
-  const [options, setOptions] = React.useState([])
+  const [currentVersion, setCurrentVersion] = useState(
+    version?.fields?.productNumber
+  )
+  const [options, setOptions] = useState([])
 
   const handleChange = (event) => {
     setCurrentVersion(event.target.value)
     onchange(event.target.value)
   }
-
-  useEffect(() => {
-    if (version) {
-      setCurrentVersion(version.fields?.productNumber)
-    }
-  }, [version])
 
   useEffect(() => {
     if (versions) {

@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react'
+
+import { client as apolloClient } from '../../lib/apollo-client'
+import GET_WORKSHOP_BY_SLUG_QUERY from '../../lib/apollo-client/schema/workshopBySlug.graphql'
+
 import { Box, Container, Divider, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
@@ -11,15 +16,16 @@ import LiveWorkshop from '@/components/workshop/LiveWorkshop'
 import NeverMiss from '@/components/workshop/NeverMiss'
 import SpotlightImage from '@/components/workshop/SpotlightImage'
 import VirtualWorkshop from '@/components/workshop/VirtualWorkshop'
-import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
 import {
   workshopItemToCardData1,
   workshopItemToCardData,
   bookVersionToSnipcart,
 } from '@/lib/data-transformations'
-import { AppContext } from '@/context/state'
-import { validatePaidMembership } from '@/lib/access-validator'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+
+import { getParamValue } from '../../lib/utils'
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   workshops: {
@@ -57,13 +63,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Workshop({ workshop, workshops }) {
-  const router = useRouter()
-  const { userAccessData } = useContext(AppContext)
-  const useMemberPrice = validatePaidMembership(userAccessData)
+export default function Workshop({
+  authorIds,
+  workshop,
+  workshops,
+  slugVariationId,
+}) {
+  const classes = useStyles()
+  const [variationId] = useState(slugVariationId || getParamValue('variation'))
+  const hasMemberPrice = useReactiveVar(hasMemberBookPriceVar)
+
   const futureWorkshops = workshops
     ?.filter((item) => item?.fields?.slug !== workshop?.fields?.slug)
-    .map((workshop, idx) => {
+    .map((workshopItem, idx) => {
       const {
         title,
         actionHref,
@@ -75,14 +87,17 @@ export default function Workshop({ workshop, workshops }) {
         nonMemberPrice,
         clockHours,
         seatsRemaining,
-      } = workshopItemToCardData(workshop, workshop.fields.variations[0])
+      } = workshopItemToCardData(
+        workshopItem,
+        workshopItem.fields.variations[0]
+      )
       return {
         key: workshop.fields.slug,
         remaining:
           seatsRemaining > 0
             ? `ONLY {seatsRemaining} SEATS REMAINING`
             : `NO SEATS REMAINING`,
-        price: useMemberPrice ? memberPrice : nonMemberPrice,
+        price: hasMemberPrice ? memberPrice : nonMemberPrice,
         label: topicTag,
         title: title,
         authorName: authorName,
@@ -96,14 +111,6 @@ export default function Workshop({ workshop, workshops }) {
     bookVersionToSnipcart(book)
   )
 
-  if (router.isFallback) {
-    return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
-    )
-  }
-
-  const classes = useStyles()
-  const [productNumber, setProductNumber] = useState(null)
   const {
     title,
     actionHref,
@@ -112,6 +119,7 @@ export default function Workshop({ workshop, workshops }) {
     topicTag,
     description,
     topics,
+    keywords,
     roles,
     grades,
     authorName,
@@ -119,21 +127,13 @@ export default function Workshop({ workshop, workshops }) {
     variations,
     clockHours,
   } = workshopItemToCardData1(workshop)
-  useEffect(() => {
-    console.log('workshop ', workshop)
-    if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href)
-      const variant = url.searchParams.get('variant')
-      setProductNumber(variant)
-    }
-  }, [])
 
   return (
     <Layout>
       <SEOHead seo={workshop?.fields?.seo ? workshop.fields.seo : workshop} />
       {workshop && (
         <Container maxWidth='lg'>
-          <Box mt={[5, 9]}>
+          <Box mt={5} mb={5}>
             <SpotlightImage imgUrl={mediaImg} imgTitle={mediaImgTitle} />
           </Box>
           <Box className={classes.workshops}>
@@ -144,27 +144,29 @@ export default function Workshop({ workshop, workshops }) {
                 description={description}
                 roles={roles}
                 grades={grades}
-                topics={topics}
+                topics={keywords}
                 author={authorDescription}
+                authorIds={authorIds}
               />
             </Box>
             <Box className={classes.liveWorkshop}>
               <LiveWorkshop
+                slug={workshop.fields.slug}
                 clockHours={clockHours}
                 variations={variations}
                 mediaImg={mediaImg}
                 bookCartItems={bookCartItems}
+                currentVariationId={variationId}
               />
             </Box>
           </Box>
 
           <Box mt={[5, 9]}>
-            <BookBanner
-              book={workshop?.fields?.materials[0]}
-              productNumber={productNumber}
-              updateProductNumber={(pn) => setProductNumber(pn)}
-              showShipping
-            />
+            {workshop?.fields?.materials?.map((book, i) => (
+              <Box pt={2} pb={2} key={i}>
+                <BookBanner book={book} showShipping />
+              </Box>
+            ))}
           </Box>
           <Box mt={[5, 9]}>
             <Divider className={classes.mobileHide} />
@@ -172,15 +174,14 @@ export default function Workshop({ workshop, workshops }) {
           <Box mt={[5, 10]} mb={8}>
             {futureWorkshops.length > 0 && (
               <TwoColContentListingWorkshop
-                title='More Virtual Workshops and Institutes from ASCD'
+                title='More Virtual Workshops from ASCD'
                 items={futureWorkshops}
                 limit={3}
                 body={
                   <ReactMarkdown>
-                    Register today for our upcoming events. All virtual events
-                    are available to view for at least 30 days after the event
-                    **(so you can still register even after the live event
-                    date)**.
+                    Register today for an upcoming author Workshop. Registered
+                    attendees have access to each session's recording for seven
+                    days after the live date.
                   </ReactMarkdown>
                 }
                 variant='workshop'
@@ -204,16 +205,34 @@ export async function getStaticPaths() {
 
   return {
     paths: data.items.map((item) => ({
-      params: { slug: item.fields.slug },
+      params: { slug: item.fields.slug.split('/') },
     })),
-    fallback: true,
+    fallback: 'blocking',
   }
 }
 
 export async function getStaticProps({ params }) {
+  console.log(params)
+  const workshop = await apolloClient.query({
+    query: GET_WORKSHOP_BY_SLUG_QUERY,
+    variables: {
+      preview: process.env.NEXT_PUBLIC_CONTENTFUL_PREVIEW === 'true',
+      where: {
+        slug: params.slug[0],
+      },
+      authorsCollectionPreview2:
+        process.env.NEXT_PUBLIC_CONTENTFUL_PREVIEW === 'true',
+    },
+  })
+
+  const authorIds =
+    workshop?.data?.workshopCollection?.items[0]?.authorsCollection?.items?.map(
+      (item) => item?.sys?.id
+    )
+
   const data = await client.getEntries({
     content_type: 'workshop',
-    'fields.slug': params.slug,
+    'fields.slug': params.slug[0],
     include: 4,
   })
 
@@ -223,13 +242,28 @@ export async function getStaticProps({ params }) {
     }
   }
 
+  data.items[0].fields.variations = data.items[0].fields.variations.filter(
+    (item) => item.fields !== undefined
+  )
+
   const workshops = await client.getEntries({
     content_type: 'workshop',
+    'fields.slug[ne]': params.slug[0],
+    limit: 3,
+    include: 4,
+  })
+
+  workshops.items.forEach((ws) => {
+    ws.fields.variations = ws.fields.variations.filter(
+      (item) => item.fields !== undefined
+    )
   })
 
   return {
     props: {
       key: data.items[0].sys.id,
+      authorIds: authorIds,
+      slugVariationId: params.slug[1] || null,
       workshop: data.items.length > 0 ? data.items[0] : null,
       workshops: workshops.items.length > 0 ? workshops.items : [],
     },

@@ -24,8 +24,8 @@ import ContentGrid from '@/components/organisms/contentgrid'
 import { workshopItemToCardData } from '@/lib/data-transformations'
 import WorkshopItem from '@/components/molecules/Workshop/WorkshopItem'
 import TextStyle from '@/components/atoms/TextStyle'
-import { hasMemberBookPrice } from '@/lib/access-validator'
-import { AppContext } from '@/context/state'
+import { useReactiveVar } from '@apollo/client'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 import NeverMiss from '@/components/workshop/NeverMiss'
 
 const useStyles = makeStyles((theme) => ({
@@ -65,17 +65,23 @@ export default function AuthorWorkshop({
   }
   // const allEventTypes = eventTypes.map((e) => e.fields?.title)
   const allTopics = topics.map((t) => t.fields?.title)
+
   const featuredWorkshop = workshops
     .filter((workshop) => workshop.fields?.featured)
     .slice(0, 1)
-  const otherWorkshops = workshops.filter(
-    (workshop) =>
-      featuredWorkshop[0] && workshop?.sys?.id !== featuredWorkshop[0]?.sys.id
-  )
+  const otherWorkshops =
+    featuredWorkshop.length > 0
+      ? workshops.filter(
+          (workshop) =>
+            featuredWorkshop[0] &&
+            workshop?.sys?.id !== featuredWorkshop[0]?.sys.id
+        )
+      : workshops
+
   const dateFns = new DateFnsUtils()
 
-  const { userAccessData } = useContext(AppContext)
-  const useMemberBookPrice = hasMemberBookPrice(userAccessData)
+  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
+
   const [value, setValue] = useState([
     new Date(),
     dateFns.addMonths(new Date(), 1),
@@ -97,12 +103,14 @@ export default function AuthorWorkshop({
 
   useEffect(() => {
     let otherWorkshopsFiltered = otherWorkshops
-
     if (!selectedTopics.includes('All Topics')) {
-      otherWorkshopsFiltered = otherWorkshops.filter((ow) =>
-        ow.fields.topics.some((t) =>
-          selectedTopics.some((s) => s === t.fields.title)
-        )
+      otherWorkshopsFiltered = otherWorkshops.filter(
+        (ow) =>
+          ow.fields.topics &&
+          ow.fields.topics.some(
+            (t) =>
+              selectedTopics && selectedTopics.some((s) => s === t.fields.title)
+          )
       )
     }
     // if (!selectedEventTypes.includes('All Events')) {
@@ -111,15 +119,19 @@ export default function AuthorWorkshop({
     //   )
     // }
 
-    if (value[0] !== null && value[1] !== null) {
-      const ows = otherWorkshopsFiltered.filter((ow) =>
-        ow.fields.variations.some((v) =>
-          v.fields.sessions.some(
-            (s) =>
-              new Date(s.fields.startDatetime) >= new Date(value[0]) &&
-              new Date(s.fields.startDatetime) <= new Date(value[1])
+    if (value[0] !== null && value[1] !== null && otherWorkshopsFiltered) {
+      const ows = otherWorkshopsFiltered.filter(
+        (ow) =>
+          ow.fields.variations &&
+          ow.fields.variations.some(
+            (v) =>
+              v.fields.sessions &&
+              v.fields.sessions.some(
+                (s) =>
+                  new Date(s.fields.startDatetime) >= new Date(value[0]) &&
+                  new Date(s.fields.startDatetime) <= new Date(value[1])
+              )
           )
-        )
       )
       setListOfGridWorkShops(ows)
     }
@@ -185,15 +197,15 @@ export default function AuthorWorkshop({
       <SEOHead seo={page?.fields?.seo ? page.fields.seo : page} />
       <Box mb={[6, 10]}>{_renderPageContent(page.fields.content)}</Box>
       <Container>
-        {featuredWorkshop[0] && (
+        {featuredWorkshop && featuredWorkshop[0] && (
           <Box mb={[6, 10]} mt={[6, 10]}>
             <Box mb={3}>
-              <TextStyle variant='h4'>
-                Upcoming Author Workshops and Institutes
+              <TextStyle variant='h4' id='allworkshops'>
+                Upcoming Author Workshops
               </TextStyle>
             </Box>
             <WorkshopItem
-              useMemberBookPrice
+              hasMemberBookPrice
               cardData={workshopItemToCardData(
                 featuredWorkshop[0],
                 featuredWorkshop[0].fields.variations[0]
@@ -270,7 +282,7 @@ export default function AuthorWorkshop({
             <Link onClick={handleClearFilters}>Clear Filters</Link>
           </Box>
         </Box>
-        {listOfGridWorkShops[0] ? (
+        {listOfGridWorkShops && listOfGridWorkShops[0] ? (
           <Box mb={[6, 10]} mt={[6, 10]}>
             <ContentGrid
               showFilters={false}
@@ -280,7 +292,7 @@ export default function AuthorWorkshop({
               columnWidth={4}
               limit={6}
               variant='workshop'
-              useMemberBookPrice={useMemberBookPrice}
+              useMemberBookPrice={hasMemberBookPrice}
             />
           </Box>
         ) : (
@@ -306,7 +318,15 @@ export async function getStaticProps() {
 
   const workshopData = await client.getEntries({
     content_type: 'workshop',
-    include: 4,
+    select:
+      'fields.title,fields.slug,fields.authors,fields.variations,fields.type,fields.topics,fields.clockHours,fields.featured,fields.spotlightImage',
+    include: 3,
+  })
+
+  workshopData.items.forEach((ws) => {
+    ws.fields.variations = ws.fields.variations.filter(
+      (item) => item.fields !== undefined
+    )
   })
 
   // const eventTypeData = await client.getEntries({

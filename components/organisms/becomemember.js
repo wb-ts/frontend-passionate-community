@@ -58,24 +58,24 @@ export default function BecomeMember({ ...props }) {
   const classes = useStyles(props)
 
   const basic = [
-    'Unlimited Access to Educational Leadership Magazine Online',
+    'Unlimited Access to Educational Leadership Magazine online',
     'Collaboration with passionate thinkers in the ASCD Professional Learning Community',
     'Member-only Webinars',
     'Member-only Discounts',
-    'Originally called Basic Membership',
+    'Originally called Basic Online Membership',
   ]
   const select = [
-    'Everything in Basic plus:',
+    'Everything in Digital plus:',
     'Five (5) member books sent to your door each year',
-    'Nine (9) print issues of EL Magazine',
+    'Eight (8) print issues of EL Magazine',
     'Online access to the 20 most recent member books',
-    'Originally called Select Online Membership',
+    'Originally called Select Membership',
   ]
   const premium = [
-    'Everything in Select plus:',
+    'Everything in Digital + Print plus:',
     'Four (4) additional member books - a total of 9 per year',
     '$100 voucher for full-day virtual conference*',
-    'Originally called Premium Online Membership',
+    'Originally called Premium Membership',
   ]
 
   return (

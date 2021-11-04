@@ -61,16 +61,19 @@ export default function UserDashboard() {
         })
         .then(function (data) {
           const items = data
-          const rows = items.length
-            ? items.map((v) => {
-                return {
-                  id: v?.PRODUCT_ID,
-                  shortName: v?.SHORT_NAME,
-                  url: v?.URL,
-                }
-              })
-            : {}
-          setRows(rows)
+          if (items.length > 0) {
+            const rows = items.length
+              ? items.map((v, index) => {
+                  return {
+                    id: `${v?.PRODUCT_ID}_${index}`,
+                    date: `${v?.ORDER_DATE}`,
+                    shortName: v?.SHORT_NAME,
+                    url: v?.URL,
+                  }
+                })
+              : {}
+            setRows(rows)
+          }
         })
     } else {
       setRows()
@@ -85,7 +88,7 @@ export default function UserDashboard() {
       <Banner header1='My Downloads' />
       <Container>
         <Box mt={13} mb={13}>
-          {rows && (
+          {rows ? (
             <div style={{ height: '30vw', width: '100%' }}>
               <DataGrid
                 rows={rows}
@@ -97,6 +100,21 @@ export default function UserDashboard() {
                 color='primary'
               />
             </div>
+          ) : (
+            <p
+              style={{
+                textAlign: 'center',
+                fontWeight: 'normal',
+                fontSize: '17px',
+              }}
+            >
+              You do not have any downloads. If you believe this to be
+              incorrect, please{' '}
+              <Link href='/contact'>
+                <a style={{ textDecoration: 'underline' }}>contact us</a>
+              </Link>{' '}
+              for assistance.
+            </p>
           )}
         </Box>
       </Container>

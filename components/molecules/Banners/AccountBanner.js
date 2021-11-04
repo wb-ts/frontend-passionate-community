@@ -5,13 +5,7 @@ import { Box, alpha, Container } from '@material-ui/core'
 import TextStyle from '@/components/atoms/TextStyle'
 import HorizontalNav from '@/components/molecules/HorizontalNav'
 import path from '../../../paths/path'
-import {
-  PAYMENTS,
-  ORDERS,
-  LEARNING,
-  PREFERENCES,
-  NOTES,
-} from '@/components/UserAccount/tabConstants'
+import { MY_ACCOUNT, ORDERS, ACCOUNT_SETTINGS } from '@/const/myaccount-tabs'
 const useStyles = makeStyles((theme) => ({
   welcome: {
     backgroundColor: (props) => theme.palette.grey.extraLight,
@@ -69,27 +63,18 @@ export default function AccountBanner({ title, tab }) {
             {
               label: 'My Account',
               url: path.account({ slug: '' }),
-              selected: tab === PAYMENTS,
+              selected: tab === MY_ACCOUNT,
             },
             {
               label: 'My Orders',
               url: path.account({ slug: ORDERS }),
               selected: tab === ORDERS,
             },
+
             {
-              label: 'My Learning',
-              url: path.account({ slug: LEARNING }),
-              selected: tab === LEARNING,
-            },
-            {
-              label: 'My Preferences',
-              url: path.account({ slug: PREFERENCES }),
-              selected: tab === PREFERENCES,
-            },
-            {
-              label: 'Notes and HighLights',
-              url: path.account({ slug: NOTES }),
-              selected: tab === NOTES,
+              label: 'Account Settings',
+              url: path.account({ slug: ACCOUNT_SETTINGS }),
+              selected: tab === ACCOUNT_SETTINGS,
             },
           ]}
           mainBtn={classes.navBtn}

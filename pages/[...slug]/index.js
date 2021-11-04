@@ -768,7 +768,7 @@ export async function getStaticPaths() {
   return {
     paths: data.items.reduce(
       (acc, item) =>
-        item?.fields?.slug
+        item?.fields?.slug && item?.fields?.slug !== 'workshops'
           ? [...acc, { params: { slug: item.fields.slug.split('/') } }]
           : acc,
       []
@@ -783,7 +783,11 @@ export async function getStaticProps({ params }) {
     'fields.slug': params.slug.join('/'),
     include: 3,
   })
-
+  if (!data || !data.items || data.items.length == 0) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       page: data?.items[0] || null,

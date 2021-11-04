@@ -1,9 +1,16 @@
-import { Box, makeStyles, Typography } from '@material-ui/core'
-import Topics from '@/components/molecules/Topics'
-import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/TextStyle'
-import ShowMoreText from 'react-show-more-text'
+import React from 'react'
 import { PropTypes } from 'prop-types'
+
+import { Box, makeStyles, Typography } from '@material-ui/core'
+
+import ShowMoreText from 'react-show-more-text'
+
+import options from '../../../const/options'
+import Topics from '../../molecules/Topics'
+import TopicTag from '../../molecules/TopicTag'
+import TextStyle from '../../atoms/TextStyle'
+import ProfileSummary from '../../info/ProfileSummary'
+import ArticleAuthors from '../../organisms/articleaauthors'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -40,6 +47,7 @@ export default function VirtualWorkshop({
   grades,
   topics,
   author,
+  authorIds,
 }) {
   const classes = useStyles()
 
@@ -51,9 +59,9 @@ export default function VirtualWorkshop({
       <TextStyle variant='h1' className={classes.title}>
         {title}
       </TextStyle>
-      <Box mt={[5, 9]} id='about'>
+      <Box id='about' style={{ margin: '0px' }}>
         <ShowMoreText
-          lines={3}
+          lines={6}
           more='Show more'
           less='Show less'
           className={classes.description}
@@ -96,22 +104,12 @@ export default function VirtualWorkshop({
           contentType='book'
         />
       </Box>
-
-      {author && (
+      {authorIds !== undefined && (
         <Box mt={3}>
-          <TextStyle variant='buttonMedium'>About the Author</TextStyle>
-          <ShowMoreText
-            lines={3}
-            more='Show more'
-            less='Show less'
-            className={classes.author}
-            anchorClass={classes.seeMore}
-            expanded={false}
-            width={0}
-            truncatedEndingComponent={'... '}
-          >
-            {author}
-          </ShowMoreText>
+          <TextStyle variant='buttonMedium'>
+            {authorIds.length > 0 ? 'About the Authors' : 'About the Author'}
+          </TextStyle>
+          <ProfileSummary ids={authorIds} />
         </Box>
       )}
     </Box>

@@ -136,7 +136,7 @@ export default function WorkshopListItem({ cardData, useMemberBookPrice }) {
   const router = useRouter()
 
   return (
-    <Card square elevation='0' className={classes.root}>
+    <Card square elevation={0} className={classes.root}>
       <CardActionArea
         href={cardData.actionHref}
         classes={{
@@ -171,17 +171,6 @@ export default function WorkshopListItem({ cardData, useMemberBookPrice }) {
               </Box>
             </Box>
             <Box>
-              <Box mt={1}>
-                {cardData.seatsRemaining > 0 ? (
-                  <TextStyle variant='subtitle3' color='#00A77E'>
-                    {`ONLY ${cardData.seatsRemaining} SEATS REMAINING`}
-                  </TextStyle>
-                ) : (
-                  <TextStyle variant='subtitle3' color='#00A77E'>
-                    {`NO SEATS REMAINING`}
-                  </TextStyle>
-                )}
-              </Box>
               <Box>
                 <TextStyle variant='subtitle1'>
                   $
@@ -206,7 +195,7 @@ WorkshopListItem.propTypes = {
     topicTag: PropTypes.string,
     authorName: PropTypes.string,
     workshopDate: PropTypes.string,
-    memberPrice: PropTypes.string,
+    memberPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     nonMemberPrice: PropTypes.string,
     seatsRemaining: PropTypes.number,
   }),

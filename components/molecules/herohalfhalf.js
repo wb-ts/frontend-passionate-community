@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column-reverse !important',
     [theme.breakpoints.up('sm')]: {
       height: '375px',
-      flexDirection: 'row !important',
+      flexDirection: ({ imagePos }) =>
+        imagePos == 'right' ? 'row !important' : 'row-reverse !important',
     },
     [theme.breakpoints.up('md')]: {
       height: '500px',
@@ -37,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('xl')]: {
       padding: 0,
+    },
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: ({ imagePos }) =>
+        imagePos == 'left' ? `${theme.spacing(5)}px` : 0,
     },
   },
   media: {
@@ -106,10 +113,10 @@ export default function HeroHalfHalf({
   ctaLink2,
   image,
   imageAlt,
-  imagePos = 'left',
+  imagePos = 'right',
   snipcart,
 }) {
-  const classes = useStyles()
+  const classes = useStyles({ imagePos })
   const router = useRouter()
 
   return (

@@ -110,12 +110,6 @@ function ArticleBody({ refresherKey, children }) {
   )
 }
 
-const expressArticleTag = (tp, user, bExpress) => {
-  if (bExpress && user.uid) {
-    tp.push(['setTags', ['express']])
-  }
-}
-
 export default function Article({ article, issue, relatedArticles }) {
   const router = useRouter()
   if (router.isFallback) {
@@ -129,14 +123,6 @@ export default function Article({ article, issue, relatedArticles }) {
   const dateFormat = require('dateformat')
 
   const { userAccountUser } = useUserAccount()
-
-  let tp = null
-  if (typeof window !== 'undefined' && typeof window.tp !== 'undefined') {
-    tp = window.tp
-    if (tp) {
-      expressArticleTag(tp, userAccountUser, article.fields.express)
-    }
-  }
 
   const options = {
     renderNode: {

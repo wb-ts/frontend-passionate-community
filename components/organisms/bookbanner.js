@@ -75,24 +75,12 @@ export default function BookBanner({
       ? productNumber
         ? book.fields.bookVersions.find(
             (version) => version.fields.productNumber == productNumber
-          )
+          ) || book.fields.bookVersions[0]
         : book.fields.bookVersions[0]
       : ''
   )
 
   const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
-
-  useEffect(() => {
-    if (productNumber && !isCollection) {
-      setVersion(
-        productNumber
-          ? book.fields.bookVersions.find(
-              (version) => version.fields.productNumber == productNumber
-            )
-          : book.fields.bookVersions[0]
-      )
-    }
-  }, [productNumber])
 
   const changeVersion = (productNumber) => {
     const newVersion = book.fields.bookVersions.find(
@@ -190,16 +178,13 @@ export default function BookBanner({
           </Box>
           {book?.fields?.authors &&
             book.fields.authors.map((author, key) => (
-              <>
-                <CustomLink
-                  key={`author-${key}`}
-                  href={paths.author({ slug: author.fields?.slug })}
-                  label={`${author.fields?.firstName} ${
-                    author.fields?.lastName
-                  }${key < book.fields.authors.length - 1 ? ',' : ''}`}
-                />
+              <React.Fragment key={key}>
+                <CustomLink href={paths.author({ slug: author.fields?.slug })}>
+                  {`${author.fields?.firstName} ${author.fields?.lastName}`}
+                  {key < book.fields.authors.length - 1 ? ',' : ''}
+                </CustomLink>
                 &nbsp;
-              </>
+              </React.Fragment>
             ))}
         </Box>
         <Box my={1}>
@@ -273,8 +258,6 @@ export default function BookBanner({
             />
           )}
         </Box>
-
-        {/* JIRA ASCD-818: start */}
         {showShipping && (
           <Box my={1}>
             <Divider />
@@ -318,7 +301,6 @@ export default function BookBanner({
             <Divider />
           </Box>
         )}
-        {/* JIRA ASCD-818: end */}
       </Grid>
     </Grid>
   )

@@ -18,24 +18,32 @@ import { userAccountIdVar } from '../../lib/apollo-client/cache'
 const PianoManager = () => {
   const userAccountId = useReactiveVar(userAccountIdVar)
 
-  useEffect(() => {
+  const setUserAccountId = () => {
     const user = pianoClient?.user?.getProvider().getUser()
     if (user) {
-      userAccountIdVar(user.uid)
+      userAccountIdVar(user?.uid)
     } else {
       userAccountIdVar(undefined)
     }
+  }
+
+  useEffect(() => {
+    pianoClient?.push([
+      'init',
+      function () {
+        setUserAccountId()
+      },
+    ])
     pianoClient?.push([
       'addHandler',
       'loginSuccess',
       function (data) {
-        userAccountIdVar(data.params.uid)
+        userAccountIdVar(data?.params?.uid)
       },
     ])
-  }, [pianoClient])
+  }, [])
 
   useEffect(() => {
-    console.log('userAccountId', userAccountId)
     if (userAccountId && !cookies.get('.ASCD')) {
       var url = process.env.NEXT_PUBLIC_COOKIE_API_URL + userAccountId
       fetch(url, {

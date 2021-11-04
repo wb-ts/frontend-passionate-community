@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: (props) => theme.palette.grey.extraLight,
     borderBottomLeftRadius: 64,
     width: '100%',
     paddingBottom: theme.spacing(7),
@@ -129,7 +128,7 @@ export default function HeroBanner({
           className={classes.container}
         >
           <Grid container className={classes.gridContainer}>
-            <Grid item xs={12} md={6} container justify='flex-start'>
+            <Grid item xs={12} md={6} justify='flex-start'>
               <Box className={classes.leftContent}>
                 <TextStyle variant='h1'>{title}</TextStyle>
                 <Box mt={2} mb={5}>
@@ -141,7 +140,8 @@ export default function HeroBanner({
                       <CtaButton
                         variant='contained'
                         color='primary'
-                        label='Primary Button'
+                        label={ctaLabel1}
+                        href={ctaLink1}
                         fullWidth
                       />
                     )}
@@ -151,7 +151,8 @@ export default function HeroBanner({
                       <CtaButton
                         variant='outlined'
                         color='primary'
-                        label='Secondary Button'
+                        label={ctaLabel2}
+                        href={ctaLink2}
                         fullWidth
                       />
                     )}
@@ -160,7 +161,7 @@ export default function HeroBanner({
               </Box>
             </Grid>
             <Grid item xs={12} md={6} container justify='flex-end'>
-              <Box className={classes.media}>
+              <Box className={classes.media} mt={2}>
                 {image ? (
                   <img
                     src={image ? image : '/images/ASCDImageFiller.png'}

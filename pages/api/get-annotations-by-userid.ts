@@ -11,7 +11,7 @@ const handler: NextApiHandler = async (req, res) => {
     const results = await query(
       `
       SELECT annotations.id, annotations.contentId, annotations.contentImageSrc, 
-      annotations.contentSlug, annotations.contentTitle, annotations.updatedAt,
+      annotations.contentSlug, annotations.contentTitle, MAX(annotations.updatedAt) as updatedAt,
       COUNT(annotations.id) as totalCount, COUNT(notes.id) as notesCount
       FROM annotations
       LEFT JOIN notes

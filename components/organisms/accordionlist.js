@@ -32,7 +32,7 @@ export default function AccordionList({
       myItems
         .map((myItem) => myItem.filterCategory)
         .flat()
-        .map((c) => c.fields.title)
+        .map((c) => c?.fields?.title)
         .reduce((unique, o) => {
           if (!unique?.some((obj) => obj === o)) {
             unique.push(o)

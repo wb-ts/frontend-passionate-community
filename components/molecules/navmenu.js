@@ -100,6 +100,10 @@ export default function NavMenu({ mobile }) {
       ctaViewAll: '/resources',
       rightLinks: [
         {
+          label: 'Membership',
+          href: '/memberships',
+        },
+        {
           label: 'Write for ASCD',
           href: '/write-for-ascd',
         },

@@ -1,0 +1,11 @@
+query GetMembershipBySlug($preview: Boolean, $where: MembershipFilter) {
+  membershipCollection(preview: $preview, where: $where) {
+    items {
+      name
+      slug
+      description {
+        json
+      }
+    }
+  }
+}

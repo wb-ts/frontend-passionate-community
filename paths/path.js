@@ -30,6 +30,9 @@ export default {
   author({ slug }) {
     return `/people/${slug}`
   },
+  profile({ slug }) {
+    return `/people/${slug}`
+  },
 
   //Activate
   activate: '/activate',
@@ -63,9 +66,9 @@ export default {
   // Workshops.
   workshop({ slug }) {
     if (slug) {
-      return `/workshop/${slug}`
+      return `/workshops/${slug}`
     } else {
-      return '/workshop'
+      return '/workshops'
     }
   },
 

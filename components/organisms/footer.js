@@ -393,7 +393,11 @@ export default function Footer({ grey }) {
               </Typography>
             </Box>
           </Grid>
-          <Grid container justify='flex-end' className={classes.footerColumns}>
+          <Grid
+            container
+            justifyContent='flex-end'
+            className={classes.footerColumns}
+          >
             <Grid item className={classes.footerColumn}>
               <FooterMenu title='About ASCD' items={about} />
             </Grid>

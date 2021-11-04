@@ -5,10 +5,15 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import Banner from '@/components/molecules/banner'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
+import PaymentMethod from '../../components/UserAccount/PaymentMethod'
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 
 const PianoAccount = dynamic(() => import('@/components/piano/pianoaccount'), {
   ssr: false,
 })
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export default function UserAccount({}) {
   return (
@@ -34,6 +39,12 @@ export default function UserAccount({}) {
             imagePos='left'
           />
         </Box>
+        {/* put it here temporarily  */}
+        <Elements stripe={stripePromise}>
+          <Box>
+            <PaymentMethod />
+          </Box>
+        </Elements>
       </Container>
     </Layout>
   )

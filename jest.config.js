@@ -6,7 +6,6 @@ module.exports = {
   },
   transformIgnorePatterns: ['^.+\\.module\\.(css|sass|scss)$'],
   moduleNameMapper: {
-    '^react-markdown$': 'react-markdown/dist/cjs',
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     '^@/components(.*)$': ['<rootDir>/components$1'],
     '^@/lib(.*)$': ['<rootDir>/lib$1'],

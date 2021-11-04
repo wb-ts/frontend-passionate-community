@@ -21,6 +21,8 @@ export default function CtaButton({
   fullWidth = false,
   target,
   styles,
+  disabled,
+  children,
   ...props
 }) {
   const classes = useStyles(underlined)
@@ -37,8 +39,9 @@ export default function CtaButton({
       id={id}
       target={target}
       style={styles}
+      disabled={disabled}
     >
-      {label}
+      {label || children}
     </Button>
   )
 }
@@ -55,4 +58,9 @@ CtaButton.propTypes = {
   fullWidth: PropTypes.bool,
   target: PropTypes.string,
   styles: PropTypes.object,
+}
+
+CtaButton.defaultProps = {
+  variant: 'contained',
+  color: 'primary',
 }

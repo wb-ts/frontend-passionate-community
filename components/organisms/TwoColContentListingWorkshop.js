@@ -39,7 +39,7 @@ export default function TwoColContentListingWorkshop({
   const ctaLink = isEvents
     ? paths.events
     : isWorkshops
-    ? paths.workshop({ slug: '' })
+    ? paths.workshop({ slug: '#allworkshops' })
     : null
   const dateFormat = require('dateformat')
 
@@ -66,8 +66,8 @@ export default function TwoColContentListingWorkshop({
                     <Divider className={classes.divider} />
                   ) : null
                 return (
-                  <>
-                    <Grid item xs={12} key={`content-list-${key}`}>
+                  <React.Fragment key={`content-list-${key}`}>
+                    <Grid item xs={12}>
                       <HorizontalCard
                         key={item.title}
                         price={item.price}
@@ -84,7 +84,7 @@ export default function TwoColContentListingWorkshop({
                     <Grid item xs={12}>
                       {divider}
                     </Grid>
-                  </>
+                  </React.Fragment>
                 )
               })}
           </Grid>

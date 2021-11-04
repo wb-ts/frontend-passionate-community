@@ -165,7 +165,7 @@ export default function ContentCardListing({ item }) {
     : '/images/ASCDImageFiller.png'
 
   return (
-    <Card square elevation='0' className={classes.root}>
+    <Card square elevation={0} className={classes.root}>
       <CardActionArea
         href={url}
         classes={{

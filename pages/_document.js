@@ -10,7 +10,7 @@ export default class MyDocument extends Document {
     return (
       <Html
         xmlns='http://www.w3.org/1999/xhtml'
-        lang='en-US'
+        lang='en'
         prefix='og: http://ogp.me/ns#'
       >
         <Head>

@@ -11,7 +11,7 @@
     "find:unused": "npx next-unused",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest --json --outputFile=./test-results/report.json"
+    "test": "jest --json --outputFile=./test-results/report.json -t BuyButton"
   },
   "dependencies": {
     "@analytics/google-analytics": "^0.5.2",
@@ -22,6 +22,8 @@
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "@stripe/react-stripe-js": "^1.6.0",
+    "@stripe/stripe-js": "^1.20.3",
     "@material-ui/pickers": "^4.0.0-alpha.12",
     "@testing-library/user-event": "^13.2.1",
     "algoliasearch": "^4.10.5",
@@ -50,6 +52,7 @@
     "react-to-print": "^2.13.0",
     "serverless-mysql": "^1.5.4",
     "sharethis-reactjs": "^1.6.0",
+    "stripe": "^8.184.0",
     "swr": "^1.0.1",
     "universal-cookie": "^4.0.4",
     "yup": "^0.32.9"

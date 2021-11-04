@@ -11,6 +11,8 @@ import PropTypes from 'prop-types'
 import TopicTag from '@/components/molecules/TopicTag'
 import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
+import InventorySummary from '../../info/InventorySummary'
+import SpotlightImage from '@/components/workshop/SpotlightImage'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,14 +81,12 @@ export default function WorkshopItem({ cardData, useMemberBookPrice }) {
   return (
     <Card className={classes.root} square elevation={0}>
       {cardData && (
-        <CardMedia title={cardData.title}>
-          <img
-            src={cardData.mediaImg}
-            alt={cardData.title}
-            width='100%'
-            height='497px'
+        <Box>
+          <SpotlightImage
+            imgUrl={cardData.mediaImg}
+            imgTitle={cardData.title}
           />
-        </CardMedia>
+        </Box>
       )}
       {cardData && (
         <CardContent className={classes.under}>
@@ -97,18 +97,31 @@ export default function WorkshopItem({ cardData, useMemberBookPrice }) {
             justifyContent='flex-start'
           >
             {cardData.topicTag && (
-              <Box display='flex'>
+              <Box display='block'>
+                <Box mb={1}>
+                  <TopicTag
+                    textTransform='uppercase'
+                    label={cardData.topicTag}
+                  />
+                </Box>
                 {cardData.authorName && (
                   <Box mr={2}>
                     <TextStyle variant={'h2'}>{cardData.authorName}</TextStyle>
                   </Box>
                 )}
-                <TopicTag textTransform='uppercase' label={cardData.topicTag} />
               </Box>
             )}
-            <Box display='flex' justifyContent='space-between'>
+            <Box display='block' justifyContent='space-between'>
               <Box>
                 <TextStyle variant='h4'>{cardData.title}</TextStyle>
+              </Box>
+            </Box>
+            <Box mt={1}>
+              <TextStyle variant='h4'>{cardData.workshopDate}</TextStyle>
+            </Box>
+            <Box display='flex' justifyContent='space-between'>
+              <Box mt={1} mb={1}>
+                <TextStyle variant='h4'>{cardData.clockHours}</TextStyle>
               </Box>
               <Box>
                 <TextStyle variant='subtitle1'>
@@ -119,24 +132,8 @@ export default function WorkshopItem({ cardData, useMemberBookPrice }) {
                 </TextStyle>
               </Box>
             </Box>
-            <Box mt={1}>
-              <TextStyle variant='h4'>{cardData.workshopDate}</TextStyle>
-            </Box>
-            <Box mt={1}>
-              <TextStyle variant='h4'>{cardData.clockHours}</TextStyle>
-            </Box>
             <Box display='flex' justifyContent='space-between'>
-              <Box mt={1}>
-                {cardData.seatsRemaining > 0 ? (
-                  <TextStyle variant='h4' color='#00A77E'>
-                    {`ONLY ${cardData.seatsRemaining} SEATS REMAINING`}
-                  </TextStyle>
-                ) : (
-                  <TextStyle variant='h4' color='#00A77E'>
-                    {`NO SEATS REMAINING`}
-                  </TextStyle>
-                )}
-              </Box>
+              <InventorySummary id={cardData.id} />
               <Box>
                 <CtaButton
                   variant='outlined'

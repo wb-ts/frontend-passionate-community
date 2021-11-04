@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
 import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
+import TwoColumnCta from '@/components/molecules/twocolumncta'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
   //
 }))
 
-const PaymentsTab = ({
+const MyAccountTab = ({
   membershipName,
   autoRenew,
   expireDate,
@@ -163,33 +164,6 @@ const PaymentsTab = ({
         </Grid>
         <Grid item xs={12} md={4} className={classes.secondPart}>
           <Box className={classes.membershipContent}>{description}</Box>
-          {/* <ul className={classes.membershipContent}>
-            <li className={classes.name}>
-              <TextStyle variant='body3'>
-                Morbi leo risus, porta ac consectetur ac, vestibulum
-              </TextStyle>
-            </li>
-            <li className={classes.name}>
-              <TextStyle variant='body3'>
-                Morbi leo risus, porta ac consectetur ac, vestibulum
-              </TextStyle>
-            </li>
-            <li className={classes.name}>
-              <TextStyle variant='body3'>
-                Morbi leo risus, porta ac consectetur ac, vestibulum
-              </TextStyle>
-            </li>
-            <li className={classes.name}>
-              <TextStyle variant='body3'>
-                Morbi leo risus, porta ac consectetur ac, vestibulum
-              </TextStyle>
-            </li>
-            <li className={classes.name}>
-              <TextStyle variant='body3'>
-                Morbi leo risus, porta ac consectetur ac, vestibulum
-              </TextStyle>
-            </li>
-          </ul> */}
         </Grid>
         <Grid item xs={12} md={4} className={classes.membershipHandle}>
           <Box>
@@ -234,4 +208,4 @@ const PaymentsTab = ({
   )
 }
 
-export default PaymentsTab
+export default MyAccountTab

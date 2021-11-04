@@ -71,9 +71,9 @@ function App({ Component, pageProps }) {
           <ApolloProvider client={client}>
             <AppProvider>
               <Component {...pageProps} />
-              <SnipcartManager />
-              <PianoManager />
             </AppProvider>
+            <SnipcartManager />
+            <PianoManager />
           </ApolloProvider>
         </ThemeProvider>
       </StylesProvider>

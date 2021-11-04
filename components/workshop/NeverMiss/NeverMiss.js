@@ -19,12 +19,13 @@ const useStyles = makeStyles((theme) => ({
     margin: '80px 0',
   },
   title: {
+    textAlign: 'center',
     fontWeight: 800,
     fontSize: 24,
     marginBottom: '16px',
   },
   description: {
-    maxWidth: '402px',
+    textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       maxWidth: 'unset',
     },
@@ -70,16 +71,17 @@ export default function NeverMiss() {
   return (
     <Box className={classes.container}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Typography variant='h3' className={classes.title}>
-            Never Miss a new workshop
+            Keep Up with ASCD Authors
           </Typography>
           <Typography variant='body2' className={classes.description}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Don't miss the latest thinking from ASCD's community of authors and
+            education leaders. Get notified about upcoming author events,
+            including workshops, live talks, webinars, chats, and more.
           </Typography>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Box
             display='flex'
             alignItems='center'

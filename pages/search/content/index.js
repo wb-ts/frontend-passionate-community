@@ -251,6 +251,22 @@ function _indexEvents(data) {
   }))
   return _indexContentToAlgolia(contentToIndex)
 }
+function _indexWorkshops(data) {
+  let contentToIndex = []
+  data.forEach((item) => {
+    contentToIndex.push({
+      objectID: item.sys.id,
+      type: 'workshop',
+      url: paths.workshop({ slug: item.fields.slug }),
+      title: item.fields.title,
+      content: item.fields.description ? documentToPlainTextString(item.fields.description) : '',
+      topic: item.fields.topics ? _helperGetValues(item.fields.topics) : [],
+      author: _helperGetAuthor(item.fields.authors),
+      thumbnail: _helperGetImage(item.fields.spotlightImage),
+    })
+  })
+  return _indexContentToAlgolia(contentToIndex)
+}
 function _helperGetImage(image) {
   const imageUrl = image?.fields?.imageBynder
     ? image?.fields?.imageBynder[0]?.src
@@ -391,6 +407,9 @@ export default function SearchContent({ importComplete }) {
                 </li>
                 <li>
                   <code>&amp;batch=11</code> - Events
+                </li>
+                <li>
+                  <code>&amp;batch=12</code> - Workshops
                 </li>
               </ul>
             </Typography>
@@ -632,8 +651,51 @@ export async function getServerSideProps(context) {
           }
         }
         _indexEvents(items)
+        break;  
+      case '12':
+        //Index Workshops
+        contentType = 'workshop'
+        offset = 0
+        items = []
+        processedEntries = null
+        while (processedEntries !== 0) {
+          const entries = await client.getEntries({
+            content_type: contentType,
+            skip: offset,
+            limit: maxEntries,
+            include: 3,
+          })
+
+          processedEntries = entries.items.length
+
+          if (processedEntries > 0) {
+            offset += processedEntries
+            let filteredItems = []
+            filteredItems = entries.items.filter(workshop => workshop.fields.variations)
+            if (filteredItems && filteredItems.length) {
+              filteredItems = filteredItems.filter((workshop) => {
+                let activeWorkshop = false
+                workshop.fields.variations.forEach((variation) => {
+                  let activeVariation = false
+                  if (variation.fields.sessions && variation.fields.sessions.length > 0) {
+                    let activeSession = false
+                    variation.fields.sessions.forEach((session) => {
+                      const startDatetime = !session.fields.startDatetime ? 0 : Date.parse(session.fields.startDatetime)
+                      activeSession = activeSession || startDatetime > new Date().getTime()
+                    })
+                    activeVariation = activeSession
+                  }
+                  activeWorkshop = activeWorkshop || activeVariation
+                })
+                return activeWorkshop
+              })
+            }
+            items.push(...filteredItems)
+          }
+        }
+        _indexWorkshops(items)
         break;
-        default:
+      default:
         // Index Collections.
         contentType = 'collection'
         offset = 0

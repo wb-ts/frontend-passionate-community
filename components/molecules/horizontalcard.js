@@ -261,13 +261,6 @@ export default function HorizontalCard({
               </TextStyle>
             </Box>
           )}
-          {remaining && (
-            <Box mt={1.5}>
-              <TextStyle variant='remainingSeat' className={classes.remaining}>
-                {remaining}
-              </TextStyle>
-            </Box>
-          )}
         </CardContent>
       </CardActionArea>
     </Card>

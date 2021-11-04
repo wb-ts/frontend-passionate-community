@@ -87,7 +87,7 @@ const UserAccountToolbarMenu = ({ loginHandler, logoutHandler, mobile }) => {
   const hasPaidMembership = useReactiveVar(hasPaidMembershipVar)
 
   const iconBtnRef = useRef(null)
-  const [popoverOpen, setPopoverOpen] = useState(null)
+  const [popoverOpen, setPopoverOpen] = useState(false)
   const [notesOpen, setNotesOpen] = useState(false)
 
   const toggleAnnotationsDrawerHandler = (open) => {

@@ -43,7 +43,7 @@ export default function EventCard({
   const classes = useStyles()
 
   return (
-    <Card elevation='0' className={classes.root}>
+    <Card elevation={0} className={classes.root}>
       {image && (
         <CardMedia title={alt} className={classes.media}>
           <img src={image} alt={alt} width='100%' height='190px' />

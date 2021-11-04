@@ -55,7 +55,7 @@ export default function TwoColumnHeader({
 
 TwoColumnHeader.propTypes = {
   title: PropTypes.string,
-  body: PropTypes.string,
+  body: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   ctaLabel: PropTypes.string,
   ctaLink: PropTypes.string,
 }

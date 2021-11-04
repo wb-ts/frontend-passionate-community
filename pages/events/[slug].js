@@ -189,7 +189,9 @@ export default function Event({ event, events }) {
                     {event?.fields?.eventId === '2021-leadership-summit' ||
                     event?.fields?.eventId ===
                       'symposium-new-era-of-education' ||
-                    event?.fields?.eventId === '2022-annual-conference' ? (
+                    event?.fields?.eventId === '2022-annual-conference' ||
+                    event?.fields?.eventId ===
+                      '2021-virtual-leadership-summit' ? (
                       <>
                         <CtaButton
                           variant='contained'
@@ -203,6 +205,9 @@ export default function Event({ event, events }) {
                               : event?.fields?.eventId ===
                                 '2022-annual-conference'
                               ? '2022-annual-conference'
+                              : event?.fields?.eventId ===
+                                '2021-virtual-leadership-summit'
+                              ? '2022-leadership-summit'
                               : 'october-event'
                           }
                           styles={{
@@ -266,6 +271,14 @@ export default function Event({ event, events }) {
                 <Grid xs={12} md={6} item></Grid>
                 <Grid xs={12} md={6} item>
                   <Box className={classes.priceLabel}>Price: $79.00</Box>
+                </Grid>
+              </>
+            )}
+            {event?.fields?.eventId === '2021-virtual-leadership-summit' && (
+              <>
+                <Grid xs={12} md={6} item></Grid>
+                <Grid xs={12} md={6} item>
+                  <Box className={classes.priceLabel}>Price: $199.00</Box>
                 </Grid>
               </>
             )}

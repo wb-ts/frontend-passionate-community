@@ -7,17 +7,9 @@ import AccountBanner from '@/components/molecules/Banners/AccountBanner'
 
 import { useRouter } from 'next/router'
 import useUserAccount from '../../lib/hooks/useUserAccount'
-import PaymentsTab from '@/components/UserAccount/PaymentsTab'
 import OrdersTab from '@/components/UserAccount/OrdersTab'
-import LearningTab from '@/components/UserAccount/LearningTab'
-import PreferencesTab from '@/components/UserAccount/PreferencesLab'
-import {
-  PAYMENTS,
-  ORDERS,
-  LEARNING,
-  PREFERENCES,
-  NOTES,
-} from '@/components/UserAccount/tabConstants'
+import AccountSettings from '@/components/UserAccount/AccountSettings'
+import { MY_ACCOUNT, ORDERS, ACCOUNT_SETTINGS } from '@/const/myaccount-tabs'
 
 const useStyles = makeStyles((theme) => ({}))
 export default function AccountTab({ tab }) {
@@ -44,8 +36,7 @@ export default function AccountTab({ tab }) {
       <Container maxWidth='lg'>
         <Box mt={8} mb={10}>
           {tab === ORDERS && <OrdersTab />}
-          {tab === LEARNING && <LearningTab />}
-          {tab === PREFERENCES && <PreferencesTab />}
+          {tab === ACCOUNT_SETTINGS && <AccountSettings />}
         </Box>
       </Container>
     </Layout>
@@ -53,7 +44,7 @@ export default function AccountTab({ tab }) {
 }
 
 export async function getStaticPaths() {
-  const tabs = [PAYMENTS, ORDERS, LEARNING, PREFERENCES, NOTES]
+  const tabs = [MY_ACCOUNT, ORDERS, ACCOUNT_SETTINGS]
   return {
     paths: tabs.map((tab) => ({
       params: { slug: tab },

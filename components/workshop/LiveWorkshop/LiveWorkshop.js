@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 
 import {
   Box,
@@ -9,21 +11,23 @@ import {
   Select,
   MenuItem,
 } from '@material-ui/core'
-import {
-  AccessTime as AccessTimeIcon,
-  MenuBook as MenuBookIcon,
-} from '@material-ui/icons'
+import { MenuBook as MenuBookIcon } from '@material-ui/icons'
 import TextStyle from '@/components/atoms/TextStyle'
-import { AppContext } from '@/context/state'
+import { useReactiveVar } from '@apollo/client'
 import {
-  validatePaidMembership,
-  hasMemberBookPrice,
-} from '@/lib/access-validator'
+  hasMemberBookPriceVar,
+  hasPaidMembershipVar,
+} from '../../../lib/apollo-client/cache'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import { addItemsToCart } from '@/components/Snipcart/SnipcartManager'
 import ShareButtons from '@/components/molecules/sharebuttons'
 import paths from '@/paths/path'
 import { PropTypes } from 'prop-types'
+import { convertTimeToLocaleTimeWithDST } from '../../../lib/utils'
+
+const InventorySummary = dynamic(() => import('../../info/InventorySummary'), {
+  ssr: false,
+})
 
 const useStyles = makeStyles((theme) => ({
   liveWorkshopContainer: {
@@ -53,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     lineHeight: '20px',
     color: theme.palette.primary.main,
-    maxWidth: '145px',
+    paddingTop: '5px',
+    paddingBottom: '5px',
+    width: '100%',
   },
   itemIcon: {
     fontSize: '15px',
@@ -107,7 +113,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: theme.typography.pxToRem(24),
     fontWeight: 600,
     letterSpacing: 0.2,
-    border: '2px solid #fff',
     '&:hover': {
       backgroundColor: theme.palette.hover.main,
       textDecoration: 'underline',
@@ -118,20 +123,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 export default function LiveWorkshop({
+  slug,
   clockHours,
   variations,
   mediaImg,
   bookCartItems,
+  currentVariationId,
 }) {
   const classes = useStyles()
-  const [otherDates, setOtherDates] = useState(variations[0]?.variationId)
-  const [selectedVariation, setSelectedVariation] = useState(variations[0])
+  const router = useRouter()
+  const getSelectedVariation = () => {
+    if (currentVariationId) {
+      const foundVariation = variations?.find(
+        (v) =>
+          v.variationId?.toLowerCase() === currentVariationId?.toLowerCase()
+      )
+      return foundVariation || variations[0]
+    }
+    return variations[0]
+  }
+  const [otherDates, setOtherDates] = useState(
+    getSelectedVariation().variationId
+  )
+  const [selectedVariation, setSelectedVariation] = useState(
+    getSelectedVariation()
+  )
+
   const [sessions, setSessions] = useState([])
   const [variantPrice, setVariantPrice] = useState(0)
-  const { userAccessData } = useContext(AppContext)
-  const useMemberPrice = validatePaidMembership(userAccessData)
-  const useMemberBookPrice = hasMemberBookPrice(userAccessData)
-  const [seatsRemaining, setSeatsRemaining] = useState(0)
+  const useMemberPrice = useReactiveVar(hasPaidMembershipVar)
+  const useMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
   const [VariationCartItem, setVariationCartItem] = useState()
   const materialPrice = useMemberBookPrice
     ? bookCartItems.reduce(
@@ -143,6 +164,11 @@ export default function LiveWorkshop({
         0
       )
   const handleChange = (event) => {
+    router.push(
+      `/workshops/building-authentic-relationships-with-students-of-color/${event.target.value?.toLowerCase()}`,
+      undefined,
+      { scroll: false, shallow: true }
+    )
     setOtherDates(event.target.value)
   }
 
@@ -161,14 +187,15 @@ export default function LiveWorkshop({
     const currentVariation = variations.find(
       (variation) => variation.variationId === otherDates
     )
+
     setSelectedVariation(currentVariation)
     setSessions(currentVariation.sessions)
-    setSeatsRemaining(currentVariation.seatsRemaining)
     setVariantPrice(
       useMemberPrice
         ? currentVariation.memberPrice
         : currentVariation.nonMemberPrice
     )
+
     setVariationCartItem({
       label: `Register Now $${variantPrice}`,
       dataItemId: currentVariation?.variationId,
@@ -179,8 +206,14 @@ export default function LiveWorkshop({
         : currentVariation.nonMemberPrice,
       dataItemQuantity: 1,
       dataItemCustom1Value: currentVariation.taxJarId,
+      dataItemCustom5Value: 'workshop',
+      dataItemCustom6Value: `/workshops/${slug}?variation=${currentVariation?.variationId}`,
+      dataItemCustom7Value: `${currentVariation?.sessions[0]?.startDate},  ${currentVariation?.sessions[0]?.startTime} - ${currentVariation?.sessions[0]?.endTime}`,
     })
-  }, [otherDates])
+  }, [otherDates, useMemberPrice])
+
+  if (sessions && sessions[0]) {
+  }
   return (
     <Box className={classes.liveWorkshopContainer}>
       <TextStyle variant='sessionDate'>Live Workshops</TextStyle>
@@ -188,22 +221,28 @@ export default function LiveWorkshop({
         {sessions.length > 1 ? `${sessions.length} Sessions` : '1 Session'} for{' '}
         {clockHours}
       </TextStyle>
-      <TextStyle className={classes.title}>
-        {seatsRemaining > 0
-          ? `ONLY {seatsRemaining} SEATS REMAINING`
-          : `NO SEATS REMAINING`}
-      </TextStyle>
+      <InventorySummary id={selectedVariation?.variationId} />
       <Box className={classes.sessions}>
         <List>
-          {sessions.map((session, idx) => (
-            <ListItem key={idx} className={classes.sessionItem}>
-              <TextStyle variant='overlineLarge'>{session.title}</TextStyle>
-              <TextStyle variant='sessionDate'>{session.startDate}</TextStyle>
-              <TextStyle variant='h7'>
-                {session.startTime}-{session.endTime}
-              </TextStyle>
-            </ListItem>
-          ))}
+          {sessions.map((session, idx) => {
+            const startTimeLocale = convertTimeToLocaleTimeWithDST(
+              new Date(`${session.startDate} ${session.startTime}`)
+            )
+            const endTimeLocale = convertTimeToLocaleTimeWithDST(
+              new Date(`${session.endDate} ${session.endTime}`)
+            )
+            return (
+              <ListItem key={idx} className={classes.sessionItem}>
+                <TextStyle variant='body3'>
+                  {session.displayTitle || session.title}
+                </TextStyle>
+                <TextStyle variant='sessionDate'>{session.startDate}</TextStyle>
+                <TextStyle variant='h7'>
+                  {startTimeLocale}-{endTimeLocale}
+                </TextStyle>
+              </ListItem>
+            )
+          })}
         </List>
       </Box>
       <Box display='flex' mt={[2, 3]}>
@@ -231,21 +270,16 @@ export default function LiveWorkshop({
         )}
       </Box>
       <Box display='flex' mt={[2, 3]}>
-        <AccessTimeIcon className={classes.itemIcon} />
-        <Box>
-          <Box className={classes.subtitle}>1 PM to 5:15 PM EST</Box>
-        </Box>
-      </Box>
-      <Box display='flex' mt={[2, 3]}>
         <MenuBookIcon className={classes.itemIcon} />
         <Box>
           <TextStyle className={classes.subtitle}>
             Required Materials - ${materialPrice.toFixed(2)}
           </TextStyle>
-          <TextStyle className={classes.description}>
-            Differentiation in the Elementary Grades: Strategies to Engage &
-            Equip All Learners
-          </TextStyle>
+          {bookCartItems?.map((book, i) => (
+            <TextStyle className={classes.description} key={i}>
+              {book.dataItemBookName}
+            </TextStyle>
+          ))}
         </Box>
       </Box>
       <Box mt={[2, 3]}>
@@ -258,7 +292,10 @@ export default function LiveWorkshop({
             dataItemImage: mediaImg,
             dataItemPrice: variantPrice,
             dataItemQuantity: 1,
-            dataItemCustom1Value: selectedVariation.taxJarId,
+            dataItemCustom1Value: selectedVariation?.taxJarId,
+            dataItemCustom5Value: 'workshop',
+            dataItemCustom6Value: `/workshops/${slug}?variation=${selectedVariation?.variationId}`,
+            dataItemCustom7Value: `${selectedVariation?.sessions[0]?.startDate},  ${selectedVariation?.sessions[0]?.startTime} - ${selectedVariation?.sessions[0]?.endTime}`,
           }}
         />
       </Box>
@@ -292,7 +329,7 @@ export default function LiveWorkshop({
       <Box mt={[2]} display='flex' justifyContent='center'>
         {/* <Button variant='contained' fullWidth size='large'> */}
         <TextStyle variant='buttonMedium'>
-          Questions? <a className={classes.description}>Checkout our FAQ</a>
+          Questions? <a className={classes.description}>Check out our FAQ</a>
         </TextStyle>
         {/* </Button> */}
       </Box>
@@ -301,6 +338,7 @@ export default function LiveWorkshop({
 }
 
 LiveWorkshop.propTypes = {
+  slug: PropTypes.string,
   clockHours: PropTypes.string,
   mediaImg: PropTypes.string,
   variations: PropTypes.arrayOf(

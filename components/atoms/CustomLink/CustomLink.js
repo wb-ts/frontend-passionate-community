@@ -85,7 +85,7 @@ export default function CustomLink({
 
 CustomLink.propTypes = {
   label: PropTypes.string,
-  href: PropTypes.string,
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   size: PropTypes.string,
   clickAction: PropTypes.func,
   scroll: PropTypes.bool,

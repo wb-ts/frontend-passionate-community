@@ -1,4 +1,5 @@
 module.exports = {
+  generateEtags: false,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Important: return the modified config
     config.module.rules.push({
@@ -15,6 +16,16 @@ module.exports = {
 
   async redirects() {
     return [
+      {
+        source: '/events/2021-leadership-summit',
+        destination: '/events/2022-ascd-virtual-leadership-summit',
+        permanent: true,
+      },
+      {
+        source: '/rejoin',
+        destination: '/membership-details',
+        permanent: true,
+      },
       {
         source: '/i3PDdigitaltools',
         destination:
@@ -628,11 +639,6 @@ module.exports = {
         source: '/myeducationjourney',
         destination:
           'http://professional-development.ascd.org/black-history-month',
-        permanent: true,
-      },
-      {
-        source: '/workshops',
-        destination: 'http://professional-development.ascd.org/main',
         permanent: true,
       },
       {
@@ -2488,7 +2494,7 @@ module.exports = {
         destination: '/memberships',
         permanent: true,
       },
-      { source: '/join', destination: '/memberships', permanent: true },
+      { source: '/join', destination: '/membership-details', permanent: true },
       { source: '/news', destination: '/news-media', permanent: true },
       {
         source: '/digitalcontentreport',

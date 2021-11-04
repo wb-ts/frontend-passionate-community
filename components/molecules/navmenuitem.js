@@ -389,7 +389,7 @@ export default function NavMenuItem({
           horizontal: 'left',
         }}
         className={classes.popover}
-        elevation='0'
+        elevation={0}
       >
         <Box className={classes.megaNav}>
           <Box className={classes.megaNavContent}>

@@ -41,7 +41,12 @@ export default function SnipcartButton({
         data-item-id={snipcart.dataItemId}
         data-item-price={snipcart.dataItemPrice}
         data-item-file-guid={snipcart.digitalFileGuid}
-        data-item-weight={snipcart.dataItemPrice}
+        data-item-taxable={snipcart.dataItemCustom5Value !== 'workshop'}
+        data-item-weight={
+          snipcart.dataItemCustom5Value === 'workshop'
+            ? 0
+            : snipcart.dataItemPrice
+        }
         data-item-custom1-name='TaxJarCategory'
         data-item-custom1-value={snipcart.dataItemCustom1Value}
         data-item-custom1-type='hidden'
@@ -60,6 +65,18 @@ export default function SnipcartButton({
         data-item-custom4-type='hidden'
         data-item-custom4-required='false'
         data-cart-custom4-options='true|false'
+        data-item-custom5-name='ProductType'
+        data-item-custom5-value={snipcart.dataItemCustom5Value}
+        data-item-custom5-type='hidden'
+        data-item-custom5-required='false'
+        data-item-custom6-name='ProductSlug'
+        data-item-custom6-value={snipcart.dataItemCustom6Value}
+        data-item-custom6-type='hidden'
+        data-item-custom6-required='false'
+        data-item-custom7-name='ProductDate'
+        data-item-custom7-value={snipcart.dataItemCustom7Value}
+        data-item-custom7-type='hidden'
+        data-item-custom7-required='false'
         data-item-url={encodeSnipcartOrderValidationUrl(
           snipcart.dataItemId,
           snipcart.dataItemPrice,

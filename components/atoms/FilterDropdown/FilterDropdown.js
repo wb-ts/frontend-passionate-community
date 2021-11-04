@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { FormControl, Select, MenuItem } from '@material-ui/core'
 import PropTypes from 'prop-types'
@@ -24,17 +24,12 @@ export default function FilterDropdown({
   ...props
 }) {
   const classes = useStyles(props)
-  const [value, setValue] = React.useState('')
-
-  React.useEffect(() => {
-    if (typeof defaultValue == 'object') {
-      setValue(defaultValue.value)
-    }
-    setValue(defaultValue)
-  }, [defaultValue])
+  const [value, setValue] = useState(
+    typeof defaultValue == 'object' ? defaultValue.value : defaultValue
+  )
 
   const handleChange = (event) => {
-    setValue(event.target.value)
+    setValue(event.target.value || '')
     action(event.target.value)
   }
 
@@ -45,6 +40,7 @@ export default function FilterDropdown({
       </MenuItem>
     ))
   }
+
   return (
     <FormControl
       variant='outlined'
@@ -72,6 +68,7 @@ FilterDropdown.propTypes = {
         label: PropTypes.string,
       }),
       PropTypes.string,
+      PropTypes.number,
     ])
   ),
   defaultValue: PropTypes.oneOfType([
@@ -79,9 +76,10 @@ FilterDropdown.propTypes = {
       value: PropTypes.string,
     }),
     PropTypes.string,
+    PropTypes.number,
   ]),
   action: PropTypes.func,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  marginLeft: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  marginLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }

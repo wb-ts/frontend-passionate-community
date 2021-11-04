@@ -284,7 +284,6 @@ export default function Header() {
                 loginHandler={pianoLogInHandler}
                 logoutHandler={pianoLogOutHandler}
               />
-              `
             </Box>
           </Grid>
         </Grid>

@@ -31,8 +31,8 @@ const MyAccount = ({ membershipData }) => {
       )}
 
       <Box pt={[0, 7]} pb={7} maxWidth={['100%', '1024px']} margin='auto'>
-        <MembershipHalfHalf
-          title='Get more from ASCD and save'
+        <HeroHalfHalf
+          title='Get so much more for just $1 a month'
           description='Switch your monthly membership to an annual membership and enjoy two months of ASCD for free.'
           image='images/halfMembership.png'
           imageAlt='Events banner image'

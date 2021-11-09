@@ -131,7 +131,7 @@ export default function HeroHalfHalf({
   variant,
   membershipData,
 }) {
-  const classes = useStyles({ imagePos })
+  const classes = useStyles({ imagePos, variant })
   const router = useRouter()
 
   return (
@@ -197,7 +197,7 @@ export default function HeroHalfHalf({
               </Box>
             )}
 
-            {ctaLabel2 && (
+            {ctaLabel2 && variant != 'membership' && (
               <Box pt={[2, 2, 0]} className={classes.button}>
                 <CtaButton
                   variant='outlined'

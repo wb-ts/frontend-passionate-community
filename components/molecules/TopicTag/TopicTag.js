@@ -1,8 +1,7 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Chip, Typography, Box } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Chip, Typography, Box } from '@mui/material'
 import TextStyle from '@/components/atoms/TextStyle'
-import Image from 'material-ui-image'
 import { PropTypes } from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         ? 'rgba(0, 0, 0, 0.4)'
         : 'rgba(0, 0, 0, 0.05)',
     color: (restProps) =>
-      restProps.color ? 'white !important' : theme.palette.text.primary,
+      restProps.color ? restProps.color : theme.palette.text.primary,
     height: '24px',
     marginBottom: theme.spacing(1),
   },

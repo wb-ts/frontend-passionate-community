@@ -1,9 +1,8 @@
 import React from 'react'
 import { connectRefinementList } from 'react-instantsearch-dom'
-
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import Paper from '@material-ui/core/Paper'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
+import Paper from '@mui/material/Paper'
 
 const CustomPaper = (props) => {
   return <Paper elevation={0} {...props} />
@@ -12,7 +11,7 @@ const CustomPaper = (props) => {
 const RefinementList = ({ items, refine }) => (
   <div className={`ais-RefinementList`}>
     <Autocomplete
-      multiple
+      multiple={true}
       options={items}
       noOptionsText='No results'
       open={true}
@@ -23,13 +22,13 @@ const RefinementList = ({ items, refine }) => (
       PaperComponent={CustomPaper}
       disablePortal={true}
       getOptionLabel={(option) => option.label}
-      renderOption={(option, { selected }) => (
+      renderOption={(props, option) => (
         <label className={`ais-RefinementList-label`}>
           <input
             type='checkbox'
             checked={option.isRefined}
             className={`ais-RefinementList-checkbox`}
-            onClick={() => {
+            onChange={() => {
               refine(option.value)
             }}
           />

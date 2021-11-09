@@ -3,7 +3,7 @@ import TextStyle from '@/components/atoms/TextStyle'
 
 export default {
   component: TextStyle,
-  title: 'Components/Atoms/TextStyle',
+  title: 'Components/atoms/TextStyle',
 }
 
 const Template = (args) => <TextStyle {...args}>Text Style Text</TextStyle>

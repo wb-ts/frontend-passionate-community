@@ -1,10 +1,9 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Box, Grid, Typography } from '@material-ui/core'
-import Image from 'material-ui-image'
+import { makeStyles } from '@mui/styles'
+import { Box, Grid, Typography } from '@mui/material'
+import NextImageWrapper from '../../images/NextImageWrapper'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
     },
   },
+  nextImage: {
+    backgroundColor: 'transparent',
+  },
   gridItem: {
     display: 'flex',
     flexDirection: 'column',
@@ -81,28 +83,18 @@ export default function CtaItem({ icon, tagline, subtagline, url, ...props }) {
       <Grid container alignItems='center'>
         <Grid item xs={4} md={12} className={classes.gridItem}>
           <Box className={classes.media}>
-            <Image
+            <NextImageWrapper
               src={
                 icon?.fields?.imageBynder
-                  ? icon?.fields?.imageBynder[0]?.src +
-                    '?' +
-                    imageoptimization.qualityParameter +
-                    '=' +
-                    imageoptimization.qualityValue
+                  ? icon?.fields?.imageBynder[0]?.src
                   : icon?.fields?.imageContentful?.fields?.file?.url
-                  ? icon?.fields?.imageContentful?.fields?.file?.url +
-                    '?' +
-                    imageoptimization.qualityParameter +
-                    '=' +
-                    imageoptimization.qualityValue
+                  ? icon?.fields?.imageContentful?.fields?.file?.url
                   : '/images/ASCDImageFiller.png'
               }
               alt={icon?.fields?.alternate}
-              style={{
-                backgroundColor: 'transparent',
-                // paddingTop: 0,
-              }}
-              imageStyle={{ width: '100%', height: '100%' }}
+              height={96}
+              width={96}
+              priority='true'
             />
           </Box>
         </Grid>

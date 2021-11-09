@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Box, Container, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container, Divider } from '@mui/material'
+import { makeStyles } from '@mui/styles';
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
@@ -18,7 +18,7 @@ import { useReactiveVar } from '@apollo/client'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 import { hasAccessToBook } from '../../lib/access-validator'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
+import { Skeleton } from '@mui/material';
 import { getCartButtonCaptionLabel } from '@/lib/utils'
 import constSnipcart from '@/const/snipcart'
 
@@ -52,9 +52,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Book({ book, relatedBooks, relatedCollections }) {
   const router = useRouter()
   if (router.isFallback) {
-    return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
-    )
+    return <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />;
   }
 
   const { userAccountAccess } = useUserAccount()

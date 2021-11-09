@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import Link from 'next/link'
-import Image from 'material-ui-image'
+import Image from 'next/image'
 import paths from '@/paths/path'
 
 const useStyles = makeStyles((theme) => ({
@@ -24,10 +24,10 @@ export default function ImageTile({ slug, imageUrl, title }) {
         <Image
           src={imageUrl}
           alt={title}
-          imageStyle={{
-            width: '210px',
-            height: '296px',
-          }}
+          width={210}
+          height={296}
+          placeholder='blur'
+          blurDataURL='/images/blurrImg.png'
         />
       </Link>
     </Box>

@@ -1,10 +1,11 @@
 import React from 'react'
-import { Box, Container, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import Image from 'material-ui-image'
+import { Box, Container, Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import Image from 'next/image'
 import IssueBannerTitle from '@/components/molecules/issuebannertitle'
 import paths from '@/paths/path'
-import imageoptimization from '@/const/imageoptimization'
+import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
+import NextImageWrapper from '../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,27 +31,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   media: {
+    display: 'block',
     position: 'relative',
     width: '100%',
     // height: '471px',
-    minHeight: '445px',
-    objectFit: 'fill',
+    // minHeight: '445px',
+    //objectFit: 'fill',
+    boxShadow: theme.shadows[10],
 
     [theme.breakpoints.up('md')]: {
       position: 'absolute',
       top: '46px',
       width: '424px',
-      height: '582px',
-    },
-    '& img': {
-      boxShadow: theme.shadows[10],
+      //height: '582px',
     },
   },
 }))
 
 export default function IssueBanner({ issue }) {
   const classes = useStyles()
-
+  contentfulThumbnailAPIToImageUrl(issue.fields.thumbnail)
   return (
     <Box className={classes.root}>
       <Container maxWidth='lg' className={classes.container}>
@@ -58,29 +58,13 @@ export default function IssueBanner({ issue }) {
           <Grid item xs={12} sm={6} lg={5} className={classes.relative}>
             <Box className={classes.media}>
               {issue.fields.thumbnail && (
-                <Image
-                  src={
-                    issue.fields?.thumbnail?.fields?.imageBynder
-                      ? issue.fields?.thumbnail?.fields?.imageBynder[0]?.src +
-                        '?' +
-                        imageoptimization.qualityParameter +
-                        '=' +
-                        imageoptimization.qualityValue
-                      : issue.fields?.thumbnail?.fields?.imageContentful?.fields
-                          ?.file?.url
-                      ? issue.fields?.thumbnail?.fields?.imageContentful?.fields
-                          ?.file?.url +
-                        '?' +
-                        imageoptimization.qualityParameter +
-                        '=' +
-                        imageoptimization.qualityValue
-                      : '/images/ASCDImageFiller.png'
-                  }
+                <NextImageWrapper
+                  src={contentfulThumbnailAPIToImageUrl(issue.fields.thumbnail)}
                   alt={issue.fields.thumbnail.fields?.alternate}
-                  style={{
-                    position: 'static',
-                    backgroundColor: 'transparent',
-                  }}
+                  width={424}
+                  height={582}
+                  layout='responsive'
+                  priority='true'
                 />
               )}
             </Box>

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Grid, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import ReactPlayer from 'react-player/wistia'
 import DaysAgo from '@/components/atoms/DaysAgo'
 // import ViewCount from '@/components/molecules/viewcount'
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     height: '99px',
     backgroundColor: 'transparent',
-    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
+    padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
     color: theme.palette.common.white,
   },
   ctabar: {

@@ -11,8 +11,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import dateFormat from 'dateformat'
 import clsx from 'clsx'
 import TextStyle from '@/components/atoms/TextStyle'
@@ -176,7 +176,7 @@ export default function Annotation({
             placeholder='Write a note'
             disabled={!editing && id && !isUpdate}
             multiline
-            rowsMax={4}
+            maxRows={4}
             InputProps={{
               disableUnderline: true,
               classes: { root: classes.textfieldInput },

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles';
 import PropTypes from 'prop-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'

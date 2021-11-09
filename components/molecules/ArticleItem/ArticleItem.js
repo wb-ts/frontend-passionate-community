@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, CardActionArea, CardContent, CardMedia } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Card, CardActionArea, CardContent, CardMedia } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import ArticleInfo from '@/components/atoms/ArticleInfo'
 import PropTypes from 'prop-types'
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 3,
     backgroundColor: 'transparent',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: 16,
     },
     background:
@@ -126,7 +126,7 @@ export default function ArticleItem({
             <ArticleInfo
               premium={cardData.premium}
               topicTag={cardData.topicTag}
-              topicTagColor={!overlay && 'black'}
+              topicTagColor={!overlay ? 'black' : ''}
               title={cardData.title}
               authorName={cardData.authorName}
               datePublished={cardData.datePublished}

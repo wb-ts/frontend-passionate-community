@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Button, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Button, Divider } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TextStyle from '@/components/atoms/TextStyle'
 import { PropTypes } from 'prop-types'
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   verticalDivider: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none',
     },
   },

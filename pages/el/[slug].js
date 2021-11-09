@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container, Grid } from '@material-ui/core'
+import { Box, Container, Grid } from '@mui/material'
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
@@ -11,10 +11,10 @@ import ReadMore from '@/components/molecules/readmore'
 import VideoPlayer from '@/components/molecules/videoplayer'
 import TOCNav from '@/components/atoms/TOCNav'
 import paths from '@/paths/path'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
+import { Skeleton } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Publication({ publication, publications }) {
   const router = useRouter()
   if (router.isFallback) {
-    return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
-    )
+    return <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />;
   }
 
   const classes = useStyles()

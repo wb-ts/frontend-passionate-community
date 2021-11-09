@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TextStyle from '../../atoms/TextStyle'
 import useProductInventory from '../../../lib/hooks/useProductInventory'
-import Skeleton from '@material-ui/lab/Skeleton'
+import Skeleton from '@mui/material/Skeleton'
 /**
  * @typedef {string} DisplayVariants
  **/
@@ -40,7 +40,9 @@ const InventorySummary = ({ id, displayVariant }) => {
     }
   }
 
-  return (
+  return <div>&nbsp;</div>
+  // Commenting out due to Penny's request, will enable later
+  /* return (
     <>
       {loading ? (
         <Skeleton
@@ -53,7 +55,7 @@ const InventorySummary = ({ id, displayVariant }) => {
         id && _renderVariant()
       )}
     </>
-  )
+  ) */
 }
 
 export default InventorySummary

@@ -1,8 +1,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 
-import { Box, makeStyles, Typography } from '@material-ui/core'
-
+import { Box, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import ShowMoreText from 'react-show-more-text'
 
 import options from '../../../const/options'

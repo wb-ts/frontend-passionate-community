@@ -1,6 +1,6 @@
 import React from 'react'
-import { Divider, Grid, Box, ListItem } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Divider, Grid, Box, ListItem } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import paths from '@/paths/path'

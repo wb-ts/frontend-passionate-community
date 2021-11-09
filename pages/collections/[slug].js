@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Container, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container, Divider, Skeleton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
@@ -9,7 +9,6 @@ import ReadMore from '@/components/molecules/readmore'
 import BookBanner from '@/components/organisms/bookbanner'
 import paths from '@/paths/path'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -42,7 +41,12 @@ export default function Collection({ collection }) {
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
     )
   }
 
@@ -56,6 +60,13 @@ export default function Collection({ collection }) {
       setProductNumber(variant)
     }
   }, [])
+
+  collection.fields?.items?.forEach((book) => {
+    const filteredVersions = book.fields.bookVersions.filter(
+      (bv) => bv.fields.bookType.fields.title !== 'Poster'
+    )
+    book.fields.bookVersions = filteredVersions
+  })
 
   return (
     <Layout>

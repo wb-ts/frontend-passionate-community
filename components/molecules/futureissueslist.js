@@ -11,10 +11,10 @@ import {
   Button,
   Grid,
   Typography,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 
 const useStyles = makeStyles((theme) => ({
   accordion: {

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Grid, Box, Avatar } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Grid, Box, Avatar, AvatarGroup } from '@mui/material'
 import TextStyle from '@/components/atoms/TextStyle'
 import ShareButtons from '@/components/molecules/sharebuttons'
-import { AvatarGroup } from '@material-ui/lab'
 import CustomLink from '@/components/atoms/CustomLink'
 import paths from '@/paths/path'
 import imageoptimization from '@/const/imageoptimization'
@@ -137,7 +136,7 @@ export default function HeroArticle({ article, minuteRead }) {
               </>
             )}
           </Grid>
-          <Grid item xs={12} md={5} container justify='flex-end'>
+          <Grid item xs={12} md={5} container justifyContent='flex-end'>
             <ShareButtons
               url={
                 article?.sys?.contentType?.sys?.id === 'blog'

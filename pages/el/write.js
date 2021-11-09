@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container } from '@mui/material'
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'

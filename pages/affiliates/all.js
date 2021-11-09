@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { client } from '@/lib/contentful'
-import { makeStyles } from '@material-ui/core/styles'
-import Input from '@material-ui/core/Input'
-import SearchIcon from '@material-ui/icons/Search'
-import InputAdornment from '@material-ui/core/InputAdornment'
+import { makeStyles } from '@mui/styles'
+import Input from '@mui/material/Input'
+import SearchIcon from '@mui/icons-material/Search'
+import InputAdornment from '@mui/material/InputAdornment'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container } from '@mui/material'
 import Banner from '@/components/molecules/banner'
 import { sortBy } from 'lodash'
-import { useState } from 'react'
 import TextStyle from '@/components/atoms/TextStyle'
 import Directory from '@/components/molecules/directory'
 
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     height: '40px',
     marginTop: -30,
   },
-  [theme.breakpoints.down('xs')]: {
+  [theme.breakpoints.down('sm')]: {
     '.MuiButtonBase-root': {
       justifyContent: 'flex-start',
     },

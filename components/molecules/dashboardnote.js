@@ -15,15 +15,15 @@ import {
   ListItemText,
   Popover,
   Typography,
-} from '@material-ui/core'
-import Skeleton from '@material-ui/lab/Skeleton'
-import { makeStyles } from '@material-ui/core/styles'
-import FormatQuoteIcon from '@material-ui/icons/FormatQuote'
-import EditIcon from '@material-ui/icons/Edit'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import VisibilityIcon from '@material-ui/icons/Visibility'
-import DeleteIcon from '@material-ui/icons/Delete'
-import Image from 'material-ui-image'
+} from '@mui/material'
+import Skeleton from '@mui/material/Skeleton'
+import { makeStyles } from '@mui/styles'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
+import EditIcon from '@mui/icons-material/Edit'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import DeleteIcon from '@mui/icons-material/Delete'
+import Image from 'next/image'
 import DaysAgo from '@/components/atoms/DaysAgo'
 import { useRouter } from 'next/router'
 import paths from '@/paths/path'
@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
   },
   noteTitle: {
     lineHeight: theme.typography.pxToRem(18),
+  },
+  nextImage: {
+    objectFit: 'cover',
   },
   moreBtn: {
     '&:hover': {
@@ -110,12 +113,15 @@ export default function DashboardNote({ notes, key, deleteAction }) {
           {notes.contentImageSrc ? (
             <Image
               src={notes.contentImageSrc}
-              style={{ width: '100%', height: '100%' }}
-              imageStyle={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              width={70}
+              height={70}
+              className={classes.nextImage}
+              placeholder='blur'
+              blurDataURL='/images/blurrImg.png'
             />
           ) : (
             <Skeleton
-              variant='rect'
+              variant='rectangular'
               width={'100%'}
               height={'100%'}
               animation={false}
@@ -154,6 +160,7 @@ export default function DashboardNote({ notes, key, deleteAction }) {
         aria-label='more options for this annotation'
         className={classes.moreBtn}
         onClick={(e) => clickMoreOptions(e)}
+        size='large'
       >
         <MoreVertIcon fontSize='small' />
       </IconButton>

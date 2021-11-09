@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { useRouter } from 'next/router'
 import TextStyle from '@/components/atoms/TextStyle'
 import TopicTag from '@/components/molecules/TopicTag'

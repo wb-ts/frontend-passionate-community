@@ -3,7 +3,7 @@ import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 
 export default {
   component: ViewAllCTA,
-  title: 'Components/Atoms/ViewAllCTA',
+  title: 'Components/atoms/ViewAllCTA',
 }
 
 const Template = (args) => <ViewAllCTA {...args} />

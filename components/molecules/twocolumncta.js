@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import CtaButton from '@/components/atoms/CtaButton'
 import TextStyle from '@/components/atoms/TextStyle'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         ? theme.palette.background.lightGrey
         : theme.palette.background.light,
     display: 'flex',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '100%',
       flexDirection: ({ variant }) =>
         variant == 'error' ? 'column' : 'column-reverse !important',
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: 0,
       paddingBottom: 0,
       paddingLeft: ({ imagePos }) =>
-        imagePos == 'left' ? `${theme.spacing(5)}px` : 0,
+        imagePos == 'left' ? theme.spacing(5) : 0,
     },
   },
   media: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     height: '359px',
     maxHeight: '359px',
     objectFit: ({ variant }) => (variant == 'error' ? 'fill' : 'cover'),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '239px',
       maxHeight: '239px',
     },
@@ -103,6 +103,20 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '85%',
     },
   },
+  longDescription: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    lineHeight: '1.5rem' /* fallback */,
+    '-webkit-line-clamp': ({ descriptionLineNumbers }) =>
+      descriptionLineNumbers
+        ? descriptionLineNumbers
+        : 2 /* number of lines to show */,
+    '-webkit-box-orient': 'vertical',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '99%',
+    },
+  },
 }))
 
 export default function TwoColumnCta({
@@ -124,6 +138,7 @@ export default function TwoColumnCta({
 }) {
   const classes = useStyles({ imagePos, variant, descriptionLineNumbers })
   const router = useRouter()
+  const charCount = (string) => { return string?.length > 0 ? string.length : 0 }
   return (
     <Grid
       container
@@ -132,7 +147,14 @@ export default function TwoColumnCta({
     >
       <Grid item sm={6} xs={12} className={classes.content}>
         <Box
-          ml={variant == 'grey' ? [0, 3, 6] : 0}
+          ml={variant == 'grey' 
+            ? (descriptionLineNumbers > 4 
+              ? [0, 1, 2] 
+              : [0, 3, 6]) 
+            : (descriptionLineNumbers > 4
+              ? [0, 1, 2]
+              : 0)
+          }
           mr={[0, 1]}
           mt={[3, 0]}
           px={variant == 'grey' ? [2, 0] : 0}
@@ -158,7 +180,9 @@ export default function TwoColumnCta({
                     ? 'h1'
                     : variant === 'h2'
                     ? 'h2'
-                    : 'h3'
+                    : charCount(title) < 31
+                    ? 'h3'
+                    : 'h4'
                 }
               >
                 {title}
@@ -169,8 +193,14 @@ export default function TwoColumnCta({
                 <TextStyle variant='subtitle2'>{`${date} - ${time}`}</TextStyle>
               </>
             ) : null}
-            <Box pt={1} className={classes.description}>
-              <TextStyle variant={variant === 'error' ? 'h3' : 'subtitle2'}>
+            <Box pt={1} className={descriptionLineNumbers < 5 ? classes.description : classes.longDescription}>
+              <TextStyle variant={variant === 'error' 
+                  ? 'h3' 
+                  : descriptionLineNumbers < 5 
+                    ? 'subtitle2'
+                    : 'subtitle3'
+                }
+              >
                 {description}
               </TextStyle>
             </Box>

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TextStyle from '@/components/atoms/TextStyle'
 import Link from 'next/link'
-import CallMadeIcon from '@material-ui/icons/CallMade'
+import CallMadeIcon from '@mui/icons-material/CallMade'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({

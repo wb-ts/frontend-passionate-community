@@ -2,16 +2,9 @@ import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
-import {
-  Box,
-  Button,
-  List,
-  ListItem,
-  makeStyles,
-  Select,
-  MenuItem,
-} from '@material-ui/core'
-import { MenuBook as MenuBookIcon } from '@material-ui/icons'
+import { Box, Button, List, ListItem, Select, MenuItem } from '@mui/material'
+import { MenuBook as MenuBookIcon } from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 import TextStyle from '@/components/atoms/TextStyle'
 import { useReactiveVar } from '@apollo/client'
 import {

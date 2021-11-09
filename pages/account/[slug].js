@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Container } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
 import AccountBanner from '@/components/molecules/Banners/AccountBanner'
 
 import { useRouter } from 'next/router'
 import useUserAccount from '../../lib/hooks/useUserAccount'
-import OrdersTab from '@/components/UserAccount/OrdersTab'
+import CardItem from '../../components/molecules/Cards/CardType1'
+import { orderItemToCardData } from '../../lib/data-transformations'
 import AccountSettings from '@/components/UserAccount/AccountSettings'
 import { MY_ACCOUNT, ORDERS, ACCOUNT_SETTINGS } from '@/const/myaccount-tabs'
 
@@ -17,12 +18,6 @@ export default function AccountTab({ tab }) {
   const classes = useStyles()
   const { userAccountUser } = useUserAccount()
   console.log('useraccount ', userAccountUser)
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href)
-    }
-  }, [])
 
   return (
     <Layout>
@@ -35,7 +30,7 @@ export default function AccountTab({ tab }) {
 
       <Container maxWidth='lg'>
         <Box mt={8} mb={10}>
-          {tab === ORDERS && <OrdersTab />}
+          {tab === ORDERS && <CardItem cardData={orderItemToCardData()} />}
           {tab === ACCOUNT_SETTINGS && <AccountSettings />}
         </Box>
       </Container>

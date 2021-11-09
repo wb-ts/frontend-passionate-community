@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Box, IconButton } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
+import { Box, IconButton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import TextStyle from '@/components/atoms/TextStyle'
-import Image from 'material-ui-image'
+import Image from 'next/image'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
       width: 28,
       height: 28,
     },
+  },
+  nextImage: {
+    padding: 0,
   },
   tile: {
     position: 'relative',
@@ -72,11 +75,11 @@ export default function ImageCarousel({ images }) {
       <Box boxShadow={10}>
         <Image
           src={images[currentImage]}
-          style={{
-            width: '307px',
-            height: '428px',
-            padding: 0,
-          }}
+          height={428}
+          width={307}
+          className={classes.nextImage}
+          placeholder='blur'
+          blurDataURL='/images/blurrImg.png'
         />
       </Box>
       <Box display='flex' justifyContent='center' alignItems='center' pt={2}>
@@ -85,6 +88,7 @@ export default function ImageCarousel({ images }) {
             aria-label='slide left'
             className={classes.sliderBtn}
             onClick={() => goLeft()}
+            size='large'
           >
             <KeyboardArrowLeftIcon style={{ fontSize: 30 }} />
           </IconButton>
@@ -99,6 +103,7 @@ export default function ImageCarousel({ images }) {
             aria-label='slide right'
             className={classes.sliderBtn}
             onClick={() => goRight()}
+            size='large'
           >
             <KeyboardArrowRightIcon style={{ fontSize: 30 }} />
           </IconButton>

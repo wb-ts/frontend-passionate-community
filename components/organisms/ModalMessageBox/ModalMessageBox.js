@@ -7,10 +7,10 @@ import {
   List,
   ListItem,
   ListItemIcon,
-} from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
-import { makeStyles } from '@material-ui/core/styles'
-import { DiscFull } from '@material-ui/icons'
+} from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { makeStyles } from '@mui/styles';
+import { DiscFull } from '@mui/icons-material'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -84,7 +84,7 @@ export default function ModalMessageBox({
           <IconButton
             aria-label='Close modal button'
             className={classes.closeModalButton}
-          >
+            size="large">
             <CloseIcon
               size='small'
               onClick={() => {
@@ -118,5 +118,5 @@ export default function ModalMessageBox({
         </Box>
       </Box>
     </Modal>
-  )
+  );
 }

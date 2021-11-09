@@ -6,9 +6,9 @@ import {
   IconButton,
   List,
   Typography,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles';
+import CloseIcon from '@mui/icons-material/Close'
 import useSWR, { mutate } from 'swr'
 import axios from 'axios'
 import DashboardNote from '../molecules/dashboardnote'
@@ -76,7 +76,7 @@ export default function DashboardAnnotations({ userId, open, toggleOpen }) {
           <IconButton
             aria-label='Close notes and annotations dashboard button'
             className={classes.closeModalButton}
-          >
+            size="large">
             <CloseIcon size='small' onClick={() => toggleOpen(false)} />
           </IconButton>
           <Typography variant='h5'>Notes & Highlights</Typography>
@@ -99,5 +99,5 @@ export default function DashboardAnnotations({ userId, open, toggleOpen }) {
         </List>
       </div>
     </Drawer>
-  )
+  );
 }

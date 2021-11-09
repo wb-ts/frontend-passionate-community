@@ -1,12 +1,12 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import InstagramIcon from '@material-ui/icons/Instagram'
-import LinkedInIcon from '@material-ui/icons/LinkedIn'
-import YouTubeIcon from '@material-ui/icons/YouTube'
-import PinterestIcon from '@material-ui/icons/Pinterest'
+import { Box } from '@mui/material'
+import { makeStyles } from '@mui/styles';
+import FacebookIcon from '@mui/icons-material/Facebook'
+import TwitterIcon from '@mui/icons-material/Twitter'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import YouTubeIcon from '@mui/icons-material/YouTube'
+import PinterestIcon from '@mui/icons-material/Pinterest'
 
 const useStyles = makeStyles((theme) => ({
   socialButtons: {

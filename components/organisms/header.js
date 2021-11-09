@@ -11,16 +11,16 @@ import {
   Toolbar,
   Button,
   Badge,
-} from '@material-ui/core'
+} from '@mui/material'
 import Link from 'next/link'
-import { makeStyles } from '@material-ui/core/styles'
-import MenuIcon from '@material-ui/icons/Menu'
+import { makeStyles } from '@mui/styles'
+import MenuIcon from '@mui/icons-material/Menu'
 import SearchPopover from '@/components/molecules/searchpopover'
-import SearchIcon from '@material-ui/icons/Search'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import CloseIcon from '@material-ui/icons/Close'
+import SearchIcon from '@mui/icons-material/Search'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import CloseIcon from '@mui/icons-material/Close'
 import useSWR from 'swr'
-import Image from 'material-ui-image'
+import NextImageWrapper from '../images/NextImageWrapper'
 import dynamic from 'next/dynamic'
 import { AppContext } from '@/context/state'
 import NavMenu from '@/components/molecules/navmenu'
@@ -46,6 +46,22 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: '10vw',
       paddingRight: '10vw',
     },
+  },
+  nextImage1: {
+    paddingTop: 0,
+    cursor: 'pointer',
+    position: 'static',
+  },
+  nextImage2: {
+    paddingTop: 0,
+    position: 'static',
+  },
+  nextImage3: {
+    paddingTop: 0,
+    cursor: 'pointer',
+    backgroundColor: 'transparent',
+    marginLeft: '14px',
+    position: 'static',
   },
   desktopToolbar: {
     height: 72,
@@ -75,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '4px',
     boxShadow: theme.shadows[3],
     left: '43.5%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       left: '35%',
     },
     transform: 'translateX(-50%)',
@@ -218,16 +234,12 @@ export default function Header() {
             </a>
             <Box mr={1.75} tabIndex='0'>
               <Link href='/' className={classes.logoLink}>
-                <Image
+                <NextImageWrapper
                   src={'/images/logo.svg'}
                   alt='ascd logo'
-                  style={{
-                    paddingTop: 0,
-                    //width: '109px',
-                    height: '36px',
-                    cursor: 'pointer',
-                  }}
-                  imageStyle={{ position: 'static' }}
+                  className={classes.nextImage1}
+                  width={109}
+                  height={36}
                 />
               </Link>
             </Box>
@@ -239,6 +251,7 @@ export default function Header() {
                 <IconButton
                   aria-label='Open search panel'
                   onClick={openSearchPopover}
+                  size='large'
                 >
                   <SearchIcon />
                 </IconButton>
@@ -271,6 +284,7 @@ export default function Header() {
                 <IconButton
                   aria-label='checkout cart'
                   className='header__summary snipcart-checkout snipcart-summary'
+                  size='large'
                 >
                   {/* <Badge badgeContent={4} color='secondary'> */}
                   <ShoppingCartIcon />
@@ -309,6 +323,7 @@ export default function Header() {
             'aria-haspopup': 'true',
             onClick: handleDrawerOpen,
           }}
+          size='large'
         >
           <MenuIcon />
         </IconButton>
@@ -317,20 +332,22 @@ export default function Header() {
           <Grid item xs={6}>
             <Box ml={1}>
               <Link href='/'>
-                <Image
+                <NextImageWrapper
                   src={'/images/logo.svg'}
                   alt='ascd logo'
-                  style={{ paddingTop: 0, width: '109px', height: '29px' }}
-                  imageStyle={{ position: 'static' }}
+                  width={109}
+                  height={29}
+                  className={classes.nextImage2}
                 />
               </Link>
             </Box>
           </Grid>
-          <Grid item xs={6} container justify='flex-end'>
+          <Grid item xs={6} container justifyContent='flex-end'>
             <IconButton
               aria-label='checkout cart'
               className='header__summary snipcart-checkout snipcart-summary'
               style={{ marginRight: '10px' }}
+              size='large'
             >
               <ShoppingCartIcon />
               {/* <Badge badgeContent={4} color='secondary'>
@@ -357,23 +374,18 @@ export default function Header() {
               <IconButton
                 className={classes.drawerHeaderClose}
                 onClick={handleDrawerClose}
+                size='large'
               >
                 <CloseIcon />
               </IconButton>
               <Box tabIndex='0'>
                 <Link href='/'>
-                  <Image
+                  <NextImageWrapper
                     src={'/images/fulllogo_white.svg'}
                     alt='ascd logo'
-                    style={{
-                      paddingTop: 0,
-                      width: '109px',
-                      height: '29px',
-                      cursor: 'pointer',
-                      backgroundColor: 'transparent',
-                      marginLeft: '14px',
-                    }}
-                    imageStyle={{ position: 'static' }}
+                    className={classes.nextImage3}
+                    width={109}
+                    height={29}
                   />
                 </Link>
               </Box>

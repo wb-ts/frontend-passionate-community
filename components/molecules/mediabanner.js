@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   button: {

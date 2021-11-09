@@ -8,12 +8,12 @@ import {
   Box,
   Button,
   Typography,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import CtaButton from '@/components/atoms/CtaButton'
 import TextStyle from '@/components/atoms/TextStyle'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import ExpandLess from '@mui/icons-material/ExpandLess'
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiAccordionSummary-expandIcon': {
       marginRight: 0,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'flex-start',
       '& .MuiAccordionSummary-expandIcon': {

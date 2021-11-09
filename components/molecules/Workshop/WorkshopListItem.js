@@ -5,8 +5,8 @@ import {
   CardActionArea,
   CardMedia,
   CardContent,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TopicTag from '@/components/molecules/TopicTag'
 import TextStyle from '@/components/atoms/TextStyle'
 import { useRouter } from 'next/router'
@@ -196,7 +196,7 @@ WorkshopListItem.propTypes = {
     authorName: PropTypes.string,
     workshopDate: PropTypes.string,
     memberPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    nonMemberPrice: PropTypes.string,
+    nonMemberPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     seatsRemaining: PropTypes.number,
   }),
   useMemberBookPrice: PropTypes.bool,

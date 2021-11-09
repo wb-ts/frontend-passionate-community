@@ -1,5 +1,5 @@
 import Layout from '@/components/layout'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container } from '@mui/material'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import React from 'react'

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 
 /**
  * Creates a Hubspot form based on the provided form id.

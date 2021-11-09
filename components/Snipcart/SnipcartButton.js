@@ -1,7 +1,7 @@
 import React from 'react'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { encodeSnipcartOrderValidationUrl } from '@/lib/utils'
-import { Tooltip } from '@material-ui/core'
+import { Tooltip } from '@mui/material'
 import constSnipcart from '@/const/snipcart'
 
 export default function SnipcartButton({

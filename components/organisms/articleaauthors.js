@@ -1,4 +1,4 @@
-import { Box, Divider } from '@material-ui/core'
+import { Box, Divider } from '@mui/material'
 import TextStyle from '@/components/atoms/TextStyle'
 import HorizontalCard from '@/components/molecules/horizontalcard'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'

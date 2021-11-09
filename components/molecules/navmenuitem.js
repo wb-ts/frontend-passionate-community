@@ -1,8 +1,8 @@
 import React from 'react'
 import CustomLink from '@/components/atoms/CustomLink'
-import { makeStyles } from '@material-ui/core/styles'
-import { Button, Popover, Box, Typography, IconButton } from '@material-ui/core'
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
+import { makeStyles } from '@mui/styles'
+import { Button, Popover, Box, Typography, IconButton } from '@mui/material'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       minWidth: 'initial',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       borderBottom: '1px solid rgba(33, 33, 33, 0.08)',
     },
   },
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
       transition: '0.2s',
       marginLeft: 0,
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '6px 12px 20px',
       fontSize: '20px',
       fontWeight: 700,
@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     color: theme.palette.grey.light,
     transform: 'rotate(180deg)',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: '16px',
       boxShadow:
         '0px 12px 17px rgba(0, 0, 0, 0.03), 0px 5px 22px rgba(0, 0, 0, 0.04), 0px 7px 8px rgba(0, 0, 0, 0.08)',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         borderRadius: 0,
         maxHeight: '100%',
         height: '100%',
@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     backgroundColor: theme.palette.grey.extraLight,
     minWidth: 300,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'center',
       borderRadius: 0,
@@ -151,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '16px',
     boxShadow:
       '0px 4px 5px rgba(0, 0, 0, 0.03), 0px 1px 10px rgba(0, 0, 0, 0.04), 0px 2px 4px rgba(0, 0, 0, 0.08)',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: 0,
       boxShadow: 'none',
       minWidth: '120px',
@@ -168,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
       marginBlockStart: 0,
       marginBlockEnd: 0,
       width: '100%',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: '32px',
         marginBottom: 0,
       },
@@ -188,11 +188,11 @@ const useStyles = makeStyles((theme) => ({
           fontSize: '16px',
           fontWeight: 700,
           color: theme.palette.text.primary,
-          [theme.breakpoints.down('sm')]: {
+          [theme.breakpoints.down('md')]: {
             fontSize: '14px',
             fontWeight: 700,
           },
-          [theme.breakpoints.down('xs')]: {
+          [theme.breakpoints.down('sm')]: {
             fontSize: '20px',
             fontWeight: 700,
           },
@@ -231,7 +231,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.light,
     borderRadius: '0 16px 0 32px',
     padding: '20px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: '0 0 0 32px',
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.primary.main,
@@ -254,7 +254,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey.extraLight,
     marginTop: '32px',
     marginLeft: '6px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
       minWidth: '200px',
       marginLeft: 0,
@@ -274,7 +274,7 @@ const useStyles = makeStyles((theme) => ({
       marginBlockEnd: 0,
       width: '100%',
       paddingTop: '24px',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: '32px',
         paddingTop: 0,
       },
@@ -286,7 +286,7 @@ const useStyles = makeStyles((theme) => ({
           lineHeight: '22px',
           fontWeight: 400,
           color: theme.palette.text.primary,
-          [theme.breakpoints.down('xs')]: {
+          [theme.breakpoints.down('sm')]: {
             fontSize: '16px',
             lineHeight: '26px',
           },
@@ -320,7 +320,7 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     color: 'black',
-    margin: `${theme.spacing(1)}px ${theme.spacing(4)}px`,
+    margin: `${theme.spacing(1)} ${theme.spacing(4)}`,
   },
   searchCategoryHeader: {
     fontWeight: 800,
@@ -360,7 +360,7 @@ export default function NavMenuItem({
       <li key={label} className={classes.navMenuItem}>
         <Button
           id={id}
-          variant='contained'
+          variant='standard'
           startIcon={startIcon}
           endIcon={endIcon}
           disableElevation
@@ -397,6 +397,7 @@ export default function NavMenuItem({
               <IconButton
                 className={classes.megaNavContentHeaderClose}
                 onClick={handleMenuClose}
+                size='large'
               >
                 <KeyboardBackspaceIcon />
               </IconButton>

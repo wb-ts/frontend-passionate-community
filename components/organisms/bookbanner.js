@@ -1,15 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Box, Grid, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import Image from 'material-ui-image'
+import { Box, Grid, Divider } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import Image from 'next/image'
 import CustomLink from '@/components/atoms/CustomLink'
 import paths from '@/paths/path'
 import FilterDropdown from '@/components/atoms/FilterDropdown'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import BookBannerPrice from '@/components/molecules/bookbannerprice'
 import TextStyle from '@/components/atoms/TextStyle'
-import LocalShippingIcon from '@material-ui/icons/LocalShipping'
-import LoyaltySharpIcon from '@material-ui/icons/LoyaltySharp'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
+import LoyaltySharpIcon from '@mui/icons-material/LoyaltySharp'
 import { useRouter } from 'next/router'
 import imageoptimization from '@/const/imageoptimization'
 import ImageCarousel from '@/components/molecules/ImageCarousel'
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     boxShadow: theme.shadows[10],
+    padding: 0,
   },
   details: {
     display: 'flex',
@@ -146,18 +147,13 @@ export default function BookBanner({
           <ImageCarousel images={bookImages} />
         ) : (
           <Image
-            src={imgUrl}
+            src={imgUrl.startsWith('//') ? 'https:' + imgUrl : imgUrl}
             alt={`Book banner image for ${book.fields.thumbnail?.fields?.title}`}
             className={classes.image}
-            imageStyle={{
-              width: '307px',
-              height: '428px',
-            }}
-            style={{
-              width: '307px',
-              height: '428px',
-              padding: 0,
-            }}
+            width={307}
+            height={428}
+            placeholder='blur'
+            blurDataURL='/images/blurrImg.png'
           />
         )}
       </Grid>
@@ -213,7 +209,9 @@ export default function BookBanner({
                 dataItemId: version.fields?.productNumber,
                 dataItemName: version.fields?.title,
                 dataItemUrl: book.fields.slug,
-                dataItemImage: imgUrl,
+                dataItemImage: imgUrl.startsWith('//')
+                  ? 'https:' + imgUrl
+                  : imgUrl,
                 dataItemDescription: book.fields.description,
                 dataItemPrice: hasMemberBookPrice
                   ? version.fields?.priceMember
@@ -245,7 +243,9 @@ export default function BookBanner({
                 dataItemId: book.fields?.productNumber,
                 dataItemName: book.fields.title,
                 dataItemUrl: book.fields.slug,
-                dataItemImage: imgUrl,
+                dataItemImage: imgUrl.startsWith('//')
+                  ? 'https:' + imgUrl
+                  : imgUrl,
                 dataItemDescription: book.fields.description,
                 dataItemPrice: hasMemberBookPrice
                   ? book.fields?.memberDiscountedPrice

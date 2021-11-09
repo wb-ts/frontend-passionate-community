@@ -1,15 +1,15 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles';
 import {
   Popover,
   Box,
   Typography,
   InputBase,
   IconButton,
-} from '@material-ui/core'
+} from '@mui/material'
 import TopicTag from '@/components/molecules/TopicTag'
-import CloseIcon from '@material-ui/icons/Close'
-import SearchIcon from '@material-ui/icons/Search'
+import CloseIcon from '@mui/icons-material/Close'
+import SearchIcon from '@mui/icons-material/Search'
 import { useRouter } from 'next/router'
 import paths from '@/paths/path'
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       minHeight: '420px',
       borderRadius: 0,
       padding: '32px',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         minHeight: '100%',
         padding: '12px',
       },
@@ -68,10 +68,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
     color: theme.palette.grey.medium,
     marginRight: 2,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginRight: 20,
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginRight: 22,
     },
     '&$visible': {
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '960px',
     padding: '32px 20px 12px',
     borderBottom: '1px solid rgba(0, 0, 0, 0.4)',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       padding: '24px 12px',
     },
     [theme.breakpoints.up('md')]: {
@@ -146,7 +146,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'space-evenly',
     marginTop: '32px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       width: '100%',
     },
@@ -156,10 +156,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     padding: '24px 16px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '24px 0',
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '24px 12px',
     },
   },
@@ -168,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
     lineHeight: '18px',
     paddingLeft: '4px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '14px',
       lineHeight: '21px',
       fontWeight: '700',
@@ -180,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     marginTop: '16px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: '12px',
     },
     '& p': {
@@ -218,7 +218,7 @@ export default function SearchPopover({
         <IconButton
           onClick={closeSearchPopover}
           className={classes.searchPopoverClose}
-        >
+          size="large">
           <CloseIcon />
         </IconButton>
         <Box className={classes.searchPopoverBody}>
@@ -244,13 +244,13 @@ export default function SearchPopover({
             }
             onClick={resetSearchPopoverValue}
             onKeyPress={onCancelKeyPress}
-          >
+            size="large">
             <CloseIcon />
           </IconButton>
           <IconButton
             className={classes.searchPopoverSearch}
             onClick={triggerSearch}
-          >
+            size="large">
             <SearchIcon />
           </IconButton>
         </Box>
@@ -336,5 +336,5 @@ export default function SearchPopover({
         </Box>
       </Box>
     </Popover>
-  )
+  );
 }

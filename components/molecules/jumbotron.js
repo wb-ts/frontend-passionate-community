@@ -1,12 +1,12 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Container, Box, Grid, Button } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Container, Box, Grid, Button } from '@mui/material'
 import CtaItem from '@/components/atoms/CtaItem'
 import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
 import BannerMessage from '@/components/atoms/BannerMessage'
 import ReactMarkdown from 'react-markdown'
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: 67,
       width: 427,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       paddingLeft: 8,
       paddingRight: 8,
     },
@@ -58,11 +58,11 @@ const useStyles = makeStyles((theme) => ({
       width: 470,
     },
     '& .MuiGrid-spacing-xs-5 > .MuiGrid-item': {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         padding: '16px 18px',
       },
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       paddingLeft: 8,
       paddingRight: 8,
     },
@@ -122,7 +122,7 @@ export default function Jumbotron({
           className={isHeader ? classes.container : ''}
         >
           <Grid container className={classes.gridContainer}>
-            <Grid item xs={12} md={6} container justify='flex-start'>
+            <Grid item xs={12} md={6} container justifyContent='flex-start'>
               <Box className={classes.leftContent}>
                 <TextStyle variant='h1'>{title}</TextStyle>
                 <Box mt={2} mb={5}>
@@ -165,7 +165,7 @@ export default function Jumbotron({
                 </Grid>
               </Box>
             </Grid>
-            <Grid item xs={12} md={6} container justify='flex-end'>
+            <Grid item xs={12} md={6} container justifyContent='flex-end'>
               <Box className={classes.rightContent}>
                 <Grid container spacing={5}>
                   {ctaValuePropositionItems &&

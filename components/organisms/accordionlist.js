@@ -1,5 +1,5 @@
 import FilterDropdown from '@/components/atoms/FilterDropdown'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import AccordionFAQ from '@/components/molecules/accordionfaq'
 import AccordionIssue from '@/components/molecules/accordionissue'

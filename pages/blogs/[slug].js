@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { useRouter } from 'next/router'
 import { client } from 'lib/contentful'
 import SEOHead from '@/const/head'
 import paths from '@/paths/path'
-import Image from 'material-ui-image'
+import NextImageWrapper from '../../components/images/NextImageWrapper'
 import TextStyle from '@/components/atoms/TextStyle'
 import TOCNav from '@/components/atoms/TOCNav'
 import Layout from '@/components/layout'
@@ -14,14 +14,13 @@ import ContentList from '@/components/molecules/contentlist'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
-import { Box, Container, Grid, Typography } from '@material-ui/core'
+import { Box, Container, Grid, Typography, Skeleton } from '@mui/material'
 import Annotator from '@/components/organisms/annotator'
 import TopicTag from '@/components/molecules/TopicTag'
 import TextCTA from '@/components/molecules/textcta'
 import ArticleAuthors from '@/components/organisms/articleaauthors'
 import { components } from '@/const/components'
 import CustomLink from '@/components/atoms/CustomLink'
-import { Skeleton } from '@material-ui/lab'
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     '& blockquote': {
-      borderLeft: `${theme.spacing(1)}px solid ${theme.palette.primary.main}`,
+      borderLeft: `${theme.spacing(1)} solid ${theme.palette.primary.main}`,
       paddingLeft: theme.spacing(2),
     },
   },
@@ -59,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
       top: 250,
     },
   },
+  nextImage: {
+    paddingTop: 0,
+    width: 'inherit',
+    height: 'inherit',
+    objectFit: 'cover',
+  },
   publication: {},
 }))
 
@@ -75,7 +80,12 @@ export default function Blog({ blog, relatedBlogs }) {
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
     )
   }
 
@@ -261,44 +271,36 @@ export default function Blog({ blog, relatedBlogs }) {
             </Box>
             {blog.fields.thumbnail && (
               <Box className={classes.media}>
-                <Image
+                <NextImageWrapper
                   src={
                     blog.fields?.thumbnail?.fields?.imageBynder
-                      ? blog.fields?.thumbnail?.fields?.imageBynder[0]?.src +
-                        '?' +
-                        imageoptimization.qualityParameter +
-                        '=' +
-                        imageoptimization.qualityValue
+                      ? blog.fields?.thumbnail?.fields?.imageBynder[0]?.src
                       : blog.fields?.thumbnail?.fields?.imageContentful?.fields
                           ?.file?.url
                       ? blog.fields?.thumbnail?.fields?.imageContentful?.fields
-                          ?.file?.url +
-                        '?' +
-                        imageoptimization.qualityParameter +
-                        '=' +
-                        imageoptimization.qualityValue
+                          ?.file?.url
                       : '/images/ASCDImageFiller.png'
                   }
                   alt={blog.fields?.thumbnail?.fields?.alternate}
-                  style={{
-                    paddingTop: 0,
-                    width: '100%',
-                    height: '460px',
-                  }}
-                  imageStyle={{
-                    width: 'inherit',
-                    height: 'inherit',
-                  }}
-                  cover='true'
+                  width={800}
+                  height={433}
+                  layout='responsive'
+                  className={classes.nextImage}
                 />
-                {blog.fields.thumbnail &&
-                  blog.fields?.thumbnail?.fields?.imageBynder &&
-                  blog.fields?.thumbnail?.fields?.imageBynder[0].copyright && (
-                    <em>
-                      Credit:{' '}
-                      {blog.fields?.thumbnail?.fields?.imageBynder[0].copyright}
-                    </em>
-                  )}
+                <Box>
+                  {blog.fields.thumbnail &&
+                    blog.fields?.thumbnail?.fields?.imageBynder &&
+                    blog.fields?.thumbnail?.fields?.imageBynder[0]
+                      .copyright && (
+                      <em>
+                        Credit:{' '}
+                        {
+                          blog.fields?.thumbnail?.fields?.imageBynder[0]
+                            .copyright
+                        }
+                      </em>
+                    )}
+                </Box>
               </Box>
             )}
             <Box

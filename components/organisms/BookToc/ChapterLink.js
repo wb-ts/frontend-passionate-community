@@ -1,5 +1,5 @@
 import React from 'react'
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 import TextStyle from '@/components/atoms/TextStyle'
 import CustomLink from '@/components/atoms/CustomLink'
 

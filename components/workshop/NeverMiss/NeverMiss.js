@@ -2,15 +2,15 @@ import React from 'react'
 import {
   Box,
   Grid,
-  makeStyles,
   Typography,
   Modal,
   IconButton,
-} from '@material-ui/core'
+} from '@mui/material'
 import hubspotFormIds from '@/const/hubspot-form-ids'
 import HubSpotForm from '@/components/molecules/hubspotform'
 import CtaButton from '@/components/atoms/CtaButton'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   container: {

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Box, List, Divider, Typography, ListItem } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Grid, Box, List, Divider, Typography, ListItem } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import NoAnnotations from '../atoms/NoAnnotations'
 import axios from 'axios'
 import useSWR, { mutate } from 'swr'
@@ -35,7 +35,7 @@ export default function Annotations({ userId }) {
   const captionLabel = 'Notes & Highlights'
 
   const classes = useStyles()
-  
+
   const fetcher = (url) => axios.get(url).then((res) => res.data)
   const { data: annotations } = useSWR(
     `/api/get-annotations-by-userid?userId=${userId}`,
@@ -89,9 +89,11 @@ export default function Annotations({ userId }) {
                     <AnnotationItem
                       annotation={annotation}
                       deleteAction={(contentId) => deleteAnnotations(contentId)}
-                      />
+                    />
                   </ListItem>
-                  {annotations[index + 1] !== undefined && (<Divider variant='middle' className={classes.divider} />)}
+                  {annotations[index + 1] !== undefined && (
+                    <Divider variant='middle' className={classes.divider} />
+                  )}
                 </>
               )
             })

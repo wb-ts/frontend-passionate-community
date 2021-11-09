@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Divider } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import TextStyle from '@/components/atoms/TextStyle'

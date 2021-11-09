@@ -1,7 +1,7 @@
 import Layout from '@/components/layout'
 import Banner from '@/components/molecules/banner'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container } from '@mui/material'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import React from 'react'

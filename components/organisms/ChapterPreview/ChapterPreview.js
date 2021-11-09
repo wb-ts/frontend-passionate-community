@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import TextStyle from '@/components/atoms/TextStyle'
-import { Box, Grid, IconButton, Modal, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close'
+import { Box, Grid, IconButton, Modal, Button } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import CloseIcon from '@mui/icons-material/Close'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import CartTile from '@/components/molecules/carttile'
 import TopicTag from '@/components/molecules/TopicTag'
@@ -383,6 +383,7 @@ const ChapterPreview = ({
                 )
                 .then(() => topRef.current.scrollTo(0, 0))
             }
+            size='large'
           >
             <img src='/images/left.svg' className={classes.navIcon} />
           </IconButton>
@@ -419,6 +420,7 @@ const ChapterPreview = ({
                 )
                 .then(() => topRef.current.scrollTo(0, 0))
             }
+            size='large'
           >
             <img src='/images/right.svg' className={classes.navIcon} />
           </IconButton>
@@ -453,6 +455,7 @@ const ChapterPreview = ({
           <IconButton
             aria-label='Close modal button'
             className={classes.closeModalButton}
+            size='large'
           >
             <CloseIcon size='small' onClick={() => setOpen(null)} />
           </IconButton>

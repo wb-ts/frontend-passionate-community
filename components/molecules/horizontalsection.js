@@ -1,13 +1,13 @@
 import React from 'react'
-import { Avatar, Box, Container, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Avatar, Box, Container, Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TextStyle from '@/components/atoms/TextStyle'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import TopicTag from '@/components/molecules/TopicTag'
 import paths from '@/paths/path'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import Image from 'material-ui-image'
+import Image from 'next/image'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '212px',
     border: '8px solid #FFFFFF',
     backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       border: '4px solid #FFFFFF',
     },
   },
@@ -45,9 +45,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       marginRight: '30px',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: '26px',
     },
+  },
+  nextImage: {
+    backgroundColor: 'transparent',
+    minWidth: 25,
+    marginTop: 5,
   },
   container: {
     display: 'flex',
@@ -104,12 +109,12 @@ export default function HorizontalSection({
                     <Box pr={2}>
                       <Image
                         src='/images/quote.svg'
-                        style={{
-                          backgroundColor: 'transparent',
-                          minWidth: 25,
-                          marginTop: 5,
-                        }}
-                      ></Image>
+                        width={20}
+                        height={20}
+                        className={classes.nextImage}
+                        placeholder='blur'
+                        blurDataURL='/images/blurrImg.png'
+                      />
                     </Box>
                     <Box>
                       <TextStyle variant='h4'>{description}</TextStyle>

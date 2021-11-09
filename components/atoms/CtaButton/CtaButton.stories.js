@@ -3,7 +3,7 @@ import CtaButton from '@/components/atoms/CtaButton'
 
 export default {
   component: CtaButton,
-  title: 'Components/Atoms/CtaButton',
+  title: 'Components/atoms/CtaButton',
 }
 
 const Template = (args) => <CtaButton {...args} />

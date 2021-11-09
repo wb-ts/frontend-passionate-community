@@ -2,8 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
 import paths from '@/paths/path'
-import { Box, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import DaysAgo from '@/components/atoms/DaysAgo'
 import TextStyle from '@/components/atoms/TextStyle'
 import TopicTag from '@/components/molecules/TopicTag'
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    padding: `0px ${theme.spacing(3)}px`,
+    padding: `0px ${theme.spacing(3)}`,
     color: theme.palette.common.white,
     zIndex: 1,
   },

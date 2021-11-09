@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Chip, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Chip, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import CtaButton from '@/components/atoms/CtaButton'
 import AuthorGroup from '@/components/atoms/AuthorGroup'
 import PropTypes from 'prop-types'
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
     width: (props) => (props.twoThirds ? '60%' : '100%'),
     marginLeft: (props) => props.twoThirds && 0,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: (props) => props.twoThirds && '100%',
     },
   },

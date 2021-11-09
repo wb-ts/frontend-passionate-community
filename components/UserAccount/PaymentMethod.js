@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Card,
-  Box,
-  TextField,
-  Button,
-  CircularProgress,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Card, Box, TextField, Button, CircularProgress } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
 import {
@@ -20,6 +14,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import useUserAccount from '../../lib/hooks/useUserAccount'
 import StripeInput from '@/components/Stripe/StripeInput'
 import { useRouter } from 'next/router'
+import PaymentSummary from './PaymentSummary'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -262,6 +257,10 @@ export default function PaymentMethod({ paymentMethodId }) {
             </Button>
           </Box>
         </Box>
+      </Box>
+
+      <Box>
+        <PaymentSummary />
       </Box>
     </Card>
   )

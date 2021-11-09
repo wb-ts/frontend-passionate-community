@@ -1,6 +1,6 @@
 import React from 'react'
-import { Paper, Box, Chip, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Paper, Box, Chip, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import CtaButton from '@/components/atoms/CtaButton'
 import TextStyle from '../atoms/TextStyle'
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   rootPopular: {
     boxShadow:
       '0px 24px 38px rgba(0, 0, 0, 0.04), 0px 9px 46px rgba(0, 0, 0, 0.08), 0px 11px 15px rgba(0, 0, 0, 0.08)',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       boxShadow:
         '0px 8px 10px rgba(0, 0, 0, 0.03), 0px 3px 14px rgba(0, 0, 0, 0.04), 0px 5px 5px rgba(0, 0, 0, 0.08)',
     },

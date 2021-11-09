@@ -7,11 +7,11 @@ import {
   IconButton,
   Popover,
   Typography,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import FormatQuoteIcon from '@material-ui/icons/FormatQuote'
-import BorderColorIcon from '@material-ui/icons/BorderColor'
-import CloseIcon from '@material-ui/icons/Close'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
+import BorderColorIcon from '@mui/icons-material/BorderColor'
+import CloseIcon from '@mui/icons-material/Close'
 import clsx from 'clsx'
 import Annotation from '@/components/molecules/annotation'
 import useSWR, { mutate } from 'swr'
@@ -704,6 +704,7 @@ export default function Annotator({
               <IconButton
                 aria-label='Close annotations'
                 onClick={() => toggleAnnotate()}
+                size='large'
               >
                 <CloseIcon fontSize='small' />
               </IconButton>

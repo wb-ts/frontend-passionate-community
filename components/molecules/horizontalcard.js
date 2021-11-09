@@ -6,12 +6,12 @@ import {
   CardContent,
   CardMedia,
   Avatar,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TopicTag from '@/components/molecules/TopicTag'
 import TextStyle from '@/components/atoms/TextStyle'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import Image from 'material-ui-image'
+import Image from 'next/image'
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
@@ -112,6 +112,10 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: ({ reverse }) => (reverse ? 70 : ''),
     },
   },
+  nextImage: {
+    paddingTop: 0,
+    marginRight: 5,
+  },
   noPadding: {
     paddingTop: 0,
     paddingBottom: 0,
@@ -196,7 +200,9 @@ export default function HorizontalCard({
             {premium && (
               <Image
                 src='/images/premium.svg'
-                style={{ width: 20, height: 20, paddingTop: 0, marginRight: 5 }}
+                width={20}
+                height={20}
+                className={classes.nextImage}
               />
             )}
             {label && <TopicTag variant='special' label={label} />}

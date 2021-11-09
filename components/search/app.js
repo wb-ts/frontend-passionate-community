@@ -8,13 +8,13 @@ import {
   Drawer,
   Button,
   IconButton,
-} from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
+} from '@mui/material'
+import { withStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
 import SearchItem from '@/components/search/searchitem'
-import Switch from '@material-ui/core/Switch'
-import TuneIcon from '@material-ui/icons/Tune'
-import CloseIcon from '@material-ui/icons/Close'
+import Switch from '@mui/material/Switch'
+import TuneIcon from '@mui/icons-material/Tune'
+import CloseIcon from '@mui/icons-material/Close'
 import {
   Configure,
   Hits,
@@ -43,7 +43,7 @@ const useStyles = (theme) => ({
     borderRadius: '0px 0px 0px 64px',
     padding: '52px 0 40px',
     marginBottom: '56px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginBottom: '12px',
     },
   },
@@ -52,7 +52,7 @@ const useStyles = (theme) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: 24,
     },
   },
@@ -71,7 +71,7 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 30,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: '24px',
       marginBottom: '24px',
     },
@@ -81,13 +81,13 @@ const useStyles = (theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'flex-start',
     },
     '& > div:first-child': {
       marginRight: '24px',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginRight: 0,
         marginBottom: '20px',
       },
@@ -116,7 +116,7 @@ const useStyles = (theme) => ({
     },
   },
   drawerPaper: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '80%',
     },
   },
@@ -141,7 +141,7 @@ const PremiumResourcesSwitch = withStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '24px 24px 18px',
     },
   },
@@ -527,7 +527,7 @@ class App extends React.Component {
                   <IconButton
                     className={classes.drawerHeaderClose}
                     onClick={handleFiltersDrawerClose}
-                  >
+                    size="large">
                     <CloseIcon />
                   </IconButton>
                   <Typography variant='h4'>Filters</Typography>
@@ -619,7 +619,7 @@ class App extends React.Component {
           </Grid>
         </InstantSearch>
       </Grid>
-    )
+    );
   }
 }
 

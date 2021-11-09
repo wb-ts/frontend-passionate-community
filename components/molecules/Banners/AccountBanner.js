@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Box, alpha, Container } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Box, alpha, Container } from '@mui/material'
 
 import TextStyle from '@/components/atoms/TextStyle'
 import HorizontalNav from '@/components/molecules/HorizontalNav'

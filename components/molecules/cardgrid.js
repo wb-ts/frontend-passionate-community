@@ -1,6 +1,6 @@
 import React from 'react'
+import { makeStyles } from '@mui/styles'
 import ReactMarkdown from 'react-markdown'
-import { makeStyles } from '@material-ui/core/styles'
 import {
   Grid,
   CardMedia,
@@ -9,7 +9,7 @@ import {
   Card,
   CardActionArea,
   Avatar,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import TextStyle from '@/components/atoms/TextStyle'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardGridItem: {
     '&.MuiGrid-item': {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         paddingBottom: 0,
       },
     },

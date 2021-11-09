@@ -1,5 +1,5 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useEffect, useState } from 'react'
+import { makeStyles } from '@mui/styles'
 import {
   Box,
   Modal,
@@ -12,14 +12,13 @@ import {
   CardActionArea,
   CardContent,
   Link,
-} from '@material-ui/core'
+} from '@mui/material'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-import CloseIcon from '@material-ui/icons/Close'
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
-import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import CloseIcon from '@mui/icons-material/Close'
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import TextStyle from '@/components/atoms/TextStyle'
 import options from '@/const/options'
@@ -27,7 +26,7 @@ import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       '& .MuiButtonBase-root': {
         justifyContent: 'flex-start',
       },
@@ -130,12 +129,12 @@ const useStyles = makeStyles((theme) => ({
     width: 'calc(100% + 16px)',
     marginLeft: '-8px',
   },
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     modal: {
       width: '56vw',
     },
   },
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     modal: {
       width: '70vw',
     },
@@ -148,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
       width: 'calc(97% + 3px) !important',
     },
   },
-  [theme.breakpoints.down('xs')]: {
+  [theme.breakpoints.down('sm')]: {
     medium: {
       width: '56px',
       height: '56px',
@@ -346,6 +345,7 @@ export default function Directory({ items }) {
                 <IconButton
                   aria-label='Close modal button'
                   className={classes.closeModalButton}
+                  size='large'
                 >
                   <CloseIcon size='small' onClick={() => setOpen(null)} />
                 </IconButton>
@@ -408,6 +408,7 @@ export default function Directory({ items }) {
                   aria-label='go to previous item'
                   className={classes.navButton}
                   onClick={() => clickPrevious()}
+                  size='large'
                 >
                   <NavigateBeforeIcon className={classes.navIcon} />
                 </IconButton>
@@ -431,6 +432,7 @@ export default function Directory({ items }) {
                   aria-label='go to next item'
                   className={classes.navButton}
                   onClick={() => clickNext()}
+                  size='large'
                 >
                   <NavigateNextIcon className={classes.navIcon} />
                 </IconButton>

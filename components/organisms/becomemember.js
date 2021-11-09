@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Box, Container, Grid } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Box, Container, Grid } from '@mui/material'
 import MemberCard from '@/components/molecules/membercard'
 import TextStyle from '@/components/atoms/TextStyle'
 
@@ -87,13 +87,17 @@ export default function BecomeMember({ ...props }) {
       )}
 
       <Container maxWidth='lg'>
-        <Grid container justify='center' className={classes.gridContainer}>
+        <Grid
+          container
+          justifyContent='center'
+          className={classes.gridContainer}
+        >
           <Grid
             item
             xs={12}
             md={4}
             container
-            justify='center'
+            justifyContent='center'
             className={classes.gridItem}
           >
             <MemberCard
@@ -108,7 +112,7 @@ export default function BecomeMember({ ...props }) {
             xs={12}
             md={4}
             container
-            justify='center'
+            justifyContent='center'
             className={classes.gridItem}
           >
             <MemberCard
@@ -124,7 +128,7 @@ export default function BecomeMember({ ...props }) {
             xs={12}
             md={4}
             container
-            justify='center'
+            justifyContent='center'
             className={classes.gridItem}
           >
             <MemberCard

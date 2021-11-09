@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Divider, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Divider, Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import ArticleItem from '@/components/molecules/ArticleItem'
 import TextStyle from '@/components/atoms/TextStyle'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'

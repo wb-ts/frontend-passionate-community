@@ -5,8 +5,8 @@ import {
   CardActionArea,
   CardContent,
   Typography,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import paths from '@/paths/path'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import { useRouter } from 'next/router'

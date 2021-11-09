@@ -1,18 +1,18 @@
 import React from 'react'
-import Layout from '@/components/layout'
-import HeroHalfHalf from '@/components/molecules/herohalfhalf'
-import TextStyle from '@/components/atoms/TextStyle'
-import ContentGrid from '@/components/organisms/contentgrid'
-import EventCard from '@/components/molecules/eventcard'
-import TwoColContentListing from '@/components/organisms/twocolcontentlisting'
-import TwoColumnCTA from '@/components/molecules/twocolumncta'
-import paths from '@/paths/path'
-import { client } from '@/lib/contentful'
-import { Box, Container, Divider, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import SEOHead from '@/const/head'
+import Layout from '../../components/layout'
+import HeroHalfHalf from '../../components/molecules/herohalfhalf'
+import TextStyle from '../../components/atoms/TextStyle'
+import ContentGrid from '../../components/organisms/contentgrid'
+import EventCard from '../../components/molecules/eventcard'
+import TwoColContentListing from '../../components/organisms/twocolcontentlisting'
+import TwoColumnCTA from '../../components/molecules/twocolumncta'
+import paths from '../../paths/path'
+import { client } from '../../lib/contentful'
+import { Box, Container, Divider, Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import SEOHead from '../../const/head'
 import ReactMarkdown from 'react-markdown'
-import imageoptimization from '@/const/imageoptimization'
+import imageoptimization from '../../const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -193,6 +193,11 @@ export default function Events({
 
   var dateFormat = require('dateformat')
 
+  const descriptionCharCount =
+    featuredEvent?.fields?.description?.length > 0
+      ? featuredEvent.fields.description.length
+      : 0
+
   return (
     <Layout>
       <SEOHead seo={SEO} />
@@ -243,10 +248,26 @@ export default function Events({
         {featuredEvent && (
           <Box mt={10}>
             <TwoColumnCTA
+              label={featuredEvent.fields.type?.fields?.title}
               title={featuredEvent.fields.title}
               date={dateFormat(featuredEvent.fields.dateTime, 'longDate')}
               time={dateFormat(featuredEvent.fields.dateTime, 'shortTime')}
               description={featuredEvent.fields.description}
+              descriptionLineNumbers={
+                descriptionCharCount > 315
+                  ? 8
+                  : descriptionCharCount > 270
+                  ? 7
+                  : descriptionCharCount > 225
+                  ? 6
+                  : descriptionCharCount > 180
+                  ? 5
+                  : descriptionCharCount > 135
+                  ? 4
+                  : descriptionCharCount > 90
+                  ? 3
+                  : null
+              }
               image={
                 featuredEvent.fields?.thumbnail?.fields?.imageBynder
                   ? featuredEvent.fields?.thumbnail?.fields?.imageBynder[0]

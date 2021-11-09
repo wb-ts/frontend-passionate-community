@@ -7,8 +7,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import TextStyle from '@/components/atoms/TextStyle'
 

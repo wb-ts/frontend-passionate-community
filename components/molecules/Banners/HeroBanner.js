@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Container, Box, Grid, Button } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Container, Box, Grid, Button } from '@mui/material'
 import CtaItem from '@/components/atoms/CtaItem'
 import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Box, FormControl, MenuItem, Select } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, FormControl, MenuItem, Select } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import CustomLink from '@/components/atoms/CustomLink'
 import paths from '@/paths/path'
 import TextStyle from '@/components/atoms/TextStyle'

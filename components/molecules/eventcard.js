@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, CardContent, CardMedia, Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Card, CardContent, CardMedia, Box } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TextStyle from '@/components/atoms/TextStyle'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 

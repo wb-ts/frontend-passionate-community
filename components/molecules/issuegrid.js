@@ -6,10 +6,10 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import FilterDropdown from '@/components/atoms/FilterDropdown'
-import Image from 'material-ui-image'
+import Image from 'next/image'
 import TextStyle from '@/components/atoms/TextStyle'
 import paths from '@/paths/path'
 import imageoptimization from '@/const/imageoptimization'
@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
         '0px 8px 10px rgba(0, 0, 0, 0.03), 0px 3px 14px rgba(0, 0, 0, 0.04), 0px 5px 5px rgba(0, 0, 0, 0.08)!important',
       borderRadius: 4,
     },
+  },
+  nextImage: {
+    position: 'static',
+    backgroundColor: 'transparent',
+    objectFit: 'cover',
   },
   cardActionRoot: {
     '&:hover': {
@@ -162,11 +167,11 @@ export default function IssueGrid({ issues }) {
                             : '/images/ASCDImageFiller.png'
                         }
                         alt={item.fields.thumbnail.fields?.alternate}
-                        style={{
-                          position: 'static',
-                          backgroundColor: 'transparent',
-                        }}
-                        cover={true}
+                        width={1920}
+                        height={445}
+                        className={classes.nextImage}
+                        placeholder='blur'
+                        blurDataURL='/images/blurrImg.png'
                       />
                     )}
                   </Box>

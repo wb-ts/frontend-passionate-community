@@ -2,8 +2,8 @@ import React from 'react'
 import { client } from '@/lib/contentful'
 import SEOHead from '@/const/head'
 import Layout from '@/components/layout'
-import { Box, Container } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container, Skeleton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import ReadMore from '@/components/molecules/readmore'
 import Topics from '@/components/molecules/Topics'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
@@ -15,7 +15,6 @@ import TextStyle from '@/components/atoms/TextStyle'
 import ContentList from '@/components/molecules/contentlist'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +43,12 @@ export default function AuthorDetails({
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
     )
   }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Divider, Grid } from '@material-ui/core'
+import { Box, Divider, Grid } from '@mui/material'
 import VideoPlayer from '@/components/molecules/videoplayer'
 import VideoPlaylistItem from '@/components/molecules/videoplaylistitem'
 

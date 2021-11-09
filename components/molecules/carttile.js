@@ -6,8 +6,8 @@ import {
   CardContent,
   Typography,
   CardMedia,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import paths from '@/paths/path'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import TextStyle from '../atoms/TextStyle'

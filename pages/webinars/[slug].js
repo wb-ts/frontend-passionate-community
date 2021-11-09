@@ -1,8 +1,8 @@
 import React from 'react'
 import Layout from '@/components/layout'
 import { client } from '@/lib/contentful'
-import { Box, Container, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container, Divider } from '@mui/material'
+import { makeStyles } from '@mui/styles';
 import SEOHead from '@/const/head'
 import ReadMore from '@/components/molecules/readmore'
 import Topics from '@/components/molecules/Topics'
@@ -14,7 +14,7 @@ import ContentGrid from '@/components/organisms/contentgrid'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
+import { Skeleton } from '@mui/material';
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles(() => ({
@@ -24,9 +24,7 @@ const useStyles = makeStyles(() => ({
 export default function Webinar({ webinar, webinars }) {
   const router = useRouter()
   if (router.isFallback) {
-    return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
-    )
+    return <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />;
   }
 
   const classes = useStyles()

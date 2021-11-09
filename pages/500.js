@@ -1,6 +1,6 @@
 import Layout from '@/components/layout'
 import Head from 'next/head'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container } from '@mui/material'
 import React from 'react'
 import TwoColumnCTA from '@/components/molecules/twocolumncta'
 

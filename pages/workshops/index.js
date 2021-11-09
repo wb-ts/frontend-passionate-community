@@ -6,13 +6,13 @@ import {
   FormControl,
   Select,
   MenuItem,
-} from '@material-ui/core'
-import { DateRangePicker, LocalizationProvider } from '@material-ui/pickers'
+} from '@mui/material'
+import { DateRangePicker, LocalizationProvider } from '@mui/lab'
 import DateFnsUtils from '@date-io/date-fns'
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import SEOHead from '@/const/head'
 import React, { useState, useEffect, useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import { components } from '@/const/components'
@@ -109,7 +109,7 @@ export default function AuthorWorkshop({
           ow.fields.topics &&
           ow.fields.topics.some(
             (t) =>
-              selectedTopics && selectedTopics.some((s) => s === t.fields.title)
+              selectedTopics && selectedTopics.some((s) => s === t.fields?.title)
           )
       )
     }
@@ -128,8 +128,8 @@ export default function AuthorWorkshop({
               v.fields.sessions &&
               v.fields.sessions.some(
                 (s) =>
-                  new Date(s.fields.startDatetime) >= new Date(value[0]) &&
-                  new Date(s.fields.startDatetime) <= new Date(value[1])
+                  new Date(s.fields?.startDatetime) >= new Date(value[0]) &&
+                  new Date(s.fields?.startDatetime) <= new Date(value[1])
               )
           )
       )
@@ -145,7 +145,7 @@ export default function AuthorWorkshop({
           return (
             <HeroBanner
               title={item.fields.title}
-              description={documentToReactComponents(item.fields.body, options)}
+              description={documentToReactComponents(item?.fields?.body, options)}
               imagePos='right'
               image={
                 item.fields?.image?.fields?.imageBynder
@@ -195,7 +195,7 @@ export default function AuthorWorkshop({
   return (
     <Layout>
       <SEOHead seo={page?.fields?.seo ? page.fields.seo : page} />
-      <Box mb={[6, 10]}>{_renderPageContent(page.fields.content)}</Box>
+      <Box mb={[6, 10]}>{_renderPageContent(page?.fields?.content)}</Box>
       <Container>
         {featuredWorkshop && featuredWorkshop[0] && (
           <Box mb={[6, 10]} mt={[6, 10]}>

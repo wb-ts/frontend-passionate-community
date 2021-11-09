@@ -15,19 +15,19 @@ import {
   Modal,
   IconButton,
   Typography,
-} from '@material-ui/core'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import ExpandLess from '@material-ui/icons/ExpandLess'
+} from '@mui/material'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import ExpandLess from '@mui/icons-material/ExpandLess'
 import CtaButton from '@/components/atoms/CtaButton'
 import { components } from '@/const/components'
 import TextStyle from '@/components/atoms/TextStyle'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { useRouter } from 'next/router'
 import paths from '@/paths/path'
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import HubSpotForm from '@/components/molecules/hubspotform'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 import BannerMessage from '@/components/atoms/BannerMessage'
 import CustomLink from '@/components/atoms/CustomLink'
 import hubspotFormIds from '@/const/hubspot-form-ids'
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiAccordionSummary-expandIcon': {
       marginRight: 0,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'flex-start',
       '& .MuiAccordionSummary-expandIcon': {
@@ -128,10 +128,10 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       textAlign: 'center',
       '&:first-of-type': {
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
           paddingBottom: 32,
           marginBottom: 16,
           borderBottom: '1px solid rgba(0, 0, 0, 0.2)',
@@ -180,17 +180,17 @@ const useStyles = makeStyles((theme) => ({
   ctaBlock: {
     display: 'flex',
     flexDirection: 'row',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'center',
     },
     '& a, button': {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
       '&:first-child': {
         marginRight: 16,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
           marginBottom: 16,
           marginRight: 0,
         },
@@ -523,8 +523,8 @@ export default function Page({ page }) {
                 just an email or phone call away.
               </TextStyle>
             </Grid>
-            <Grid item xs={false} sm={2} container justify='center'>
-              <Hidden xsDown>
+            <Grid item xs={false} sm={2} container justifyContent='center'>
+              <Hidden smDown>
                 <Divider
                   orientation='vertical'
                   flexItem
@@ -615,6 +615,7 @@ export default function Page({ page }) {
               <IconButton
                 aria-label='Close modal button'
                 className={classes.closeModalButton}
+                size='large'
               >
                 <CloseIcon size='small' onClick={() => setOpenModal(false)} />
               </IconButton>
@@ -744,7 +745,7 @@ export default function Page({ page }) {
       >
         <SEOHead seo={page?.fields?.seo ? page.fields.seo : page} />
         <Box mt={[0, 0, 5]} mb={[6, 10]}>
-          {_renderContent(page.fields.content)}
+          {_renderContent(page?.fields?.content)}
         </Box>
         <Container maxWidth='lg'>
           {page.fields.slug == 'write-for-ascd' && _renderWriteForUsContent()}

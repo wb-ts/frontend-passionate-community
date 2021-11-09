@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
-import {
-  ThemeProvider,
-  StylesProvider,
-  createGenerateClassName,
-} from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import { StylesProvider, createGenerateClassName } from '@mui/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import theme from '../theme'
 import '../styles/globals.css'
 import { AppProvider } from '@/context/state'
@@ -66,16 +63,18 @@ function App({ Component, pageProps }) {
         <link rel='icon' type='image/ico' href='/favicon.ico' />
       </Head>
       <StylesProvider generateClassName={generateClassName}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ApolloProvider client={client}>
-            <AppProvider>
-              <Component {...pageProps} />
-            </AppProvider>
-            <SnipcartManager />
-            <PianoManager />
-          </ApolloProvider>
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <ApolloProvider client={client}>
+              <AppProvider>
+                <Component {...pageProps} />
+                <SnipcartManager />
+                <PianoManager />
+              </AppProvider>
+            </ApolloProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </StylesProvider>
     </React.Fragment>
   )

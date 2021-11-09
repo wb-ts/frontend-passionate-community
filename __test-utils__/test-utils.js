@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { ThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import theme from '../theme'
 import { AppProvider } from '@/context/state'
 

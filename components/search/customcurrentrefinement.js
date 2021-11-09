@@ -1,9 +1,9 @@
 import React from 'react'
 import { connectCurrentRefinements } from 'react-instantsearch-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import { Chip, Box } from '@material-ui/core'
+import { makeStyles } from '@mui/styles';
+import { Chip, Box } from '@mui/material'
 import { CustomClearRefinements } from '@/components/search/customclearrefinements'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 
 const useStyles = makeStyles((theme) => ({
   chipFilter: {

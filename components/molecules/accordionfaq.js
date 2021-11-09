@@ -9,10 +9,10 @@ import {
   Button,
   Grid,
   Typography,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import ExpandLess from '@material-ui/icons/ExpandLess'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import ExpandLess from '@mui/icons-material/ExpandLess'
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiAccordionSummary-expandIcon': {
       marginRight: '24px',
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'flex-start',
       '& .MuiAccordionSummary-expandIcon': {
@@ -133,15 +133,19 @@ export default function AccordionFAQ({
       <AccordionSummary
         expandIcon={
           expand == `panel${id}` ? (
-            <Box>
+            <Box px={1}>
               <Button endIcon={<ExpandLess />}>
-                <Typography className={classes.more}>{collapseText}</Typography>
+                <Typography noWrap className={classes.more}>
+                  {collapseText}
+                </Typography>
               </Button>
             </Box>
           ) : (
-            <Box>
+            <Box px={1}>
               <Button endIcon={<ExpandMore />}>
-                <Typography className={classes.more}>{expandText}</Typography>
+                <Typography noWrap className={classes.more}>
+                  {expandText}
+                </Typography>
               </Button>
             </Box>
           )

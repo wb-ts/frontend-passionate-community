@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import CardGrid from '@/components/molecules/cardgrid'
 import TextCTA from '@/components/molecules/textcta'
 import CalloutBlock from '@/components/atoms/CalloutBlock'

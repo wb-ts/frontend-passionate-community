@@ -1,13 +1,13 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Grid, Container } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import CtaButton from '@/components/atoms/CtaButton'
 import TextStyle from '@/components/atoms/TextStyle'
 import TopicTag from '@/components/molecules/TopicTag'
 import { useRouter } from 'next/router'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import ReactMarkdown from 'react-markdown'
-
+import MembershipDetails from '../UserAccount/MembershipDetails'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -55,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     alignSelf: 'center',
     borderRadius: '0 0 0 96px',
+    boxShadow: ({ variant }) =>
+      variant == 'membership'
+        ? '0px 12px 17px rgba(0, 0, 0, 0.03), 0px 5px 22px rgba(0, 0, 0, 0.04), 0px 7px 8px rgba(0, 0, 0, 0.08)'
+        : 'none',
+    display: 'flex',
 
     [theme.breakpoints.up('md')]: {
       width: 500,
@@ -62,6 +67,13 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: 500,
       borderRadius: '8px 8px 8px 96px',
     },
+  },
+  mediaDescription: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    alignItems: 'center',
   },
   link: {
     textDecoration: 'underline',
@@ -72,17 +84,18 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
+    alignItems: ({ variant }) => (variant == 'membership' ? 'start' : 'center'),
+    textAlign: ({ variant }) => (variant == 'membership' ? 'start' : 'center'),
     [theme.breakpoints.up('md')]: {
-      flexDirection: 'row',
+      flexDirection: ({ variant }) =>
+        variant == 'membership' ? 'column' : 'row',
     },
   },
   button: {
     width: '100%',
     paddingRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
-      width: 'auto',
+      width: ({ variant }) => (variant == 'membership' ? '50%' : 'auto'),
     },
     '& a': {
       justifyContent: 'center !important',
@@ -115,6 +128,8 @@ export default function HeroHalfHalf({
   imageAlt,
   imagePos = 'right',
   snipcart,
+  variant,
+  membershipData,
 }) {
   const classes = useStyles({ imagePos })
   const router = useRouter()
@@ -187,7 +202,19 @@ export default function HeroHalfHalf({
                 <CtaButton
                   variant='outlined'
                   color='primary'
-                  width='100%'
+                  fullWidth
+                  size='large'
+                  label={ctaLabel2}
+                  href={ctaLink2}
+                />
+              </Box>
+            )}
+            {ctaLabel2 && variant == 'membership' && (
+              <Box pt={[2, 2, 4]} className={classes.button}>
+                <CtaButton
+                  variant='outlined'
+                  color='primary'
+                  fullWidth
                   size='large'
                   label={ctaLabel2}
                   href={ctaLink2}
@@ -197,17 +224,38 @@ export default function HeroHalfHalf({
           </Box>
         </Box>
       </Grid>
-      <Grid item xs={12} sm={6} className={classes.media}>
-        {image ? (
-          <img
-            src={image ? image : '/images/ASCDImageFiller.png'}
-            alt={imageAlt}
-            style={{ width: '100%', height: 'inherit', objectFit: 'cover' }}
-          />
-        ) : (
-          'Image'
-        )}
-      </Grid>
+      {variant != 'membership' ? (
+        <Grid item xs={12} sm={6} className={classes.media}>
+          {image ? (
+            <img
+              src={image ? image : '/images/ASCDImageFiller.png'}
+              alt={imageAlt}
+              style={{ width: '100%', height: 'inherit', objectFit: 'cover' }}
+            />
+          ) : (
+            'Image'
+          )}
+        </Grid>
+      ) : (
+        <Grid item xs={12} sm={6} className={classes.media}>
+          <Grid xs={4} sm={4}>
+            {image ? (
+              <img
+                src={image ? image : '/images/ASCDImageFiller.png'}
+                alt={imageAlt}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : (
+              'Image'
+            )}
+          </Grid>
+          <Grid xs={8} sm={8} className={classes.mediaDescription}>
+            <Container maxWidth='sm'>
+              <MembershipDetails membershipData={membershipData} />
+            </Container>
+          </Grid>
+        </Grid>
+      )}
     </Grid>
   )
 }

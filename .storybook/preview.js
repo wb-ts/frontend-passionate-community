@@ -3,9 +3,9 @@ import {
   ThemeProvider,
   StylesProvider,
   createGenerateClassName,
-} from '@material-ui/core/styles'
+} from '@mui/styles'
 import theme from '../theme'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import CssBaseline from '@mui/material/CssBaseline'
 import { withTests } from '@storybook/addon-jest'
 import results from '../test-results/report.json'
 

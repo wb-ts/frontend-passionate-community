@@ -3,8 +3,8 @@ import React, { useEffect, useState, useContext } from 'react'
 import { client as apolloClient } from '../../lib/apollo-client'
 import GET_WORKSHOP_BY_SLUG_QUERY from '../../lib/apollo-client/schema/workshopBySlug.graphql'
 
-import { Box, Container, Divider, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container, Divider, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
@@ -212,7 +212,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  console.log(params)
   const workshop = await apolloClient.query({
     query: GET_WORKSHOP_BY_SLUG_QUERY,
     variables: {

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Divider, Grid, Box, ListItem } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { Fragment } from 'react'
+import { Divider, Grid, Box, ListItem } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import paths from '@/paths/path'
@@ -19,12 +19,15 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     display: 'block',
     marginBottom: 4,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: 0,
     },
   },
 }))
 
+/**
+ * @todo Refactor this component
+ */
 export default function TwoColContentListing({
   title,
   body,
@@ -37,6 +40,18 @@ export default function TwoColContentListing({
   const isEvents = variant === 'event'
   const isWorkshops = variant === 'workshop'
   const dateFormat = require('dateformat')
+
+  const getImageObject = (item) => {
+    if (item.fields.spotlightImage?.fields?.imageContentful) {
+      return item.fields.spotlightImage?.fields?.imageContentful
+    }
+    if (item.fields.thumbnail) {
+      return item.fields.thumbnail
+    }
+    if (item.fields.image) {
+      return item.fields.image
+    }
+  }
 
   return (
     <Grid container>
@@ -61,24 +76,24 @@ export default function TwoColContentListing({
                     <Divider className={classes.divider} />
                   ) : null
                 return (
-                  <>
-                    <Grid item xs={12} key={`content-list-${key}`}>
+                  <Fragment key={`content-list-${key}`}>
+                    <Grid item xs={12}>
                       <HorizontalCard
-                        key={item.fields.title}
                         price={isWorkshops ? item.fields.memberPrice : null}
                         remaining={
                           isWorkshops ? 'only 12 seats remaining' : null
                         }
+                        premium={
+                          item.fields.premium ? item.fields.premium : null
+                        }
                         label={
-                          item.fields?.topics
-                            ? item.fields?.topics[0]?.fields?.title
-                            : ''
+                          variant === 'event'
+                            ? item.fields.type?.fields?.title
+                            : item.fields.topic?.fields?.title
                         }
-                        title={item.fields?.title}
-                        image={
-                          item.fields.spotlightImage?.fields?.imageContentful
-                            ?.fields?.file?.url
-                        }
+                        title={item.fields.title}
+                        body={item.fields.body ? item.fields.body : null}
+                        image={getImageObject(item)}
                         date={
                           item.fields.dateTime
                             ? dateFormat(item.fields.dateTime, 'longDate')
@@ -95,7 +110,7 @@ export default function TwoColContentListing({
                     <Grid item xs={12}>
                       {divider}
                     </Grid>
-                  </>
+                  </Fragment>
                 )
               })}
           </Grid>

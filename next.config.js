@@ -10,7 +10,7 @@ module.exports = {
     return config
   },
   images: {
-    domains: ['images.ctfassets.net'],
+    domains: ['images.ctfassets.net', 'library.ascd.org'],
   },
   generateBuildId: async () => 'ascd-pages',
 
@@ -2032,7 +2032,6 @@ module.exports = {
         permanent: true,
       },
       { source: '/wscc', destination: '/about', permanent: true },
-      { source: '/whole-child', destination: '/about', permanent: true },
       { source: '/programs', destination: '/about', permanent: true },
       { source: '/advertising', destination: '/advertisers', permanent: true },
       {

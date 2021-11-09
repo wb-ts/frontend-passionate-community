@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, CardContent, Box, CircularProgress } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Card, CardContent, Box, CircularProgress } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import TextStyle from '@/components/atoms/TextStyle'
 import PropTypes from 'prop-types'
 import Image from 'next/image'
@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function CardItem({ cardData }) {
+  console.log(cardData)
   const classes = useStyles()
   const myLoader = ({ src, width, quality }) => {
     return `/images/ASCDImageFiller.png?w=20px&q={90}`

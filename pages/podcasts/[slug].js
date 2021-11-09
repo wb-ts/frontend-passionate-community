@@ -8,15 +8,14 @@ import TwoColumnCta from '@/components/molecules/twocolumncta'
 import { client } from '@/lib/contentful'
 import paths from '@/paths/path'
 import DaysAgo from '@/components/atoms/DaysAgo'
-import { Box, Container, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container, Divider, Skeleton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import SEOHead from '@/const/head'
 import TopicTag from '@/components/molecules/TopicTag'
 import PodcastPlayer from '@/components/molecules/podcastplayer'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles(() => ({
@@ -31,7 +30,12 @@ export default function Podcast({ podcast, podcasts }) {
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
     )
   }
   const classes = useStyles()

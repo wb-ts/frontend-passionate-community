@@ -1,14 +1,29 @@
 import React, { useState } from 'react'
-import { Grid, Button, IconButton, List, ListItem, Box, ListItemIcon, ListItemText, Typography, Popover, 
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@material-ui/core'
+import {
+  Grid,
+  Button,
+  IconButton,
+  List,
+  ListItem,
+  Box,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Popover,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@mui/material'
 import Skeleton from '@material-ui/lab/Skeleton'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import VisibilityIcon from '@material-ui/icons/Visibility'
-import DeleteIcon from '@material-ui/icons/Delete'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import DeleteIcon from '@mui/icons-material/Delete'
 import Image from 'material-ui-image'
-import FormatQuoteIcon from '@material-ui/icons/FormatQuote'
-import EditIcon from '@material-ui/icons/Edit'
-import { makeStyles } from '@material-ui/core/styles'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
+import EditIcon from '@mui/icons-material/Edit'
+import { makeStyles } from '@mui/styles'
 import DaysAgo from '../../components/atoms/DaysAgo'
 import { useRouter } from 'next/router'
 import paths from '../../paths/path'
@@ -124,32 +139,48 @@ export default function AnnotationItem({ annotation, deleteAction }) {
 
   return (
     <>
-      <Box
-        className={classes.root}
-      >
+      <Box className={classes.root}>
         <Grid container spacing={classes.containerListItem}>
-          <Grid item xs={3} >
+          <Grid item xs={3}>
             <Box className={classes.containgerImage}>
               {annotation.contentImageSrc ? (
-                <Image style={{ paddingTop: 'calc(63.1%)' }}
+                <Image
+                  style={{ paddingTop: 'calc(63.1%)' }}
                   className={classes.image}
                   src={annotation.contentImageSrc}
                 />
               ) : (
-                <Skeleton
-                  variant='rect'
-                  animation={false}
-                />
+                <Skeleton variant='rect' animation={false} />
               )}
             </Box>
           </Grid>
-          <Grid iitem xs={12} sm container className={classes.containerListItemInfo}>
-            <Grid item xs container className={classes.containerRow} style={{ marginBottom: 28 }}>
+          <Grid
+            iitem
+            xs={12}
+            sm
+            container
+            className={classes.containerListItemInfo}
+          >
+            <Grid
+              item
+              xs
+              container
+              className={classes.containerRow}
+              style={{ marginBottom: 28 }}
+            >
               <Grid item xs>
-                <Button fullWidth className={classes.annotationTitleButton} 
-                  onClick={() => router.push(paths.article({ slug: annotation.contentSlug }))}
+                <Button
+                  fullWidth
+                  className={classes.annotationTitleButton}
+                  onClick={() =>
+                    router.push(paths.article({ slug: annotation.contentSlug }))
+                  }
                 >
-                  <Typography align='left' variant='h4' className={classes.annotationTitle}>
+                  <Typography
+                    align='left'
+                    variant='h4'
+                    className={classes.annotationTitle}
+                  >
                     {annotation.contentTitle}
                   </Typography>
                 </Button>
@@ -180,7 +211,9 @@ export default function AnnotationItem({ annotation, deleteAction }) {
                     <ListItem
                       button
                       onClick={() =>
-                        router.push(paths.article({ slug: annotation.contentSlug }))
+                        router.push(
+                          paths.article({ slug: annotation.contentSlug })
+                        )
                       }
                     >
                       <ListItemIcon>
@@ -199,22 +232,29 @@ export default function AnnotationItem({ annotation, deleteAction }) {
               </Grid>
             </Grid>
             <Grid item container className={classes.containerRow}>
-              <Grid item xs={5} container className={classes.containerAnnotationCount}>
+              <Grid
+                item
+                xs={5}
+                container
+                className={classes.containerAnnotationCount}
+              >
                 <Grid item className={classes.annotationCount}>
                   <FormatQuoteIcon />
-                  <Typography variant='body3' style={{paddingLeft: '4px'}}>
+                  <Typography variant='body3' style={{ paddingLeft: '4px' }}>
                     {annotation.notesCount}
-                  </Typography> 
+                  </Typography>
                 </Grid>
                 <Grid item className={classes.highlightCount}>
                   <EditIcon className={classes.icon} />
-                  <Typography variant='body3' style={{paddingLeft: '4px'}}>
+                  <Typography variant='body3' style={{ paddingLeft: '4px' }}>
                     {annotation.totalCount - annotation.notesCount}
-                  </Typography> 
+                  </Typography>
                 </Grid>
               </Grid>
               <Grid item xs={7} className={classes.lastView}>
-                <Typography variant='body3' style={{paddingRight: '4px'}}>Last viewed</Typography>
+                <Typography variant='body3' style={{ paddingRight: '4px' }}>
+                  Last viewed
+                </Typography>
                 <DaysAgo input={annotation.updatedAt} variant='body3' />
               </Grid>
             </Grid>
@@ -233,7 +273,8 @@ export default function AnnotationItem({ annotation, deleteAction }) {
             id='alert-dialog-description'
             className={classes.confirmText}
           >
-            You will delete all of the notes and highlights associated with this article.
+            You will delete all of the notes and highlights associated with this
+            article.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

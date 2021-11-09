@@ -6,6 +6,10 @@ import { useRouter } from 'next/router'
 
 const defaultOGImage = '/images/ASCDImageFiller.png'
 
+/**
+ *
+ * @todo Move this to components directory
+ */
 export const Head = ({ seo }) => {
   const CANONICAL_DOMAIN = 'https://www.ascd.org'
   const title = seo?.fields?.title

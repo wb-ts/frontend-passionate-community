@@ -1,7 +1,7 @@
 import { algoliaSearchIndex } from '@/lib/algolia'
 import { client } from '@/lib/contentful'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
-import { Box, Container, Typography } from '@material-ui/core'
+import { Box, Container, Typography } from '@mui/material'
 import Head from 'next/head'
 import React from 'react'
 import paths from '@/paths/path'

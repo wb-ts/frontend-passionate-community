@@ -1,7 +1,7 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import CtaButton from '@/components/atoms/CtaButton'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container } from '@mui/material'
 import TextStyle from '@/components/atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
     },
   },
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     innerHeader: {
       marginRight: '20vw',
       marginBottom: '0',
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     innerHeader: {
       marginRight: '12vw',
       marginBottom: '0',
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  [theme.breakpoints.down('xs')]: {
+  [theme.breakpoints.down('sm')]: {
     innerHeader: {
       marginTop: '15vw',
       marginRight: '8vw',

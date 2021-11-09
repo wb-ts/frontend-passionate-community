@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, IconButton } from '@material-ui/core'
+import { Box, IconButton } from '@mui/material'
 import ReactPlayer from 'react-player/wistia'
-import { makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close'
+import { makeStyles } from '@mui/styles';
+import CloseIcon from '@mui/icons-material/Close'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -68,7 +68,7 @@ export default function VideoBanner({ close }) {
         aria-label='Close video banner button'
         className={classes.closeButton}
         onClick={() => closeBanner()}
-      >
+        size="large">
         <CloseIcon size='small' />
       </IconButton>
 
@@ -88,5 +88,5 @@ export default function VideoBanner({ close }) {
         />
       </Box>
     </Box>
-  )
+  );
 }

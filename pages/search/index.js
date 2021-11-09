@@ -1,7 +1,7 @@
 import React from 'react'
 import { isEqual } from 'lodash'
 import Layout from '@/components/layout'
-import { Container } from '@material-ui/core'
+import { Container } from '@mui/material'
 import PropTypes from 'prop-types'
 import { withRouter } from 'next/router'
 import qs from 'qs'

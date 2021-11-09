@@ -1,9 +1,9 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import WidgetsIcon from '@material-ui/icons/Widgets'
-import EventAvailableIcon from '@material-ui/icons/EventAvailable'
-import ContactsIcon from '@material-ui/icons/Contacts'
+import { makeStyles } from '@mui/styles'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import WidgetsIcon from '@mui/icons-material/Widgets'
+import EventAvailableIcon from '@mui/icons-material/EventAvailable'
+import ContactsIcon from '@mui/icons-material/Contacts'
 import CtaButton from '@/components/atoms/CtaButton'
 import NavMenuItem from './navmenuitem'
 import paths from '@/paths/path'
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     lineHeight: '18px',
     letterSpacing: '0.2px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '40px 0 20px',
     },
     '& ul': {
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
   labelIcon: {
     color: theme.palette.primary.light,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },

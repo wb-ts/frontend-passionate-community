@@ -5,8 +5,8 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
 import TopicTag from '@/components/molecules/TopicTag'
 import TextStyle from '@/components/atoms/TextStyle'
@@ -159,8 +159,8 @@ WorkshopItem.propTypes = {
     topicTag: PropTypes.string,
     authorName: PropTypes.string,
     workshopDate: PropTypes.string,
-    memberPrice: PropTypes.string,
-    nonMemberPrice: PropTypes.string,
+    memberPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    nonMemberPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     clockHours: PropTypes.string,
     seatsRemaining: PropTypes.number,
   }),

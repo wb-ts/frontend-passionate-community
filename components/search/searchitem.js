@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Box, Typography, Button } from '@material-ui/core'
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
-import ReplyIcon from '@material-ui/icons/Reply'
+import { makeStyles } from '@mui/styles'
+import { Box, Typography, Button } from '@mui/material'
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
+import ReplyIcon from '@mui/icons-material/Reply'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import { useReactiveVar } from '@apollo/client'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     padding: '32px 26px 26px',
     marginBottom: '4px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       justifyContent: 'flex-start',
       padding: '16px 16px 10px',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '16px 30px',
     },
     transition: 'transform .2s ease-in-out',
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
       '&:after': {
         borderBottom: 0,
       },
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         borderRadius: 0,
         boxShadow: 'none',
         '&:after': {
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignSelf: 'stretch',
     marginRight: '20px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
       marginRight: 0,
     },
@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     color: theme.palette.grey.medium,
     marginBottom: '20px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '12px',
     },
     '& h6': {
@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginBottom: '20px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '12px',
     },
   },
@@ -159,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     marginTop: 'auto',
     marginBottom: '-5px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '16px',
     },
     '& button': {
@@ -189,7 +189,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     alignSelf: 'stretch',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
       justifyContent: 'center',
     },

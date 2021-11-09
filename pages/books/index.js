@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container } from '@mui/material'
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
@@ -16,7 +16,7 @@ import { documentToPlainTextString } from '@contentful/rich-text-plain-text-rend
 import TextStyle from '@/components/atoms/TextStyle'
 import imageoptimization from '@/const/imageoptimization'
 import { components } from '@/const/components'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   navBtn: {

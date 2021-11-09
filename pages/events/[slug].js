@@ -5,9 +5,9 @@ import { client } from '@/lib/contentful'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import CtaButton from '@/components/atoms/CtaButton'
 import TextCTA from '@/components/molecules/textcta'
-import { Box, Grid, Container, Divider, Button } from '@material-ui/core'
+import { Box, Grid, Container, Divider, Button, Skeleton } from '@mui/material'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import SEOHead from '@/const/head'
 import TwoColContentListing from '@/components/organisms/twocolcontentlisting'
 import ReactMarkdown from 'react-markdown'
@@ -16,7 +16,6 @@ import TextStyle from '../../components/atoms/TextStyle'
 import { useReactiveVar } from '@apollo/client'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@material-ui/lab'
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
@@ -77,7 +76,12 @@ export default function Event({ event, events }) {
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
     )
   }
   const classes = useStyles()

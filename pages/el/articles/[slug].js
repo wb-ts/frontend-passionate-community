@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { useRouter } from 'next/router'
 import { client } from 'lib/contentful'
 import SEOHead from '@/const/head'
 import paths from '@/paths/path'
-import Image from 'material-ui-image'
+import NextImageWrapper from '../../../components/images/NextImageWrapper'
 import TextStyle from '@/components/atoms/TextStyle'
 import TOCNav from '@/components/atoms/TOCNav'
 import Layout from '@/components/layout'
@@ -15,7 +15,7 @@ import ContentList from '@/components/molecules/contentlist'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
-import { Box, Container, Grid, Typography } from '@material-ui/core'
+import { Box, Container, Grid, Typography, Skeleton } from '@mui/material'
 import Annotator from '@/components/organisms/annotator'
 import TopicTag from '@/components/molecules/TopicTag'
 import TextCTA from '@/components/molecules/textcta'
@@ -24,9 +24,9 @@ import { components } from '@/const/components'
 import PdfIframe from '@/components/molecules/pdfIframe'
 import PdfTitleBar from '@/components/molecules/pdftitlebar'
 import CustomLink from '@/components/atoms/CustomLink'
-import { Skeleton } from '@material-ui/lab'
 import imageoptimization from '@/const/imageoptimization'
 import useUserAccount from '../../../lib/hooks/useUserAccount'
+import { contentfulThumbnailAPIToImageUrl } from '../../../lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     '& blockquote': {
-      borderLeft: `${theme.spacing(1)}px solid ${theme.palette.primary.main}`,
+      borderLeft: `${theme.spacing(1)} solid ${theme.palette.primary.main}`,
       paddingLeft: theme.spacing(2),
     },
   },
@@ -114,7 +114,12 @@ export default function Article({ article, issue, relatedArticles }) {
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Skeleton animation='wave' variant='rect' width='100%' height='100px' />
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
     )
   }
 
@@ -214,23 +219,6 @@ export default function Article({ article, issue, relatedArticles }) {
           )
         }
       },
-      // [BLOCKS.QUOTE]: (node, children) => {
-      //   return (
-      //     <Box my={6} display='flex'>
-      //       <Box width='10%' pr={3}>
-      //         <Image
-      //           src='/images/quote.svg'
-      //           style={{ backgroundColor: 'transparent' }}
-      //         ></Image>
-      //       </Box>
-      //       <Box width='90%'>
-      //         <TextStyle variant='h2'>
-      //           {documentToPlainTextString(node)}
-      //         </TextStyle>
-      //       </Box>
-      //     </Box>
-      //   )
-      // },
     },
 
     renderText: (text) => {
@@ -422,35 +410,15 @@ export default function Article({ article, issue, relatedArticles }) {
                 </Box>
                 {article.fields.image && (
                   <Box className={classes.media} id='piano-hide-1'>
-                    <Image
-                      src={
-                        article.fields?.image?.fields?.imageBynder
-                          ? article.fields?.image?.fields?.imageBynder[0]?.src +
-                            '?' +
-                            imageoptimization.qualityParameter +
-                            '=' +
-                            imageoptimization.qualityValue
-                          : article.fields?.image?.fields?.imageContentful
-                              ?.fields?.file?.url
-                          ? article.fields?.image?.fields?.imageContentful
-                              ?.fields?.file?.url +
-                            '?' +
-                            imageoptimization.qualityParameter +
-                            '=' +
-                            imageoptimization.qualityValue
-                          : '/images/ASCDImageFiller.png'
-                      }
-                      alt={article.fields?.image?.fields?.alternate}
-                      style={{
-                        paddingTop: 0,
-                        width: '100%',
-                        height: '460px',
-                      }}
-                      imageStyle={{
-                        width: 'inherit',
-                        height: 'inherit',
-                      }}
-                      cover='true'
+                    <NextImageWrapper
+                      src={contentfulThumbnailAPIToImageUrl(
+                        article.fields.image
+                      )}
+                      alt={article.fields.image.fields?.alternate}
+                      width={800}
+                      height={433}
+                      layout='responsive'
+                      priority='true'
                     />
                     {article.fields.image &&
                       article.fields?.image?.fields?.imageBynder &&

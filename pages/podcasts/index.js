@@ -8,7 +8,7 @@ import { client } from '@/lib/contentful'
 import paths from '@/paths/path'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import TextStyle from '@/components/atoms/TextStyle'
-import { Box, Container, Grid } from '@material-ui/core'
+import { Box, Container, Grid } from '@mui/material'
 import SEOHead from '@/const/head'
 import MediaBanner from '@/components/molecules/mediabanner'
 

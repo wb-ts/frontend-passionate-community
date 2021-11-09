@@ -1,7 +1,7 @@
-import { Box, Container, Divider } from '@material-ui/core'
+import { Box, Container, Divider } from '@mui/material'
 import SEOHead from '@/const/head'
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { client } from '@/lib/contentful'
 import paths from '@/paths/path'
 import Layout from '@/components/layout'
@@ -65,7 +65,6 @@ export default function Home({
     <Layout paywall>
       <SEOHead seo={SEO} />
       {showBanner && <VideoBanner close={() => setShowBanner(false)} />}
-
       {!isLoggedIn && (
         <Jumbotron
           valuepropositions={valuepropositions}
@@ -84,7 +83,6 @@ export default function Home({
             />
           </Box>
         )}
-
         <Box mt={4} id='topics' className={classes.topics}>
           <Divider />
           <Box mt={[4, 6]} mb={[4, 7.5]}>
@@ -110,13 +108,11 @@ export default function Home({
           </Box>
         )}
       </Container>
-
       {(!isSub || !isLoggedIn) && (
         <Box id='become a member'>
           <BecomeMember />
         </Box>
       )}
-
       <Container maxWidth='lg'>
         <Box id='events' className={classes.events}>
           <TwoColContentListing

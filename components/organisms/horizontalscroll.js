@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
-import { Box, Grid, IconButton, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
+import { Box, Grid, IconButton, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import IssueTile from '@/components/molecules/issuetile'
 import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import CartTile from '@/components/molecules/carttile'
@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     position: 'relative',
     maxWidth: '1600px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginRight: '-16px',
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginRight: '-8px',
     },
   },
@@ -181,6 +181,7 @@ export default function HorizontalScroll({
             aria-label='slide left'
             className={classes.sliderBtn}
             onClick={() => goLeft()}
+            size='large'
           >
             <KeyboardArrowLeftIcon style={{ fontSize: 65 }} />
           </IconButton>
@@ -205,6 +206,7 @@ export default function HorizontalScroll({
             aria-label='slide right'
             className={classes.sliderBtn}
             onClick={() => goRight()}
+            size='large'
           >
             <KeyboardArrowRightIcon style={{ fontSize: 65 }} />
           </IconButton>

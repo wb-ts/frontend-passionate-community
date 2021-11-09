@@ -10,17 +10,17 @@ import {
   Typography,
   Modal,
   IconButton,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import FooterMenu from '@/components/molecules/footermenu'
 import SocialButtons from '@/components/molecules/socialbuttons'
 import CustomLink from '@/components/atoms/CustomLink'
 import NLink from 'next/link'
-import SendIcon from '@material-ui/icons/Send'
-import Image from 'material-ui-image'
+import SendIcon from '@mui/icons-material/Send'
+import Image from 'next/image'
 import TextStyle from '@/components/atoms/TextStyle'
 import React, { useState } from 'react'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 import hubspotFormIds from '@/const/hubspot-form-ids'
 import HubSpotForm from '@/components/molecules/hubspotform'
 import CtaButton from '@/components/atoms/CtaButton'
@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
       height: 400,
     },
   },
+  nextImage: {
+    paddingTop: 0,
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    position: 'static',
+  },
   container: {
     padding: '50px 3vw 5px',
     textAlign: 'center',
@@ -59,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
       padding: '50px 10vw 5px',
     },
     '& > div': {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         maxWidth: '450px',
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -77,15 +83,15 @@ const useStyles = makeStyles((theme) => ({
   },
   footerFirstColumn: {
     width: '30%',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       width: '25%',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginBottom: '48px',
       width: '100%',
     },
     '& > .MuiBox-root': {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         marginRight: 0,
       },
     },
@@ -97,14 +103,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xl')]: {
       marginLeft: 40,
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       width: '60%',
       marginLeft: 0,
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '70%',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       flexDirection: 'column',
     },
@@ -112,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
   footerColumn: {
     flex: 1,
     '& > .MuiBox-root': {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         paddingRight: 0,
         marginBottom: '28px',
         marginTop: 0,
@@ -139,14 +145,14 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
           marginLeft: '20px',
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
           marginBottom: 32,
         },
       },
     },
     '&:nth-of-type(3)': {
       '& > .MuiBox-root': {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
           marginBottom: '48px',
         },
       },
@@ -198,7 +204,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       transform: 'translate(14px, 20px) scale(1)',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       transform: 'translate(14px, 21px) scale(1)',
     },
   },
@@ -222,13 +228,13 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'row',
       alignItems: 'center',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: '450px',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
     '& $copyrightLine > .MuiBox-root': {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         marginRight: 0,
         marginTop: '10px',
         justifyContent: 'space-between',
@@ -240,7 +246,7 @@ const useStyles = makeStyles((theme) => ({
   },
   socialButtons: {
     width: '30%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '90%',
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -364,14 +370,11 @@ export default function Footer({ grey }) {
                 <Image
                   src={'/images/fulllogo_white.svg'}
                   alt='ascd logo'
-                  style={{
-                    paddingTop: 0,
-                    width: '109px',
-                    height: '29px',
-                    backgroundColor: 'transparent',
-                    cursor: 'pointer',
-                  }}
-                  imageStyle={{ position: 'static' }}
+                  width={109}
+                  height={29}
+                  className={classes.nextImage}
+                  placeholder='blur'
+                  blurDataURL='/images/blurrImg.png'
                 />
               </NLink>
               <Box
@@ -518,6 +521,7 @@ export default function Footer({ grey }) {
               <IconButton
                 aria-label='Close modal button'
                 className={classes.closeModalButton}
+                size='large'
               >
                 <CloseIcon size='small' onClick={() => setOpenModal(false)} />
               </IconButton>

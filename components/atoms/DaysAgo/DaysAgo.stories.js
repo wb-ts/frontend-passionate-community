@@ -3,7 +3,7 @@ import DaysAgo from '@/components/atoms/DaysAgo'
 
 export default {
   component: DaysAgo,
-  title: 'Components/Atoms/DaysAgo',
+  title: 'Components/atoms/DaysAgo',
 }
 
 const Template = (args) => <DaysAgo {...args} />

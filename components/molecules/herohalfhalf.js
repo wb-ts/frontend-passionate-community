@@ -33,17 +33,12 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(1),
     [theme.breakpoints.up('md')]: {
-      paddingLeft: theme.spacing(2),
+      paddingLeft: ({ imagePos }) =>
+        imagePos == 'left' ? theme.spacing(5) : theme.spacing(1),
       justifyContent: 'flex-start',
     },
     [theme.breakpoints.up('xl')]: {
       padding: 0,
-    },
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: 0,
-      paddingBottom: 0,
-      paddingLeft: ({ imagePos }) =>
-        imagePos == 'left' ? `${theme.spacing(5)}px` : 0,
     },
   },
   media: {
@@ -216,8 +211,9 @@ export default function HeroHalfHalf({
                   color='primary'
                   fullWidth
                   size='large'
-                  label={ctaLabel2}
-                  href={ctaLink2}
+                  label='{ctaLabel2}'
+                  id='upgrade-test'
+                  // href={ctaLink2}
                 />
               </Box>
             )}

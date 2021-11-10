@@ -124,13 +124,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: theme.typography.pxToRem(556),
-    width: theme.typography.pxToRem(440),
+    height: '100vh',
+    width: '100vw',
     position: 'absolute',
     padding: theme.spacing(8, 7, 8, 7),
     // overflow: 'scroll',
-    [theme.breakpoints.up('md')]: {
-      height: theme.typography.pxToRem(556),
+    [theme.breakpoints.up('sm')]: {
+      height: 'auto',
       width: theme.typography.pxToRem(440),
       top: '50%',
       left: '50%',
@@ -139,8 +139,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   modalButtoWrap: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: 'block',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
   },
   select: {
     display: 'flex',
@@ -152,7 +155,10 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(0),
-    marginLeft: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      marginLeft: theme.spacing(2),
+    },
+
     // padding: '11px 32px 11px 11px'
   },
   planDetails: {
@@ -345,8 +351,7 @@ export default function HeroHalfHalf({
                   color='primary'
                   fullWidth
                   size='large'
-                  label='{ctaLabel2}'
-                  id='upgrade-test'
+                  label={ctaLabel2}
                   // href={ctaLink2}
                 />
               </Box>
@@ -403,7 +408,8 @@ export default function HeroHalfHalf({
               <Grid item xs={12} md={8}>
                 <FormControl
                   className={classes.formControl}
-                  sx={{ m: 10, minWidth: 220 }}
+                  sx={{ m: 0, width: '100%' }}
+                  md={{ m: 10, minWidth: 220 }}
                 >
                   <Select
                     labelId='select-membership-label'
@@ -431,25 +437,29 @@ export default function HeroHalfHalf({
               <Box>{upgradeData[value]?.description}</Box>
             </Grid>
             <Grid className={classes.modalButtoWrap}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 {confirmStatus && (
-                  <CtaButton
-                    variant='contained'
-                    fullWidth
-                    color='primary'
-                    label='Upgrade'
-                    id={upgradeId}
-                  />
+                  <Box>
+                    <CtaButton
+                      variant='contained'
+                      fullWidth
+                      color='primary'
+                      label='Upgrade'
+                      id={upgradeId}
+                    />
+                  </Box>
                 )}
               </Grid>
-              <Grid item xs={12} md={4}>
-                <CtaButton
-                  variant='outlined'
-                  fullWidth
-                  color='primary'
-                  label='Cancel'
-                  onclick={handleClose}
-                />
+              <Grid item xs={12} sm={12} md={4}>
+                <Box pt={[2, 2, 0]}>
+                  <CtaButton
+                    variant='outlined'
+                    fullWidth
+                    color='primary'
+                    label='Cancel'
+                    onclick={handleClose}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </div>

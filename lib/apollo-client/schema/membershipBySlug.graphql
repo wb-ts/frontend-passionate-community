@@ -6,6 +6,16 @@ query GetMembershipBySlug($preview: Boolean, $where: MembershipFilter) {
       description {
         json
       }
+      upgradeMembershipCollection {
+        items {
+          name
+          slug
+          upgradeId
+          description {
+            json
+          }
+        }
+      }
     }
   }
 }

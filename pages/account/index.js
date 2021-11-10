@@ -17,8 +17,9 @@ export default function MainTab() {
     membershipKeyword,
   } = useUserAccess()
 
-  const { description } = useMembership(membershipKeyword)
+  const { description, upgradeData } = useMembership(membershipKeyword)
   const { userAccountUser } = useUserAccount()
+
   return (
     <Layout>
       <Box>
@@ -38,6 +39,13 @@ export default function MainTab() {
               period,
               description,
             }}
+            upgradeData={[
+              {
+                slug: membershipKeyword,
+                upgradeId: '',
+                description: description,
+              },
+            ].concat(upgradeData)}
           />
         </Box>
       </Container>

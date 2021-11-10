@@ -37,7 +37,7 @@ The configuration files can be found at the root dir: `eslintrc.json` and `.pret
 
 ## UI Library
 
-We are using Material UI. Learn more here https://material-ui.com/getting-started/learn/.
+We are using Material UI. Learn more here https://mui.com/getting-started/learn/.
 
 ## Storybook
 

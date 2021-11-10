@@ -8,13 +8,16 @@ import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
 import HeroHalfHalf from '@/components/molecules/herohalfhalf'
+import useMembership from '../../lib/hooks/useMembership'
+import { PIANO_TERM_NAMES as PTN } from '@/const/piano-term-names'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
 }))
 
-const MyAccount = ({ membershipData }) => {
+const MyAccount = ({ membershipData, upgradeData }) => {
   const classes = useStyles()
+
   return (
     <Box>
       {membershipData.period == 'month' && (
@@ -43,6 +46,7 @@ const MyAccount = ({ membershipData }) => {
           imagePos='left'
           variant='membership'
           membershipData={membershipData}
+          upgradeData={upgradeData}
         />
       </Box>
     </Box>

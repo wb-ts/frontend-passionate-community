@@ -1,5 +1,13 @@
 import React from 'react'
-import { Box, Grid, Container } from '@mui/material'
+import {
+  Box,
+  Grid,
+  Container,
+  Modal,
+  FormControl,
+  Select,
+  MenuItem,
+} from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import CtaButton from '@/components/atoms/CtaButton'
 import TextStyle from '@/components/atoms/TextStyle'
@@ -7,7 +15,9 @@ import TopicTag from '@/components/molecules/TopicTag'
 import { useRouter } from 'next/router'
 import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import ReactMarkdown from 'react-markdown'
+import Typography from '@mui/material/Typography'
 import MembershipDetails from '../UserAccount/MembershipDetails'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -107,6 +117,82 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '85%',
     },
   },
+
+  modal: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.grey.dark,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: theme.typography.pxToRem(556),
+    width: theme.typography.pxToRem(440),
+    position: 'absolute',
+    padding: theme.spacing(8, 7, 8, 7),
+    // overflow: 'scroll',
+    [theme.breakpoints.up('md')]: {
+      height: theme.typography.pxToRem(556),
+      width: theme.typography.pxToRem(440),
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      boxShadow: theme.shadows[5],
+    },
+  },
+  modalButtoWrap: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  select: {
+    display: 'flex',
+    padding: 0,
+    // justifyContent: 'center',
+    '& svg': {
+      color: theme.palette.main,
+    },
+  },
+  formControl: {
+    margin: theme.spacing(0),
+    marginLeft: theme.spacing(2),
+    // padding: '11px 32px 11px 11px'
+  },
+  planDetails: {
+    display: 'flex',
+  },
+  planLabel: {
+    fontSize: theme.typography.pxToRem(14),
+    fontWeight: 400,
+    lineHeight: theme.typography.pxToRem(24),
+    letterSpacing: 0.2,
+    [theme.breakpoints.up('md')]: {
+      fontSize: theme.typography.pxToRem(16),
+      lineHeight: theme.typography.pxToRem(26),
+    },
+  },
+  planName: {
+    marginLeft: theme.spacing(1),
+    fontSize: theme.typography.pxToRem(14),
+    fontWeight: 700,
+    lineHeight: theme.typography.pxToRem(24),
+    letterSpacing: 0.2,
+    [theme.breakpoints.up('md')]: {
+      fontSize: theme.typography.pxToRem(16),
+      lineHeight: theme.typography.pxToRem(26),
+    },
+  },
+  selectLabel: {
+    fontSize: theme.typography.pxToRem(12),
+    fontWeight: 600,
+    lineHeight: theme.typography.pxToRem(22),
+    letterSpacing: 0.2,
+    [theme.breakpoints.up('md')]: {
+      fontSize: theme.typography.pxToRem(14),
+      lineHeight: theme.typography.pxToRem(24),
+    },
+  },
+  yourPlan: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }))
 
 export default function HeroHalfHalf({
@@ -125,9 +211,38 @@ export default function HeroHalfHalf({
   snipcart,
   variant,
   membershipData,
+  upgradeData,
 }) {
   const classes = useStyles({ imagePos, variant })
   const router = useRouter()
+
+  const [openModal, setOpenModal] = React.useState(false)
+  const [confirmStatus, setConfirmStatus] = React.useState(false)
+  const [value, setValue] = React.useState(0)
+  const [upgradeId, setUpgradeId] = React.useState('')
+
+  const handleClose = () => {
+    setValue(0)
+    setOpenModal(false)
+    setConfirmStatus(false)
+  }
+  const handleChange = (event) => {
+    setUpgradeId(upgradeData[event.target.value].upgradeId)
+    console.log('upgrade Id ', upgradeData[event.target.value].upgradeId)
+    if (event.target.value != 0) {
+      setValue(event.target.value)
+      setConfirmStatus(true)
+    } else {
+      setValue(0)
+      setConfirmStatus(false)
+    }
+  }
+  const confirmChange = () => {
+    if (value != 0) {
+      setConfirmStatus(false)
+      setOpenModal(false)
+    }
+  }
 
   return (
     <Grid container className={classes.root}>
@@ -161,7 +276,7 @@ export default function HeroHalfHalf({
             </Box>
           </Box>
           <Box mt={5} className={classes.buttonContainer}>
-            {ctaLabel1 && (
+            {ctaLabel1 && variant != 'membership' && (
               <Box pt={0} className={classes.button}>
                 <CtaButton
                   variant='contained'
@@ -175,6 +290,25 @@ export default function HeroHalfHalf({
                       ? () => ctaLink1()
                       : undefined
                   }
+                  href={
+                    Object.prototype.toString.call(ctaLink1) !=
+                    '[object Function]'
+                      ? ctaLink1
+                      : null
+                  }
+                  snipcart={snipcart}
+                />
+              </Box>
+            )}
+            {ctaLabel1 && variant == 'membership' && (
+              <Box pt={0} className={classes.button}>
+                <CtaButton
+                  variant='contained'
+                  color='primary'
+                  width='100%'
+                  size='large'
+                  label={ctaLabel1}
+                  onclick={() => setOpenModal(true)}
                   href={
                     Object.prototype.toString.call(ctaLink1) !=
                     '[object Function]'
@@ -251,6 +385,75 @@ export default function HeroHalfHalf({
             </Container>
           </Grid>
         </Grid>
+      )}
+      {upgradeData && (
+        <Modal
+          open={openModal}
+          onClose={handleClose}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+        >
+          <div className={classes.modal}>
+            <Grid container className={classes.modalBg} spacing={1}>
+              <Grid item xs={12} md={4} className={classes.yourPlan}>
+                <TextStyle variant='subtitle2' className={classes.yourPlan}>
+                  Your Plan:
+                </TextStyle>
+              </Grid>
+              <Grid item xs={12} md={8}>
+                <FormControl
+                  className={classes.formControl}
+                  sx={{ m: 10, minWidth: 220 }}
+                >
+                  <Select
+                    labelId='select-membership-label'
+                    id='select-membership'
+                    value={value}
+                    onChange={handleChange}
+                    className={classes.select}
+                    inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                    {upgradeData.map((membership, index) => (
+                      <MenuItem value={index} key={index}>
+                        {membership.slug}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Box mt={4}>
+                {confirmStatus ? (
+                  <Typography variant='h6'>You will gain access to:</Typography>
+                ) : (
+                  <Typography variant='h6'>Includes:</Typography>
+                )}
+              </Box>
+              <Box>{upgradeData[value]?.description}</Box>
+            </Grid>
+            <Grid className={classes.modalButtoWrap}>
+              <Grid item xs={12} md={6}>
+                {confirmStatus && (
+                  <CtaButton
+                    variant='contained'
+                    fullWidth
+                    color='primary'
+                    label='Upgrade'
+                    id={upgradeId}
+                  />
+                )}
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <CtaButton
+                  variant='outlined'
+                  fullWidth
+                  color='primary'
+                  label='Cancel'
+                  onclick={handleClose}
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </Modal>
       )}
     </Grid>
   )

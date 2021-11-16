@@ -1,0 +1,30 @@
+query GetUserSubscriptionById($userId: ID!) {
+  subscription(uid: $userId)
+    @rest(
+      type: "UserSubscription"
+      path: "/publisher/subscription/list?{args}"
+      method: "GET"
+    ) {
+    items: subscriptions {
+      subscription_id
+      auto_renew
+      next_bill_date
+      end_date
+      cancelable
+      cancelable_and_refundadle
+      status
+      user {
+        personal_name
+      }
+      term {
+        name
+        type
+        payment_billing_plan_table {
+          period
+          priceValue
+        }
+        payment_force_auto_renew
+      }
+    }
+  }
+}

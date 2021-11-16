@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
@@ -8,8 +8,8 @@ import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
 import HeroHalfHalf from '@/components/molecules/herohalfhalf'
-import useMembership from '../../lib/hooks/useMembership'
-import { PIANO_TERM_NAMES as PTN } from '@/const/piano-term-names'
+
+import descriptionMock from '../../__mocks__/descriptionMock'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -17,6 +17,20 @@ const useStyles = makeStyles((theme) => ({
 
 const MyAccount = ({ membershipData, upgradeData }) => {
   const classes = useStyles()
+
+  const [title, setTitle] = useState('')
+
+  useEffect(() => {
+    setTitle(
+      upgradeData.length > 1
+        ? membershipData.period == 'month'
+          ? 'Get so much more for just $1 a month'
+          : membershipData.period == 'year'
+          ? 'Get so much more for just $12 a year'
+          : null
+        : null
+    )
+  }, [upgradeData])
 
   return (
     <Box>
@@ -35,8 +49,8 @@ const MyAccount = ({ membershipData, upgradeData }) => {
 
       <Box pt={[0, 7]} pb={7} maxWidth={['100%', '1024px']} margin='auto'>
         <HeroHalfHalf
-          title='Get so much more for just $1 a month'
-          description='Switch your monthly membership to an annual membership and enjoy two months of ASCD for free.'
+          title={title}
+          description={descriptionMock}
           image='images/halfMembership.png'
           imageAlt='Events banner image'
           ctaLabel1='Upgrade Membership'

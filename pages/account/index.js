@@ -1,7 +1,7 @@
 import { Box, Container } from '@mui/material'
 import Layout from '@/components/layout'
 import AccountBanner from '@/components/molecules/Banners/AccountBanner'
-import useUserAccess from '../../lib/hooks/useUserAccess'
+import useUserSubscription from '../../lib/hooks/useUserSubscription'
 import useUserAccount from '../../lib/hooks/useUserAccount'
 import useMembership from '../../lib/hooks/useMembership'
 import MyAccount from '@/components/UserAccount/MyAccount'
@@ -15,7 +15,8 @@ export default function MainTab() {
     price,
     period,
     membershipKeyword,
-  } = useUserAccess()
+    subscriptionId,
+  } = useUserSubscription()
 
   const { description, upgradeData } = useMembership(membershipKeyword)
   const { userAccountUser } = useUserAccount()

@@ -264,23 +264,26 @@ export default function HeroHalfHalf({
               />
             </Box>
           )}
-          <Box>
-            <TextStyle variant='h1'>{title}</TextStyle>
-            {date && time ? (
-              <>
-                <TextStyle variant='subtitle2'>{`${date} - ${time} EST`}</TextStyle>
-              </>
-            ) : null}
-            <Box mt={2} className={classes.description}>
-              <TextStyle variant='subtitle2'>
-                {Array.isArray(description) ? (
-                  description
-                ) : (
-                  <ReactMarkdown>{description}</ReactMarkdown>
-                )}
-              </TextStyle>
+          {title && (
+            <Box>
+              <TextStyle variant='h1'>{title}</TextStyle>
+              {date && time ? (
+                <>
+                  <TextStyle variant='subtitle2'>{`${date} - ${time} EST`}</TextStyle>
+                </>
+              ) : null}
+              <Box mt={2} className={classes.description}>
+                <TextStyle variant='subtitle2'>
+                  {Array.isArray(description) ? (
+                    description
+                  ) : (
+                    <ReactMarkdown children={description} />
+                  )}
+                </TextStyle>
+              </Box>
             </Box>
-          </Box>
+          )}
+
           <Box mt={5} className={classes.buttonContainer}>
             {ctaLabel1 && variant != 'membership' && (
               <Box pt={0} className={classes.button}>
@@ -306,7 +309,7 @@ export default function HeroHalfHalf({
                 />
               </Box>
             )}
-            {ctaLabel1 && variant == 'membership' && (
+            {ctaLabel1 && variant == 'membership' && upgradeData.length > 1 && (
               <Box pt={0} className={classes.button}>
                 <CtaButton
                   variant='contained'

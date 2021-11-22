@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Grid,
@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
     // overflow: 'scroll',
     [theme.breakpoints.up('sm')]: {
       height: 'auto',
-      width: theme.typography.pxToRem(440),
+      width: theme.typography.pxToRem(500),
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
@@ -218,6 +218,7 @@ export default function HeroHalfHalf({
   variant,
   membershipData,
   upgradeData,
+  upgradeAnnualId,
 }) {
   const classes = useStyles({ imagePos, variant })
   const router = useRouter()
@@ -227,14 +228,19 @@ export default function HeroHalfHalf({
   const [value, setValue] = React.useState(0)
   const [upgradeId, setUpgradeId] = React.useState('')
 
+  useEffect(() => {
+    console.log('membershipData ', membershipData)
+    console.log('upgradeData ', upgradeData)
+  }, [membershipData, upgradeData])
+
   const handleClose = () => {
     setValue(0)
     setOpenModal(false)
     setConfirmStatus(false)
   }
   const handleChange = (event) => {
-    setUpgradeId(upgradeData[event.target.value].upgradeId)
-    console.log('upgrade Id ', upgradeData[event.target.value].upgradeId)
+    setUpgradeId(upgradeData[event.target.value]?.upgradeId)
+    console.log('upgrade Id ', upgradeData[event.target.value]?.upgradeId)
     if (event.target.value != 0) {
       setValue(event.target.value)
       setConfirmStatus(true)
@@ -293,6 +299,7 @@ export default function HeroHalfHalf({
                   width='100%'
                   size='large'
                   label={ctaLabel1}
+                  id={upgradeAnnualId}
                   onclick={
                     Object.prototype.toString.call(ctaLink1) ==
                     '[object Function]'
@@ -309,7 +316,7 @@ export default function HeroHalfHalf({
                 />
               </Box>
             )}
-            {ctaLabel1 && variant == 'membership' && upgradeData.length > 1 && (
+            {ctaLabel1 && variant == 'membership' && upgradeData?.length > 1 && (
               <Box pt={0} className={classes.button}>
                 <CtaButton
                   variant='contained'
@@ -329,6 +336,33 @@ export default function HeroHalfHalf({
               </Box>
             )}
 
+            {ctaLabel1 &&
+              variant == 'membership' &&
+              !membershipData?.membershipName && (
+                <Box pt={0} className={classes.button}>
+                  <CtaButton
+                    variant='contained'
+                    color='primary'
+                    width='100%'
+                    size='large'
+                    label={ctaLabel1}
+                    onclick={
+                      Object.prototype.toString.call(ctaLink1) ==
+                      '[object Function]'
+                        ? () => ctaLink1()
+                        : undefined
+                    }
+                    href={
+                      Object.prototype.toString.call(ctaLink1) !=
+                      '[object Function]'
+                        ? ctaLink1
+                        : null
+                    }
+                    snipcart={snipcart}
+                  />
+                </Box>
+              )}
+
             {snipcart && (
               <Box pt={[2, 0, 0]} className={classes.button}>
                 <SnipcartButton snipcart={snipcart} />
@@ -347,18 +381,26 @@ export default function HeroHalfHalf({
                 />
               </Box>
             )}
-            {ctaLabel2 && variant == 'membership' && (
-              <Box pt={[2, 2, 4]} className={classes.button}>
-                <CtaButton
-                  variant='outlined'
-                  color='primary'
-                  fullWidth
-                  size='large'
-                  label={ctaLabel2}
-                  // href={ctaLink2}
-                />
-              </Box>
-            )}
+            {ctaLabel2 &&
+              variant == 'membership' &&
+              membershipData?.membershipName && (
+                <Box pt={2} pb={1} className={classes.button}>
+                  <CtaButton
+                    variant='outlined'
+                    color='primary'
+                    fullWidth
+                    size='large'
+                    label={ctaLabel2}
+                    // href={ctaLink2}
+                    onclick={
+                      Object.prototype.toString.call(ctaLink2) ==
+                      '[object Function]'
+                        ? () => ctaLink2()
+                        : undefined
+                    }
+                  />
+                </Box>
+              )}
           </Box>
         </Box>
       </Grid>
@@ -422,7 +464,7 @@ export default function HeroHalfHalf({
                     className={classes.select}
                     inputProps={{ 'aria-label': 'Without label' }}
                   >
-                    {upgradeData.map((membership, index) => (
+                    {upgradeData?.map((membership, index) => (
                       <MenuItem value={index} key={index}>
                         {membership.slug}
                       </MenuItem>
@@ -437,7 +479,9 @@ export default function HeroHalfHalf({
                   <Typography variant='h6'>Includes:</Typography>
                 )}
               </Box>
-              <Box>{upgradeData[value]?.description}</Box>
+              <Box mt={4}>
+                <ReactMarkdown>{upgradeData[value]?.description}</ReactMarkdown>
+              </Box>
             </Grid>
             <Grid className={classes.modalButtoWrap}>
               <Grid item xs={12} sm={12} md={6}>
@@ -449,6 +493,7 @@ export default function HeroHalfHalf({
                       color='primary'
                       label='Upgrade'
                       id={upgradeId}
+                      onclick={handleClose}
                     />
                   </Box>
                 )}

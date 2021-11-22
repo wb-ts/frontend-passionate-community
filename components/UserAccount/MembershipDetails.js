@@ -4,6 +4,7 @@ import { Box, Modal, Typography, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import TextStyle from '@/components/atoms/TextStyle'
 import CtaButton from '@/components/atoms/CtaButton'
+import ReactMarkdown from 'react-markdown'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -107,31 +108,31 @@ const MembershipDetails = ({ membershipData }) => {
       <Box className={classes.membershipStatus}>
         <TextStyle className={classes.subtitle}>Account Status</TextStyle>
         <TextStyle className={classes.membershipLabel}>
-          {membershipData.membershipName
+          {membershipData?.membershipName
             ? membershipData.membershipName
             : 'Free User'}
         </TextStyle>
-        {membershipData.membershipName && (
+        {membershipData?.membershipName && (
           <Box>
             <Box mt={1} mb={1} display='flex'>
               <TextStyle className={classes.currency}>$</TextStyle>
               <TextStyle className={classes.price}>
-                {membershipData.price}
+                {membershipData?.price}
               </TextStyle>
               <TextStyle
                 variant='subtitle2'
                 className={classes.perMonthPopular}
               >
                 /
-                {membershipData.period === 'year'
+                {membershipData?.period === 'year'
                   ? 'annually'
-                  : membershipData.period}
+                  : membershipData?.period}
               </TextStyle>
             </Box>
             <Box className={classes.membershipDetail}>
               <TextStyle className={classes.membershipRenew}>
-                {membershipData.autoRenew ? 'Renews' : 'Expires'}{' '}
-                {membershipData.expireDate}
+                {membershipData?.autoRenew ? 'Renews' : 'Expires'}{' '}
+                {membershipData?.expireDate}
               </TextStyle>
 
               <TextStyle
@@ -163,7 +164,7 @@ const MembershipDetails = ({ membershipData }) => {
 
           <Box mt={5} pl={5}>
             <TextStyle variant='sessionDate'>Includes:</TextStyle>
-            <Box>{membershipData.description}</Box>
+            <ReactMarkdown>{membershipData?.description}</ReactMarkdown>
           </Box>
         </Box>
       </Modal>

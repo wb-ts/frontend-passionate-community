@@ -10,31 +10,50 @@ import TwoColumnCta from '@/components/molecules/twocolumncta'
 import HeroHalfHalf from '@/components/molecules/herohalfhalf'
 
 import descriptionMock from '../../__mocks__/descriptionMock'
+import paths from '@/paths/path'
+import Axios from 'axios'
+import qs from 'qs'
+import useMembership from '../../lib/hooks/useMembership'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
 }))
 
-const MyAccount = ({ membershipData, upgradeData }) => {
+const MyAccount = ({ membershipData }) => {
   const classes = useStyles()
 
-  const [title, setTitle] = useState('')
+  const { description, getMoreText, upgradeData } = useMembership(
+    membershipData?.membershipKeyword,
+    membershipData?.period
+  )
 
-  useEffect(() => {
-    setTitle(
-      upgradeData.length > 1
-        ? membershipData.period == 'month'
-          ? 'Get so much more for just $1 a month'
-          : membershipData.period == 'year'
-          ? 'Get so much more for just $12 a year'
-          : null
-        : null
-    )
-  }, [upgradeData])
+  const handleCancelMembership = () => {
+    var data = qs.stringify({
+      api_token: `${process.env.NEXT_PUBLIC_PIANO_API_KEY}`,
+      aid: `${process.env.NEXT_PUBLIC_PIANO_APP_ID}`,
+      subscription_id: membershipData?.subscriptionId,
+    })
+    var config = {
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_PIANO_API_BASE_URL}/publisher/subscription/cancel`,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      data: data,
+    }
+
+    Axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
 
   return (
     <Box>
-      {membershipData.period == 'month' && (
+      {membershipData?.period == 'month' && (
         <Box pt={[0, 7]} pb={7} maxWidth={['100%', '1024px']} margin='auto'>
           <HeroHalfHalf
             title='Get more from ASCD and save'
@@ -42,25 +61,41 @@ const MyAccount = ({ membershipData, upgradeData }) => {
             image='images/monthlyMembership.png'
             imageAlt='Events banner image'
             ctaLabel1='Upgrade Membership'
-            ctaLink1={() => navigateTo('upcoming-events')}
+            upgradeAnnualId='upgrade2annual'
           />
         </Box>
       )}
 
       <Box pt={[0, 7]} pb={7} maxWidth={['100%', '1024px']} margin='auto'>
         <HeroHalfHalf
-          title={title}
+          title={getMoreText}
           description={descriptionMock}
           image='images/halfMembership.png'
           imageAlt='Events banner image'
-          ctaLabel1='Upgrade Membership'
-          ctaLink1={() => navigateTo('upcoming-events')}
+          ctaLabel1={
+            membershipData?.membershipName
+              ? 'Upgrade Membership'
+              : 'Buy Membership'
+          }
+          ctaLink1={
+            membershipData?.membershipName ? null : paths.membershipDetails
+          }
           ctaLabel2='Cancel Membership'
-          ctaLink2={() => navigateTo('upcoming-events')}
+          ctaLink2={() => handleCancelMembership()}
           imagePos='left'
           variant='membership'
-          membershipData={membershipData}
-          upgradeData={upgradeData}
+          membershipData={{ ...membershipData, description }}
+          upgradeData={
+            membershipData?.membershipName
+              ? [
+                  {
+                    slug: membershipData?.membershipKeyword,
+                    upgradeId: '',
+                    description: description,
+                  },
+                ].concat(upgradeData)
+              : []
+          }
         />
       </Box>
     </Box>

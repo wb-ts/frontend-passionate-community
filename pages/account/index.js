@@ -18,7 +18,6 @@ export default function MainTab() {
     subscriptionId,
   } = useUserSubscription()
 
-  const { description, upgradeData } = useMembership(membershipKeyword)
   const { userAccountUser } = useUserAccount()
 
   return (
@@ -32,21 +31,19 @@ export default function MainTab() {
       <Container maxWidth='lg'>
         <Box mt={1} mb={8}>
           <MyAccount
-            membershipData={{
-              membershipName,
-              autoRenew,
-              expireDate,
-              price,
-              period,
-              description,
-            }}
-            upgradeData={[
-              {
-                slug: membershipKeyword,
-                upgradeId: '',
-                description: description,
-              },
-            ].concat(upgradeData)}
+            membershipData={
+              userAccountUser
+                ? {
+                    membershipName,
+                    autoRenew,
+                    expireDate,
+                    price,
+                    period,
+                    subscriptionId,
+                    membershipKeyword,
+                  }
+                : null
+            }
           />
         </Box>
       </Container>

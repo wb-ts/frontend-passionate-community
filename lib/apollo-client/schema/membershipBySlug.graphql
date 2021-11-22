@@ -3,17 +3,15 @@ query GetMembershipBySlug($preview: Boolean, $where: MembershipFilter) {
     items {
       name
       slug
-      description {
-        json
-      }
+      description
+      getMoreYear
+      getMoreMonth
       upgradeMembershipCollection {
         items {
           name
           slug
           upgradeId
-          description {
-            json
-          }
+          description
         }
       }
     }

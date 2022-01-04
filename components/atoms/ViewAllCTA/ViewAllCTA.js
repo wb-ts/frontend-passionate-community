@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(45deg)',
   },
 }))
-export default function ViewAllCTA({ label, href, sm, lg, ...props }) {
+export default function ViewAllCTA({ label, href, target, sm, lg, ...props }) {
   const classes = useStyles()
 
   const textSize = (sm, lg, label) => {
@@ -56,7 +56,7 @@ export default function ViewAllCTA({ label, href, sm, lg, ...props }) {
     <>
       {href && (
         <Link href={href} passHref aria-label='View All link'>
-          <a className={classes.label}>
+          <a className={classes.label} target={target}>
             {textSize(sm, lg, label)}
             <Box pl={0.75}>
               <CallMadeIcon className={classes.forwardArrowIcon} />
@@ -71,6 +71,7 @@ export default function ViewAllCTA({ label, href, sm, lg, ...props }) {
 ViewAllCTA.propTypes = {
   label: PropTypes.string,
   href: PropTypes.string,
+  target: PropTypes.string,
   sm: PropTypes.bool,
   lg: PropTypes.bool,
 }

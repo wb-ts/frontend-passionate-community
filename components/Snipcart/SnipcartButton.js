@@ -80,7 +80,8 @@ export default function SnipcartButton({
         data-item-url={encodeSnipcartOrderValidationUrl(
           snipcart.dataItemId,
           snipcart.dataItemPrice,
-          snipcart.digitalFileGuid
+          snipcart.digitalFileGuid,
+          snipcart.dataItemCustom5Value
         )}
         data-item-description={
           snipcart

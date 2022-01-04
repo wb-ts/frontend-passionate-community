@@ -11,15 +11,6 @@ export default {
 
   webinars: '/webinars',
 
-  //account
-  account({ slug }) {
-    if (slug) {
-      return `/account/${slug}`
-    } else {
-      return '/account'
-    }
-  },
-
   // EL.
   el({ slug }) {
     return `/el/${slug}`

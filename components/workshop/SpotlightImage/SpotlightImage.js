@@ -1,18 +1,28 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { makeStyles } from '@mui/styles'
+import NextImageWrapper from '../../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({
   heroImg: {
-    width: '100%',
     border: '1px solid rgba(0, 0, 0, 0.1)',
     borderRadius: '16px 16px 16px 64px',
   },
 }))
 
-export default function SpotlightImage({ imgUrl, imgTitle, className }) {
+export default function SpotlightImage({ imgUrl, imgTitle }) {
   const classes = useStyles()
-  return <img src={imgUrl} alt={imgTitle} className={classes.heroImg} />
+  return (
+    <NextImageWrapper
+      src={imgUrl}
+      alt={imgTitle}
+      className={classes.heroImg}
+      height={388}
+      width={800}
+      layout='responsive'
+      priority='true'
+    />
+  )
 }
 
 SpotlightImage.propTypes = {

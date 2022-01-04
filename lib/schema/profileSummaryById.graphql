@@ -1,0 +1,9 @@
+#import "./fragments/profileSummaryFragment.graphql"
+
+query GetProfileSummaryBySlug($preview: Boolean, $where: ProfileFilter) {
+  profileCollection(preview: $preview, where: $where) {
+    profiles: items {
+      ...ProfileSummaryFragment
+    }
+  }
+}

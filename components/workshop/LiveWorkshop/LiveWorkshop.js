@@ -16,7 +16,7 @@ import { addItemsToCart } from '@/components/Snipcart/SnipcartManager'
 import ShareButtons from '@/components/molecules/sharebuttons'
 import paths from '@/paths/path'
 import { PropTypes } from 'prop-types'
-import { convertTimeToLocaleTimeWithDST } from '../../../lib/utils'
+import { convertTimeToLocaleTimeWithDST, pathName } from '../../../lib/utils'
 
 const InventorySummary = dynamic(() => import('../../info/InventorySummary'), {
   ssr: false,
@@ -158,9 +158,12 @@ export default function LiveWorkshop({
       )
   const handleChange = (event) => {
     router.push(
-      `/workshops/building-authentic-relationships-with-students-of-color/${event.target.value?.toLowerCase()}`,
+      `${pathName()}/${event.target.value?.toLowerCase()}`,
       undefined,
-      { scroll: false, shallow: true }
+      {
+        scroll: false,
+        shallow: true,
+      }
     )
     setOtherDates(event.target.value)
   }
@@ -218,12 +221,6 @@ export default function LiveWorkshop({
       <Box className={classes.sessions}>
         <List>
           {sessions.map((session, idx) => {
-            const startTimeLocale = convertTimeToLocaleTimeWithDST(
-              new Date(`${session.startDate} ${session.startTime}`)
-            )
-            const endTimeLocale = convertTimeToLocaleTimeWithDST(
-              new Date(`${session.endDate} ${session.endTime}`)
-            )
             return (
               <ListItem key={idx} className={classes.sessionItem}>
                 <TextStyle variant='body3'>
@@ -231,7 +228,7 @@ export default function LiveWorkshop({
                 </TextStyle>
                 <TextStyle variant='sessionDate'>{session.startDate}</TextStyle>
                 <TextStyle variant='h7'>
-                  {startTimeLocale}-{endTimeLocale}
+                  {session.startTime}-{session.endTime}
                 </TextStyle>
               </ListItem>
             )

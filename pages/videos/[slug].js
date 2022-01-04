@@ -2,8 +2,8 @@ import React from 'react'
 import { client } from '@/lib/contentful'
 import SEOHead from '@/const/head'
 import Layout from '@/components/layout'
-import { Box, Container, Divider } from '@mui/material'
-import { makeStyles } from '@mui/styles';
+import { Box, Container, Divider, Skeleton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import ReadMore from '@/components/molecules/readmore'
 import Topics from '@/components/molecules/Topics'
 import TwoColumnCta from '@/components/molecules/twocolumncta'
@@ -14,7 +14,6 @@ import ContentGrid from '@/components/organisms/contentgrid'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import options from '@/const/options'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@mui/material';
 import imageoptimization from '@/const/imageoptimization'
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Video({ video, videos }) {
   const router = useRouter()
   if (router.isFallback) {
-    return <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />;
+    return (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
+    )
   }
 
   const classes = useStyles()
@@ -96,13 +102,13 @@ export default function Video({ video, videos }) {
         {book && (
           <Box my={11}>
             <TwoColumnCta
-              title={book?.fields.title}
+              title={book?.fields?.title}
               description={
                 documentToReactComponents(book?.fields.description, options)[0]
               }
               ctaLabel1='Shop'
               ctaLink1={paths.book({ slug: book?.fields.slug })}
-              label={book?.fields.topic?.fields.title}
+              label={book?.fields.topic?.fields?.title}
               image={
                 book?.fields?.featuredImage?.fields?.imageBynder
                   ? book?.fields?.featuredImage?.fields?.imageBynder[0]?.src +

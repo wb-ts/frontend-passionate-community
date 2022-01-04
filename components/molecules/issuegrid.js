@@ -10,6 +10,8 @@ import {
 import { makeStyles } from '@mui/styles'
 import FilterDropdown from '@/components/atoms/FilterDropdown'
 import Image from 'next/image'
+import NextImageWrapper from '../images/NextImageWrapper'
+import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
 import TextStyle from '@/components/atoms/TextStyle'
 import paths from '@/paths/path'
 import imageoptimization from '@/const/imageoptimization'
@@ -26,11 +28,6 @@ const useStyles = makeStyles((theme) => ({
         '0px 8px 10px rgba(0, 0, 0, 0.03), 0px 3px 14px rgba(0, 0, 0, 0.04), 0px 5px 5px rgba(0, 0, 0, 0.08)!important',
       borderRadius: 4,
     },
-  },
-  nextImage: {
-    position: 'static',
-    backgroundColor: 'transparent',
-    objectFit: 'cover',
   },
   cardActionRoot: {
     '&:hover': {
@@ -146,32 +143,14 @@ export default function IssueGrid({ issues }) {
               >
                 <CardMedia title={item.fields.thumbnail?.fields?.alternate}>
                   <Box className={classes.media}>
-                    {item.fields.thumbnail && (
-                      <Image
-                        src={
-                          item.fields?.thumbnail?.fields?.imageBynder
-                            ? item.fields?.thumbnail?.fields?.imageBynder[0]
-                                ?.src +
-                              '?' +
-                              imageoptimization.qualityParameter +
-                              '=' +
-                              imageoptimization.qualityValue
-                            : item.fields?.thumbnail?.fields?.imageContentful
-                                ?.fields?.file?.url
-                            ? item.fields?.thumbnail?.fields?.imageContentful
-                                ?.fields?.file?.url +
-                              '?' +
-                              imageoptimization.qualityParameter +
-                              '=' +
-                              imageoptimization.qualityValue
-                            : '/images/ASCDImageFiller.png'
-                        }
+                    {item?.fields?.thumbnail && (
+                      <NextImageWrapper
+                        src={contentfulThumbnailAPIToImageUrl(
+                          item.fields.thumbnail
+                        )}
                         alt={item.fields.thumbnail.fields?.alternate}
-                        width={1920}
-                        height={445}
-                        className={classes.nextImage}
-                        placeholder='blur'
-                        blurDataURL='/images/blurrImg.png'
+                        width={464}
+                        height={600}
                       />
                     )}
                   </Box>

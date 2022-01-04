@@ -190,36 +190,49 @@ export default function Event({ event, events }) {
                   </Button>
                 ) : (
                   <>
-                    {event?.fields?.eventId === '2021-leadership-summit' ||
+                    {event?.fields?.eventId ===
+                      '2022-virtual-annual-conference' ||
+                    event?.fields?.eventId === '2021-leadership-summit' ||
                     event?.fields?.eventId ===
                       'symposium-new-era-of-education' ||
                     event?.fields?.eventId === '2022-annual-conference' ||
                     event?.fields?.eventId ===
-                      '2021-virtual-leadership-summit' ? (
+                      '2021-virtual-leadership-summit' ||
+                    event?.fields?.eventId === 'kindergarten-conference' ? (
                       <>
-                        <CtaButton
-                          variant='contained'
-                          color='primary'
-                          size='large'
-                          label='Register Now'
-                          backgroundColor='#3C64B1'
-                          id={
-                            event?.fields?.eventId === '2021-leadership-summit'
-                              ? 'december-event'
-                              : event?.fields?.eventId ===
-                                '2022-annual-conference'
-                              ? '2022-annual-conference'
-                              : event?.fields?.eventId ===
-                                '2021-virtual-leadership-summit'
-                              ? '2022-leadership-summit'
-                              : 'october-event'
-                          }
-                          styles={{
-                            border: '2px solid #fff',
-                            borderRadius: '2px',
-                            width: '100%',
-                          }}
-                        />
+                        {event?.fields?.eventId !==
+                          'kindergarten-conference' && (
+                          <CtaButton
+                            variant='contained'
+                            color='primary'
+                            size='large'
+                            label='Register Now'
+                            backgroundColor='#3C64B1'
+                            id={
+                              event?.fields?.eventId ===
+                              '2021-leadership-summit'
+                                ? 'december-event'
+                                : event?.fields?.eventId ===
+                                  '2022-annual-conference'
+                                ? 'annual-conference-2022'
+                                : event?.fields?.eventId ===
+                                  '2021-virtual-leadership-summit'
+                                ? 'leadership-summit-2022'
+                                : event?.fields?.eventId ===
+                                  '2022-virtual-annual-conference'
+                                ? 'ascd-virtual-annual-conference-2022'
+                                : event?.fields?.eventId ===
+                                  'kindergarten-conference'
+                                ? 'kindergarten-conference'
+                                : 'october-event'
+                            }
+                            styles={{
+                              border: '2px solid #fff',
+                              borderRadius: '2px',
+                              width: '100%',
+                            }}
+                          />
+                        )}
                       </>
                     ) : (
                       <SnipcartButton

@@ -224,7 +224,7 @@ const SnipcartManager = React.memo(() => {
         setOpenModal(true)
       }
     } else {
-      if (cartMetadata && cartMetadata['back-order-items']) {
+      if (cartMetadata && cartMetadata['back-order-items'] && item) {
         backOrderItems = cartMetadata['back-order-items']
         setCartMetadata(
           !cartMetadata['piano-id-uid'] ? null : cartMetadata['piano-id-uid'],
@@ -345,7 +345,8 @@ export const addItemsToCart = async (items) => {
       url: encodeSnipcartOrderValidationUrl(
         item.dataItemId,
         item.dataItemPrice,
-        item.digitalFileGuid
+        item.digitalFileGuid,
+        item.dataItemCustom5Value
       ),
       description: item
         ? description.substring(0, description.indexOf('.') + 1)

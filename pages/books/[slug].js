@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Box, Container, Divider } from '@mui/material'
-import { makeStyles } from '@mui/styles';
+import { Box, Container, Divider, Skeleton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
@@ -18,7 +18,6 @@ import { useReactiveVar } from '@apollo/client'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 import { hasAccessToBook } from '../../lib/access-validator'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@mui/material';
 import { getCartButtonCaptionLabel } from '@/lib/utils'
 import constSnipcart from '@/const/snipcart'
 
@@ -52,7 +51,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Book({ book, relatedBooks, relatedCollections }) {
   const router = useRouter()
   if (router.isFallback) {
-    return <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />;
+    return (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
+    )
   }
 
   const { userAccountAccess } = useUserAccount()
@@ -65,6 +71,7 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
   const classes = useStyles()
   const dateFormat = require('dateformat')
   const [productNumber, setProductNumber] = useState(null)
+  const [bookVersion, setBookVersion] = useState(null)
 
   const secondaryTopics = book.fields.topicSecondary
     ?.map((topic) => topic.fields?.title)
@@ -88,17 +95,49 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
       const variant = url.searchParams.get('variant')
-      setProductNumber(variant)
+      const defaultBookVersion = bookVersionWithProductNumber(book?.fields.bookVersions)
+      if (!defaultBookVersion) {
+        router.push('/404')
+      }
+      else {
+        if (variant) {
+          const matchedBookVersion = book?.fields.bookVersions.find((version) => version.fields?.productNumber === variant) 
+          if (!matchedBookVersion) {
+            if (book?.fields?.slug && defaultBookVersion.fields?.productNumber) {
+              router.push(`/books/${book.fields.slug}?variant=${defaultBookVersion.fields.productNumber}`)
+            }
+          }
+          else {
+            setProductNumber(variant)
+            setBookVersion(matchedBookVersion)
+          }
+        }
+        else {
+          const chapter = url.searchParams.get('chapter')
+          if (!chapter && book?.fields?.slug && defaultBookVersion.fields?.productNumber) {
+            router.push(`/books/${book.fields.slug}?variant=${defaultBookVersion.fields.productNumber}`)
+          }
+        }
+      }
     }
-  }, [])
+  }, [router.query])
 
-  const bookVersion = productNumber
-    ? book.fields.bookVersions.find(
-        (version) => version.fields.productNumber == productNumber
-      )
-    : book.fields.bookVersions[0]
+  const bookVersionWithProductNumber = (bookVersions) => {
+    if (bookVersions && bookVersions.length > 0) {
+      return bookVersions.find((version) => version.fields?.productNumber !== undefined && version.fields?.productNumber.trim() !== '')
+    }
+    else {
+      return undefined
+    }
+  }
 
-  return (
+  // const bookVersion = productNumber
+  //   ? book.fields.bookVersions.find(
+  //       (version) => version.fields.productNumber == productNumber
+  //     )
+  //   : book.fields.bookVersions[0]
+
+  return bookVersion ? (
     <Layout>
       <SEOHead seo={book?.fields?.seo ? book.fields.seo : book} />
       <Container maxWidth='lg'>
@@ -149,7 +188,7 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
                     ? bookVersion?.fields?.royaltyFlag
                     : false
                 }
-                custom3Value={book.fields.authors.map(
+                custom3Value={book.fields.authors?.map(
                   (author) =>
                     author.fields?.title +
                     (author.fields?.email ? '/' + author.fields?.email : '')
@@ -165,7 +204,7 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
               />
             </Box>
           )}
-          {book.fields.authors.length > 0 && (
+          {book.fields.authors && book.fields.authors.length > 0 && (
             <Box mt={[5, 9]} id='book-authors'>
               <ArticleAuthors
                 authors={book.fields.authors}
@@ -247,6 +286,8 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
         )}
       </Container>
     </Layout>
+  ) : (
+    <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />
   )
 }
 

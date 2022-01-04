@@ -64,10 +64,8 @@ const theme = {
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        '@global': {
-          body: {
-            backgroundColor: palette.common.white,
-          },
+        body: {
+          backgroundColor: palette.common.white,
         },
       },
     },

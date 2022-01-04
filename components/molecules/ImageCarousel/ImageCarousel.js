@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import TextStyle from '@/components/atoms/TextStyle'
-import Image from 'next/image'
+import NextImageWrapper from '../../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -73,13 +73,11 @@ export default function ImageCarousel({ images }) {
   return (
     <Box>
       <Box boxShadow={10}>
-        <Image
+        <NextImageWrapper
           src={images[currentImage]}
           height={428}
           width={307}
           className={classes.nextImage}
-          placeholder='blur'
-          blurDataURL='/images/blurrImg.png'
         />
       </Box>
       <Box display='flex' justifyContent='center' alignItems='center' pt={2}>

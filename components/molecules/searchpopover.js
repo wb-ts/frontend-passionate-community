@@ -1,17 +1,12 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles';
-import {
-  Popover,
-  Box,
-  Typography,
-  InputBase,
-  IconButton,
-} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import { Popover, Box, Typography, InputBase, IconButton } from '@mui/material'
 import TopicTag from '@/components/molecules/TopicTag'
 import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
 import { useRouter } from 'next/router'
 import paths from '@/paths/path'
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme) => ({
   searchPopover: {
@@ -187,6 +182,17 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
   },
+  searchFaq: {
+    maxWidth: '960px',
+    width: '80%',
+    textAlign: 'right',
+    marginTop: '4px',
+    '& a': {
+      color: '#FF2E45',
+      fontWeight: '500',
+      width: '80%',
+    },
+  },
 }))
 
 export default function SearchPopover({
@@ -218,7 +224,8 @@ export default function SearchPopover({
         <IconButton
           onClick={closeSearchPopover}
           className={classes.searchPopoverClose}
-          size="large">
+          size='large'
+        >
           <CloseIcon />
         </IconButton>
         <Box className={classes.searchPopoverBody}>
@@ -244,15 +251,20 @@ export default function SearchPopover({
             }
             onClick={resetSearchPopoverValue}
             onKeyPress={onCancelKeyPress}
-            size="large">
+            size='large'
+          >
             <CloseIcon />
           </IconButton>
           <IconButton
             className={classes.searchPopoverSearch}
             onClick={triggerSearch}
-            size="large">
+            size='large'
+          >
             <SearchIcon />
           </IconButton>
+        </Box>
+        <Box className={classes.searchFaq}>
+          <Link href='/faq'>Search FAQ</Link>
         </Box>
         <Box className={classes.searchPopoverTopics}>
           <Box className={classes.searchPopoverTopicsBox}>
@@ -336,5 +348,5 @@ export default function SearchPopover({
         </Box>
       </Box>
     </Popover>
-  );
+  )
 }

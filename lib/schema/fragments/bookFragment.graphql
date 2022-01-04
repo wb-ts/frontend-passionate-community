@@ -1,0 +1,34 @@
+#import "./imageFragment.graphql"
+
+fragment BookFragment on Book {
+  title
+  slug
+  description {
+    json
+  }
+  thumbnail {
+    ...ImageFragment
+  }
+  authors: authorsCollection(preview: $preview) {
+    items {
+      ...ProfileSummaryFragment
+    }
+  }
+  versions: bookVersionsCollection(limit: $bookVersionLimit) {
+    items {
+      productNumber
+      priceNonMember
+      title
+      priceMember
+      taxJar {
+        taxJarId
+      }
+      digitalFileGuid
+      royaltyFlag
+      bookType {
+        title
+      }
+      dateRelease
+    }
+  }
+}

@@ -12,11 +12,14 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 export default (req: NextApiRequest, res: NextApiResponse) => {
   const baseUrl =
     process.env.NEXT_PUBLIC_SNIPCART_ORDER_VALIDATION_BASE_URL || ''
-  const {vKey, item, guid} = req.query
-  const price = Buffer.from(
+  const {vKey, item, guid, productType} = req.query
+  let price = Buffer.from(
     vKey?.toString(),
     'base64'
   ).toString('binary')
+
+  // Prevent $0 workshops from being sold
+  price = (productType === 'workshop' && price === '0') ? '99' : price
 
   const validationJson = {
     "id": item[0],
@@ -24,7 +27,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     "dimensions": {
       "weight": price
     },
-    "url": `${baseUrl}/api/order-validations/${item[0]}?vKey=${vKey}`,
+    "url": `${baseUrl}/api/order-validations/${item[0]}?vKey=${vKey}&productType=${productType}`,
     "fileGuid": (guid) ? guid : ''
   }
 

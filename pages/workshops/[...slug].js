@@ -1,47 +1,36 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React from 'react'
 
-import { client as apolloClient } from '../../lib/apollo-client'
-import GET_WORKSHOP_BY_SLUG_QUERY from '../../lib/apollo-client/schema/workshopBySlug.graphql'
+import dynamic from 'next/dynamic'
 
-import { Box, Container, Divider, Typography } from '@mui/material'
+import { contentfulDirectClient } from '../../lib/apollo-client'
+import PAGE_QUERY from '../../lib/schema/pages/workshopProductPage.graphql'
+
+import { Box, Container, Divider, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+
+import WorkshopSectionTopLeft from '../../components/layouts/workshop/WorkshopSectionTopLeft'
+import ProductBanner from '../../components/layouts/ProductBanner'
 
 import { client } from '@/lib/contentful'
 import Layout from '@/components/layout'
 import SEOHead from '@/const/head'
 import ReactMarkdown from 'react-markdown'
-import BookBanner from '@/components/organisms/bookbanner'
 import TwoColContentListingWorkshop from '@/components/organisms/TwoColContentListingWorkshop'
-import LiveWorkshop from '@/components/workshop/LiveWorkshop'
 import NeverMiss from '@/components/workshop/NeverMiss'
 import SpotlightImage from '@/components/workshop/SpotlightImage'
-import VirtualWorkshop from '@/components/workshop/VirtualWorkshop'
-import {
-  workshopItemToCardData1,
-  workshopItemToCardData,
-  bookVersionToSnipcart,
-} from '@/lib/data-transformations'
-import { useReactiveVar } from '@apollo/client'
-import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 
-import { getParamValue } from '../../lib/utils'
+const WorkshopSectionTopRight = dynamic(
+  () => import('../../components/layouts/workshop/WorkshopSectionTopRight'),
+  { ssr: false }
+)
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   workshops: {
     display: 'flex',
     justifyContent: 'space-between',
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
       justifyContent: 'center',
-    },
-  },
-
-  virtualWorkshop: {
-    flexGrow: 1,
-    maxWidth: 587,
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: 'unset',
     },
   },
   liveWorkshop: {
@@ -64,107 +53,44 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Workshop({
-  authorIds,
   workshop,
-  workshops,
+  recommendedWorkshops,
   slugVariationId,
 }) {
   const classes = useStyles()
-  const [variationId] = useState(slugVariationId || getParamValue('variation'))
-  const hasMemberPrice = useReactiveVar(hasMemberBookPriceVar)
-
-  const futureWorkshops = workshops
-    ?.filter((item) => item?.fields?.slug !== workshop?.fields?.slug)
-    .map((workshopItem, idx) => {
-      const {
-        title,
-        actionHref,
-        mediaImg,
-        topicTag,
-        authorName,
-        workshopDate,
-        memberPrice,
-        nonMemberPrice,
-        clockHours,
-        seatsRemaining,
-      } = workshopItemToCardData(
-        workshopItem,
-        workshopItem.fields.variations[0]
-      )
-      return {
-        key: workshop.fields.slug,
-        remaining:
-          seatsRemaining > 0
-            ? `ONLY {seatsRemaining} SEATS REMAINING`
-            : `NO SEATS REMAINING`,
-        price: hasMemberPrice ? memberPrice : nonMemberPrice,
-        label: topicTag,
-        title: title,
-        authorName: authorName,
-        image: mediaImg,
-        date: `${workshopDate}-${clockHours}`,
-        actionHref: actionHref,
-      }
-    })
-
-  const bookCartItems = workshop?.fields?.materials.map((book) =>
-    bookVersionToSnipcart(book)
-  )
-
-  const {
-    title,
-    actionHref,
-    mediaImg,
-    mediaImgTitle,
-    topicTag,
-    description,
-    topics,
-    keywords,
-    roles,
-    grades,
-    authorName,
-    authorDescription,
-    variations,
-    clockHours,
-  } = workshopItemToCardData1(workshop)
+  const variationId = slugVariationId
 
   return (
     <Layout>
-      <SEOHead seo={workshop?.fields?.seo ? workshop.fields.seo : workshop} />
+      <SEOHead seo={workshop} />
       {workshop && (
         <Container maxWidth='lg'>
           <Box mt={5} mb={5}>
-            <SpotlightImage imgUrl={mediaImg} imgTitle={mediaImgTitle} />
+            {workshop.spotlightImage?.imgSrc && (
+              <SpotlightImage
+                imgUrl={workshop.spotlightImage.imgSrc}
+                imgTitle={workshop.spotlightImage.alternate}
+              />
+            )}
           </Box>
           <Box className={classes.workshops}>
-            <Box className={classes.virtualWorkshop}>
-              <VirtualWorkshop
-                title={title}
-                topicTag={topicTag}
-                description={description}
-                roles={roles}
-                grades={grades}
-                topics={keywords}
-                author={authorDescription}
-                authorIds={authorIds}
-              />
+            <Box pr={7}>
+              <WorkshopSectionTopLeft workshop={workshop} />
             </Box>
             <Box className={classes.liveWorkshop}>
-              <LiveWorkshop
-                slug={workshop.fields.slug}
-                clockHours={clockHours}
-                variations={variations}
-                mediaImg={mediaImg}
-                bookCartItems={bookCartItems}
-                currentVariationId={variationId}
+              <WorkshopSectionTopRight
+                workshop={workshop}
+                selectedVariationId={variationId}
               />
             </Box>
           </Box>
-
           <Box mt={[5, 9]}>
-            {workshop?.fields?.materials?.map((book, i) => (
+            {workshop.materials.items.map((book, i) => (
               <Box pt={2} pb={2} key={i}>
-                <BookBanner book={book} showShipping />
+                <ProductBanner
+                  data={book}
+                  defaultProductVariantId={book.versions.items[0].productNumber}
+                />
               </Box>
             ))}
           </Box>
@@ -172,10 +98,10 @@ export default function Workshop({
             <Divider className={classes.mobileHide} />
           </Box>
           <Box mt={[5, 10]} mb={8}>
-            {futureWorkshops.length > 0 && (
+            {recommendedWorkshops?.length > 0 && (
               <TwoColContentListingWorkshop
                 title='More Virtual Workshops from ASCD'
-                items={futureWorkshops}
+                items={recommendedWorkshops}
                 limit={3}
                 body={
                   <ReactMarkdown>
@@ -197,6 +123,9 @@ export default function Workshop({
 }
 
 export async function getStaticPaths() {
+  /**
+   * @todo Change to graphql
+   */
   const data = await client.getEntries({
     content_type: 'workshop',
     select: 'fields.slug',
@@ -205,66 +134,42 @@ export async function getStaticPaths() {
 
   return {
     paths: data.items.map((item) => ({
-      params: { slug: item.fields.slug.split('/') },
+      params: {
+        slug: item.fields.slug.split('/'),
+      },
     })),
     fallback: 'blocking',
   }
 }
 
 export async function getStaticProps({ params }) {
-  const workshop = await apolloClient.query({
-    query: GET_WORKSHOP_BY_SLUG_QUERY,
-    variables: {
-      preview: process.env.NEXT_PUBLIC_CONTENTFUL_PREVIEW === 'true',
-      where: {
-        slug: params.slug[0],
+  let workshopResults = null
+  try {
+    workshopResults = await contentfulDirectClient.query({
+      query: PAGE_QUERY,
+      fetchPolicy: 'network-only',
+      errorPolicy: 'all',
+      variables: {
+        preview: process.env.NEXT_PUBLIC_CONTENTFUL_PREVIEW === 'true',
+        slug: params?.slug[0] || 'undefined',
+        topicsLimit: 9,
       },
-      authorsCollectionPreview2:
-        process.env.NEXT_PUBLIC_CONTENTFUL_PREVIEW === 'true',
-    },
-  })
+    })
+  } catch (e) {
+    console.error(e)
+  }
 
-  const authorIds =
-    workshop?.data?.workshopCollection?.items[0]?.authorsCollection?.items?.map(
-      (item) => item?.sys?.id
-    )
-
-  const data = await client.getEntries({
-    content_type: 'workshop',
-    'fields.slug': params.slug[0],
-    include: 4,
-  })
-
-  if (!data || !data.items || data.items.length == 0) {
+  if (!workshopResults || workshopResults.data.workshop.items.length < 1) {
     return {
       notFound: true,
     }
   }
 
-  data.items[0].fields.variations = data.items[0].fields.variations.filter(
-    (item) => item.fields !== undefined
-  )
-
-  const workshops = await client.getEntries({
-    content_type: 'workshop',
-    'fields.slug[ne]': params.slug[0],
-    limit: 3,
-    include: 4,
-  })
-
-  workshops.items.forEach((ws) => {
-    ws.fields.variations = ws.fields.variations.filter(
-      (item) => item.fields !== undefined
-    )
-  })
-
   return {
     props: {
-      key: data.items[0].sys.id,
-      authorIds: authorIds,
+      workshop: workshopResults.data.workshop.items[0] || null,
       slugVariationId: params.slug[1] || null,
-      workshop: data.items.length > 0 ? data.items[0] : null,
-      workshops: workshops.items.length > 0 ? workshops.items : [],
+      recommendedWorkshops: workshopResults.data.moreWorkshops.items || null,
     },
     revalidate: 20,
   }

@@ -21,7 +21,7 @@ export default function WriteEL({ topics, publications, SEO }) {
       deadline: dateFormat(topic.fields.deadlineDate, 'UTC:mmmm d, yyyy'),
       details: topic.fields.description,
       filterDate: topic.fields.magazineDate,
-      filterTopic: topic.fields.topic.fields.title,
+      filterTopic: topic.fields.topic.fields?.title,
     }
   })
 

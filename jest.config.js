@@ -3,6 +3,7 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.css$': '<rootDir>/__test-transforms__/cssTransform.js',
+    '\\.(gql|graphql)$': 'jest-transform-graphql',
   },
   transformIgnorePatterns: ['^.+\\.module\\.(css|sass|scss)$'],
   moduleNameMapper: {
@@ -42,4 +43,6 @@ module.exports = {
       },
     ],
   ],
+  //set up load .env.test environment file
+  globalSetup: '<rootDir>/__test-utils__/setupEnv.js',
 }

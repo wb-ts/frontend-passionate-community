@@ -14,6 +14,8 @@ import PodcastPlayer from '@/components/molecules/podcastplayer'
 import TextCTA from '@/components/molecules/textcta'
 import imageoptimization from '@/const/imageoptimization'
 import { components } from '@/const/components'
+import { hasPaidMembershipVar } from '../../lib/apollo-client/cache'
+import { useReactiveVar } from '@apollo/client'
 
 export default function EducationalLearning({
   publications,
@@ -24,6 +26,7 @@ export default function EducationalLearning({
   componentList,
   SEO,
 }) {
+  const useMemberPrice = useReactiveVar(hasPaidMembershipVar)
   return (
     <Layout>
       <SEOHead seo={SEO} />
@@ -45,7 +48,7 @@ export default function EducationalLearning({
               subtitle:
                 'Since 1943, Educational Leadership has been a trusted source of evidence-based, peer-to-peer guidance and inspiration.',
             }}
-            ctaLabel='Join'
+            ctaLabel={useMemberPrice ? '' : 'Subscribe'}
             ctaLink={paths.subscribe}
             authors={{
               ctaLabel: '100+ Featured Authors',
@@ -169,6 +172,7 @@ export async function getStaticProps() {
     'fields.featured': true,
     'fields.elArticleType': 'Articles in Columns/Departments Section',
     order: '-fields.issueDate',
+    include: 3,
   })
   const podcasts = await client.getEntries({
     content_type: 'podcast',

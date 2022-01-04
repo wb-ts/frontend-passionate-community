@@ -1,0 +1,68 @@
+#import "./profileSummaryFragment.graphql"
+#import "./bookFragment.graphql"
+#import "./imageFragment.graphql"
+
+fragment WorkshopFragment on Workshop {
+  title
+  slug
+  clockHours
+  featured
+  description {
+    json
+  }
+  type {
+    title
+  }
+  spotlightImage {
+    ...ImageFragment
+  }
+  grades: gradesCollection(preview: $preview, limit: $gradesLimit) {
+    items {
+      title
+    }
+  }
+  keywords: keywordsCollection(preview: $preview, limit: $keywordsLimit) {
+    items {
+      title
+    }
+  }
+  roles: rolesCollection(preview: $preview, limit: $rolesLimit) {
+    items {
+      title
+    }
+  }
+  topics: topicsCollection(preview: $preview, limit: $topicsLimit) {
+    items {
+      title
+    }
+  }
+  materials: materialsCollection(preview: $preview, limit: $materialsLimit) {
+    items {
+      ...BookFragment
+    }
+  }
+  authors: authorsCollection(preview: $preview) {
+    items {
+      ...ProfileSummaryFragment
+    }
+  }
+  variations: variationsCollection(preview: $preview, limit: $variationsLimit) {
+    items {
+      title
+      variationId
+      nonMemberPrice
+      memberPrice
+      taxJar {
+        taxJarId
+      }
+      sessions: sessionsCollection {
+        items {
+          sessionId
+          startDatetime
+          endDatetime
+          displayTitle
+        }
+      }
+    }
+  }
+}

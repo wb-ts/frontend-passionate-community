@@ -1,2 +1,2 @@
-export default from './SnipcartButton'
-export default from './SnipcartManager'
+export { default as SnipcartButton } from './SnipcartButton'
+export { default as SnipcartManager } from './SnipcartManager'

@@ -12,7 +12,8 @@ import paths from '@/paths/path'
 
 const maxPubIssueEntries = 1
 const maxBookEntries = 1
-const maxEntries = 50
+const maxWorkshopEntries = 2
+const maxEntries = 30
 const debug = false
 
 async function _indexContentToAlgolia(contentToIndex) {
@@ -86,7 +87,7 @@ function _indexBooks(data) {
       url: paths.book({ slug: item.fields.slug }),
       content: documentToPlainTextString(item.fields.description),
       topic: _helperGetTopics(item.fields.topic, item.fields.topicSecondary),
-      yearPublished: new Date(item.fields.datePublished).getFullYear(),
+      yearPublished: new Date(item.fields.datePublished).getUTCFullYear(),
       language: _helperGetLanguages(item.fields.languages),
       premium: item.fields.premium,
       author: _helperGetAuthor(item.fields.authors),
@@ -244,7 +245,11 @@ function _indexEvents(data) {
     type: 'event',
     url: paths.event({ slug: item.fields.slug }),
     title: item.fields.title,
-    content: item.fields.description ? item.fields.description : '' + ' ' + item.fields.eventDetails ? documentToPlainTextString(item.fields.body) : '',
+    content: item.fields.description
+      ? item.fields.description
+      : '' + ' ' + item.fields.eventDetails
+      ? documentToPlainTextString(item.fields.body)
+      : '',
     topic: _helperGetTopics(item.fields.topic, item.fields.topicSecondary),
     dateTimeStamp: item.fields.dateTime,
     thumbnail: _helperGetImage(item.fields.thumbnail),
@@ -259,7 +264,9 @@ function _indexWorkshops(data) {
       type: 'workshop',
       url: paths.workshop({ slug: item.fields.slug }),
       title: item.fields.title,
-      content: item.fields.description ? documentToPlainTextString(item.fields.description) : '',
+      content: item.fields.description
+        ? documentToPlainTextString(item.fields.description)
+        : '',
       topic: item.fields.topics ? _helperGetValues(item.fields.topics) : [],
       author: _helperGetAuthor(item.fields.authors),
       thumbnail: _helperGetImage(item.fields.spotlightImage),
@@ -651,7 +658,7 @@ export async function getServerSideProps(context) {
           }
         }
         _indexEvents(items)
-        break;  
+        break
       case '12':
         //Index Workshops
         contentType = 'workshop'
@@ -662,7 +669,7 @@ export async function getServerSideProps(context) {
           const entries = await client.getEntries({
             content_type: contentType,
             skip: offset,
-            limit: maxEntries,
+            limit: maxWorkshopEntries,
             include: 3,
           })
 
@@ -671,17 +678,25 @@ export async function getServerSideProps(context) {
           if (processedEntries > 0) {
             offset += processedEntries
             let filteredItems = []
-            filteredItems = entries.items.filter(workshop => workshop.fields.variations)
+            filteredItems = entries.items.filter(
+              (workshop) => workshop.fields.variations
+            )
             if (filteredItems && filteredItems.length) {
               filteredItems = filteredItems.filter((workshop) => {
                 let activeWorkshop = false
                 workshop.fields.variations.forEach((variation) => {
                   let activeVariation = false
-                  if (variation.fields.sessions && variation.fields.sessions.length > 0) {
+                  if (
+                    variation.fields.sessions &&
+                    variation.fields.sessions.length > 0
+                  ) {
                     let activeSession = false
                     variation.fields.sessions.forEach((session) => {
-                      const startDatetime = !session.fields.startDatetime ? 0 : Date.parse(session.fields.startDatetime)
-                      activeSession = activeSession || startDatetime > new Date().getTime()
+                      const startDatetime = !session.fields.startDatetime
+                        ? 0
+                        : Date.parse(session.fields.startDatetime)
+                      activeSession =
+                        activeSession || startDatetime > new Date().getTime()
                     })
                     activeVariation = activeSession
                   }
@@ -694,7 +709,7 @@ export async function getServerSideProps(context) {
           }
         }
         _indexWorkshops(items)
-        break;
+        break
       default:
         // Index Collections.
         contentType = 'collection'

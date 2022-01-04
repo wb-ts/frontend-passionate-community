@@ -5,10 +5,12 @@ import CtaButton from '@/components/atoms/CtaButton'
 import AuthorGroup from '@/components/atoms/AuthorGroup'
 import PropTypes from 'prop-types'
 import TextStyle from '@/components/atoms/TextStyle'
+import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import { useRouter } from 'next/router'
 import ShareButtons from '@/components/molecules/sharebuttons'
 import paths from '@/paths/path'
 import CustomLink from '@/components/atoms/CustomLink'
+import { getCartButtonCaptionLabel } from '@/lib/utils'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,19 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: theme.spacing(4),
       flexDirection: 'row',
       alignItems: 'unset',
+    },
+  },
+  snipcartBtn: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.text.secondary,
+    // border: '1px solid #fff',
+    '&:hover': {
+      backgroundColor: theme.palette.hover.main,
+      textDecoration: 'underline',
+    },
+    [theme.breakpoints.up('md')]: {
+      minWidth: 100,
+      height: '2.5rem',
     },
   },
   ctaBox: {
@@ -80,6 +95,10 @@ export default function IssueBannerTitle({
   const router = useRouter()
 
   const dateFormat = require('dateformat')
+
+  const cartButtonCaptionLabel = getCartButtonCaptionLabel(
+    issue?.bookVersion?.fields?.dateRelease
+  )
 
   const dt = extraLink
     ? issue.metadata.datePosted &&
@@ -170,26 +189,55 @@ export default function IssueBannerTitle({
       )}
 
       <Box mb={2} className={classes.ctaContainer}>
+        {issue?.bookVersion && (
+          <Box display='flex'>
+            <Box pr={2} alignSelf='center'>
+              <TextStyle variant='h3'>
+                ${issue.bookVersion?.fields?.priceMember}
+              </TextStyle>
+              <TextStyle variant='h7'>Single Print Issue</TextStyle>
+            </Box>
+            <Box pr={2}>
+              <SnipcartButton
+                className={classes.snipcartBtn}
+                snipcart={{
+                  label: cartButtonCaptionLabel,
+                  dataItemId: issue?.bookVersion?.fields?.productNumber,
+                  dataItemName: issue?.title,
+                  dataItemUrl: issue.slug,
+                  dataItemImage: issue.imgUrl.startsWith('//')
+                    ? 'https:' + issue.imgUrl
+                    : issue.imgUrl,
+                  dataItemDescription: issue.description,
+                  dataItemPrice: issue?.bookVersion.fields?.priceMember,
+                  dataItemCustom1Value: issue?.bookVersion?.fields?.taxJar
+                    ?.fields?.taxJarId
+                    ? issue?.bookVersion?.fields.taxJar.fields.taxJarId
+                    : '',
+                  dataItemCustom2Value: issue?.bookVersion?.fields?.royaltyFlag
+                    ? issue?.bookVersion?.fields?.royaltyFlag
+                    : false,
+                  dataItemQuantity: 1,
+                  digitalFileGuid: issue?.bookVersion?.fields?.digitalFileGuid,
+                  productReleaseDate: issue?.bookVersion?.fields?.dateRelease,
+                }}
+              />
+            </Box>
+          </Box>
+        )}
         {ctaLabel && (
           <Box mr={[0, 2]} my={[3, 0]} className={classes.ctaBox}>
             <CtaButton
               variant='contained'
               color='primary'
               width='100%'
-              size='large'
+              size='medium'
               label={ctaLabel}
               href={ctaLink}
             />
           </Box>
         )}
-        {issue && issue.title && issue.slug && (
-          <Box className={classes.shareBtns}>
-            <ShareButtons
-              url={paths.el({ slug: issue.slug })}
-              title={issue.title}
-            />
-          </Box>
-        )}
+
         {authors && (
           <Box className={classes.ctaBox}>
             <AuthorGroup
@@ -202,8 +250,16 @@ export default function IssueBannerTitle({
           </Box>
         )}
       </Box>
+      {issue && issue.title && issue.slug && (
+        <Box className={classes.shareBtns}>
+          <ShareButtons
+            url={paths.el({ slug: issue.slug })}
+            title={issue.title}
+          />
+        </Box>
+      )}
       {extraLink && dt.getFullYear() == '2021' && dt.getMonth() + 1 == '7' && (
-        <Box my={5} px={[5, 0, 0]} textAlign={['center', 'left', 'left']}>
+        <Box my={2} px={[5, 0, 0]} textAlign={['center', 'left', 'left']}>
           <CustomLink
             href='https://share.hsforms.com/1KGJ1NHq1T5Og0HOn6HeZOA4rwbz?__hstc=258360661.7d073d228b90833ecab4fcc424388120.1608059657822.1626182273289.1626206955662.363&__hssc=258360661.2.1626206955662&__hsfp=1879013358'
             label='Download the Summer 2021 issue of EL'

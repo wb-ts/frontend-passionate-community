@@ -56,7 +56,7 @@ export default function AccordionList({
           }
         })
         .reduce((unique, o) => {
-          if (!unique?.some((obj) => obj.value === o.value)) {
+          if (!unique?.some((obj) => obj.value === o?.value)) {
             unique.push(o)
           }
           return unique
@@ -69,7 +69,7 @@ export default function AccordionList({
         .map((issue) => issue.filterTopic)
         .flat()
         .reduce((unique, o) => {
-          if (!unique?.some((obj) => obj.value === o.value)) {
+          if (o && !unique?.some((obj) => obj.value === o?.value)) {
             unique.push(o)
           }
           return unique

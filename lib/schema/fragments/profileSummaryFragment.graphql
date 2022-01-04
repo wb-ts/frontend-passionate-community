@@ -1,0 +1,15 @@
+#import "./imageFragment.graphql"
+
+fragment ProfileSummaryFragment on Profile {
+  description {
+    json
+  }
+  slug
+  firstName
+  lastName
+  email
+  title
+  thumbnail {
+    ...ImageFragment
+  }
+}

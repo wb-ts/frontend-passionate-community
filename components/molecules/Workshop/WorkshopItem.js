@@ -125,10 +125,14 @@ export default function WorkshopItem({ cardData, useMemberBookPrice }) {
               </Box>
               <Box>
                 <TextStyle variant='subtitle1'>
-                  $
-                  {useMemberBookPrice
-                    ? cardData.memberPrice
-                    : cardData.nonMemberPrice}
+                  {cardData.memberPrice &&
+                    cardData.nonMemberPrice &&
+                    `$${
+                      useMemberBookPrice
+                        ? cardData.memberPrice
+                        : cardData.nonMemberPrice
+                    }
+                  `}
                 </TextStyle>
               </Box>
             </Box>

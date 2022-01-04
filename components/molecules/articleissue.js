@@ -40,8 +40,8 @@ export default function ArticleIssue({ issue }) {
           color='primary'
           fullWidth
           height='49'
-          label='Subscribe Now'
-          href={paths.subscribe}
+          label='Go To Publication'
+          href={paths.el({ slug: issue.fields.slug })}
         />
       </Box>
     </Box>

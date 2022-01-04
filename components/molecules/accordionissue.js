@@ -123,25 +123,16 @@ export default function AccordionIssue({ handleChange, expanded, id, item }) {
     >
       <AccordionSummary
         expandIcon={
-          <Box mr={4}>
+          <Box px={1}>
             {expanded == `panel${id}` ? (
-              <Button endIcon={<ExpandLess />} style={{ marginRight: 10 }}>
+              <Button endIcon={<ExpandLess />}>
                 <Typography className={classes.more}>Less</Typography>
               </Button>
             ) : (
-              <Button endIcon={<ExpandMore />} style={{ marginRight: 10 }}>
+              <Button endIcon={<ExpandMore />}>
                 <Typography className={classes.more}>More</Typography>
               </Button>
             )}
-            <CtaButton
-              variant='contained'
-              color='primary'
-              width='114'
-              height='42'
-              label='Submit'
-              href='https://elmagazine.submittable.com/submit'
-              target='_blank'
-            />
           </Box>
         }
         aria-controls={`panel${id}-content`}
@@ -166,6 +157,17 @@ export default function AccordionIssue({ handleChange, expanded, id, item }) {
           <Box>
             <TextStyle variant='h4'>{item.title}</TextStyle>
             <TextStyle variant='subtitle1'>Deadline: {item.deadline}</TextStyle>
+          </Box>
+          <Box>
+            <CtaButton
+              variant='contained'
+              color='primary'
+              width='114'
+              height='42'
+              label='Submit'
+              href='https://elmagazine.submittable.com/submit'
+              target='_blank'
+            />
           </Box>
         </Box>
       </AccordionSummary>

@@ -6,6 +6,7 @@ import en from 'javascript-time-ago/locale/en'
 import paths from '@/paths/path'
 import HorizontalCard from '@/components/molecules/horizontalcard'
 import TwoColumnHeader from '@/components/atoms/TwoColumnHeader'
+import { formatDateToCalendarMedium } from '../../lib/utils'
 
 const useStyles = makeStyles((theme) => ({
   gridLeft: {
@@ -65,19 +66,44 @@ export default function TwoColContentListingWorkshop({
                   items.length - 1 > key ? (
                     <Divider className={classes.divider} />
                   ) : null
+
+                const itemData =
+                  item.__typename === 'Workshop'
+                    ? {
+                        title: item.title,
+                        authorName: `${item.authors.items[0].firstName} ${item.authors.items[0].lastName}`,
+                        label: 'Author Workshop',
+                        price:
+                          item.variations.items.length > 0 &&
+                          item.variations.items[0]
+                            ? item.variations.items[0].nonMemberPrice
+                            : '',
+                        image: item.spotlightImage.imgSrc,
+                        actionHref: `/workshops/${item.slug}`,
+                        date:
+                          item.variations.items.length > 0 &&
+                          item.variations.items[0]
+                            ? `${formatDateToCalendarMedium(
+                                item.variations.items[0].sessions.items[0]
+                                  .startDateTime
+                              )}-${item.clockHours} Clock Hours`
+                            : '',
+                      }
+                    : item
+
                 return (
                   <React.Fragment key={`content-list-${key}`}>
                     <Grid item xs={12}>
                       <HorizontalCard
-                        key={item.title}
-                        price={item.price}
-                        remaining={item.remaining}
-                        label={item.label}
-                        title={item.title}
-                        authorName={item.authorName}
-                        image={item.image}
-                        date={item.date}
-                        ctaLink={item.actionHref}
+                        key={itemData.title}
+                        price={itemData.price}
+                        remaining={itemData.remaining}
+                        label={itemData.label}
+                        title={itemData.title}
+                        authorName={itemData.authorName}
+                        image={itemData.image}
+                        date={itemData.date}
+                        ctaLink={itemData.actionHref}
                         variant={variant}
                       />
                     </Grid>

@@ -5,12 +5,4 @@ export const PIANO_TERM_NAMES = Object.freeze({
   PAID_SUBSCRIPTIONS_KEYWORDS: ['Basic', 'Select', 'Premium'],
   SELECT_SUBSCRIPTION_KEYWORD: 'Select',
   PREMIUM_SUBSCRIPTION_KEYWORD: 'Premium',
-  PAID_MEMBERSHIP_KEYWORDS: [
-    'Digital - Basic',
-    'Standard - Basic',
-    'Digital - Select',
-    'Standard - Select',
-    'Digital - Premium',
-    'Standard - Premium',
-  ],
 })

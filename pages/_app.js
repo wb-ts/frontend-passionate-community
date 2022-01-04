@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
-import { StylesProvider, createGenerateClassName } from '@mui/styles'
+import { createGenerateClassName } from '@mui/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import theme from '../theme'
 import '../styles/globals.css'
@@ -12,6 +12,8 @@ import SnipcartManager from '@/components/Snipcart/SnipcartManager'
 import PianoManager from '@/components/piano/PianoManager'
 import { ApolloProvider } from '@apollo/client'
 import { client } from '../lib/apollo-client'
+import { CacheProvider } from '@emotion/react'
+import createEmotionCache from '../createEmotionCache'
 
 Router.events.on('routeChangeComplete', () =>
   typeof window !== 'undefined' && typeof window.tp !== 'undefined'
@@ -19,19 +21,13 @@ Router.events.on('routeChangeComplete', () =>
     : () => {}
 )
 
+const clientSideEmotionCache = createEmotionCache()
+
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ascd',
 })
 
-function App({ Component, pageProps }) {
-  useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
-  }, [])
-
+function App({ Component, pageProps, emotionCache = clientSideEmotionCache }) {
   useEffect(() => {
     analytics.page({
       title: pageProps?.SEO?.fields?.title
@@ -55,27 +51,25 @@ function App({ Component, pageProps }) {
 
   return (
     <React.Fragment>
-      <Head>
-        <meta
-          name='viewport'
-          content='minimum-scale=1, initial-scale=1, width=device-width'
-        />
-        <link rel='icon' type='image/ico' href='/favicon.ico' />
-      </Head>
-      <StylesProvider generateClassName={generateClassName}>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <ApolloProvider client={client}>
-              <AppProvider>
-                <Component {...pageProps} />
-                <SnipcartManager />
-                <PianoManager />
-              </AppProvider>
-            </ApolloProvider>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </StylesProvider>
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <meta
+            name='viewport'
+            content='minimum-scale=1, initial-scale=1, width=device-width'
+          />
+          <link rel='icon' type='image/ico' href='/favicon.ico' />
+        </Head>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ApolloProvider client={client}>
+            <AppProvider>
+              <Component {...pageProps} />
+              <SnipcartManager />
+              <PianoManager />
+            </AppProvider>
+          </ApolloProvider>
+        </ThemeProvider>
+      </CacheProvider>
     </React.Fragment>
   )
 }

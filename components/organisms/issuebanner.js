@@ -6,6 +6,8 @@ import IssueBannerTitle from '@/components/molecules/issuebannertitle'
 import paths from '@/paths/path'
 import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
 import NextImageWrapper from '../images/NextImageWrapper'
+import { hasPaidMembershipVar } from '../../lib/apollo-client/cache'
+import { useReactiveVar } from '@apollo/client'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IssueBanner({ issue }) {
   const classes = useStyles()
-  contentfulThumbnailAPIToImageUrl(issue.fields.thumbnail)
+  const useMemberPrice = useReactiveVar(hasPaidMembershipVar)
   return (
     <Box className={classes.root}>
       <Container maxWidth='lg' className={classes.container}>
@@ -88,8 +90,13 @@ export default function IssueBanner({ issue }) {
                     issueNo: issue.fields.issueNo.toString(),
                   },
                   slug: issue.fields.slug,
+                  bookVersion: issue?.fields?.bookVersion,
+                  imgUrl: contentfulThumbnailAPIToImageUrl(
+                    issue?.fields?.thumbnail
+                  ),
+                  description: issue?.fields?.shortDescription,
                 }}
-                ctaLabel='Subscribe'
+                ctaLabel={useMemberPrice ? '' : 'Subscribe'}
                 ctaLink={paths.subscribe}
                 align='left'
                 extraLink

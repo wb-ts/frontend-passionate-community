@@ -26,7 +26,11 @@ import PdfTitleBar from '@/components/molecules/pdftitlebar'
 import CustomLink from '@/components/atoms/CustomLink'
 import imageoptimization from '@/const/imageoptimization'
 import useUserAccount from '../../../lib/hooks/useUserAccount'
-import { contentfulThumbnailAPIToImageUrl } from '../../../lib/data-transformations'
+import {
+  contentfulThumbnailAPIToImageUrl,
+  contentfulThumbnailAPIToImageWidth,
+  contentfulThumbnailAPIToImageHeight,
+} from '../../../lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,9 +60,10 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: '100vw',
+    textAlign: 'center',
     [theme.breakpoints.up('md')]: {
       width: '100%',
-      maxWidth: 850,
+      maxWidth: 674,
     },
   },
   toc: {
@@ -415,9 +420,12 @@ export default function Article({ article, issue, relatedArticles }) {
                         article.fields.image
                       )}
                       alt={article.fields.image.fields?.alternate}
-                      width={800}
-                      height={433}
-                      layout='responsive'
+                      width={contentfulThumbnailAPIToImageWidth(
+                        article.fields.image
+                      )}
+                      height={contentfulThumbnailAPIToImageHeight(
+                        article.fields.image
+                      )}
                       priority='true'
                     />
                     {article.fields.image &&
@@ -483,9 +491,11 @@ export default function Article({ article, issue, relatedArticles }) {
 
                   <Box mt={9}>
                     <TextCTA
-                      title='Want to add  your own highlights and notes for this article to access later?'
-                      ctaLabel='Become a member today'
-                      ctaLink={paths.subscribe}
+                      title="ASCD is a community dedicated to educators' professional growth and well-being."
+                      ctaLabel="Discover ASCD's Professional Learning Services"
+                      description='Let us help you put your vision into action.'
+                      ctaLink='https://professional-development.ascd.org/get-started?utm_campaign=2022-IS-0809&utm_source=PD&utm_medium=SiteLink&utm_content=PLS_Page'
+                      target='_blank'
                     />
                   </Box>
 

@@ -22,17 +22,13 @@ import ArticleAuthors from '@/components/organisms/articleaauthors'
 import { components } from '@/const/components'
 import CustomLink from '@/components/atoms/CustomLink'
 import imageoptimization from '@/const/imageoptimization'
+import {
+  contentfulThumbnailAPIToImageUrl,
+  contentfulThumbnailAPIToImageWidth,
+  contentfulThumbnailAPIToImageHeight,
+} from '../../lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  articleText: {
-    width: '100%',
-    maxWidth: 674,
-  },
   topics: {
     '& > div': {
       marginBottom: theme.spacing(1),
@@ -44,12 +40,6 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: theme.spacing(2),
     },
   },
-  media: {
-    width: '110%',
-    [theme.breakpoints.up('md')]: {
-      width: '100%',
-    },
-  },
   toc: {
     position: 'relative',
     zIndex: 1,
@@ -58,13 +48,6 @@ const useStyles = makeStyles((theme) => ({
       top: 250,
     },
   },
-  nextImage: {
-    paddingTop: 0,
-    width: 'inherit',
-    height: 'inherit',
-    objectFit: 'cover',
-  },
-  publication: {},
 }))
 
 function ArticleBody({ refresherKey, children }) {
@@ -223,18 +206,36 @@ export default function Blog({ blog, relatedBlogs }) {
             />
           </Box>
         </Grid>
-        <Grid item md={8} xs={12}>
-          <Container maxWidth='lg' className={classes.root}>
-            <Box id='abstract' className={classes.articleText} my={6}>
-              <TextStyle variant='articleAbstract'>
-                {documentToReactComponents(blog.fields.blurb, options)}
-              </TextStyle>
+        <Grid item md={8} xs={12} px={[2, 2, 4, 8]}>
+          <Box id='abstract' my={6}>
+            <TextStyle variant='articleAbstract'>
+              {documentToReactComponents(blog.fields.blurb, options)}
+            </TextStyle>
 
-              <Box my={2} className={classes.topics}>
-                {blog.fields.topic && (
+            <Box my={2} className={classes.topics}>
+              {blog.fields.topic && (
+                <TopicTag
+                  key={blog.fields.topic.fields?.title}
+                  label={blog.fields.topic.fields?.title}
+                  variant='basicSmall'
+                  marginRight='8px'
+                  textTransform='uppercase'
+                  onclick={() =>
+                    router.push(
+                      paths.search({
+                        types: ['blog'],
+                        topics: [blog.fields.topic.fields.title],
+                      })
+                    )
+                  }
+                />
+              )}
+              {blog.fields.topicSecondary
+                ?.filter((topic) => topic.fields)
+                .map((topic, key) => (
                   <TopicTag
-                    key={blog.fields.topic.fields?.title}
-                    label={blog.fields.topic.fields?.title}
+                    key={key}
+                    label={topic.fields.title}
                     variant='basicSmall'
                     marginRight='8px'
                     textTransform='uppercase'
@@ -242,117 +243,84 @@ export default function Blog({ blog, relatedBlogs }) {
                       router.push(
                         paths.search({
                           types: ['blog'],
-                          topics: [blog.fields.topic.fields.title],
+                          topics: [topic.fields.title],
                         })
                       )
                     }
                   />
+                ))}
+            </Box>
+          </Box>
+          {blog.fields.thumbnail && (
+            <Box>
+              <NextImageWrapper
+                src={contentfulThumbnailAPIToImageUrl(blog.fields?.thumbnail)}
+                alt={blog.fields?.thumbnail?.fields?.alternate}
+                width={contentfulThumbnailAPIToImageWidth(
+                  blog.fields?.thumbnail
                 )}
-                {blog.fields.topicSecondary
-                  ?.filter((topic) => topic.fields)
-                  .map((topic, key) => (
-                    <TopicTag
-                      key={key}
-                      label={topic.fields.title}
-                      variant='basicSmall'
-                      marginRight='8px'
-                      textTransform='uppercase'
-                      onclick={() =>
-                        router.push(
-                          paths.search({
-                            types: ['blog'],
-                            topics: [topic.fields.title],
-                          })
-                        )
-                      }
-                    />
-                  ))}
+                height={contentfulThumbnailAPIToImageHeight(
+                  blog.fields?.thumbnail
+                )}
+              />
+              <Box>
+                {blog.fields.thumbnail &&
+                  blog.fields?.thumbnail?.fields?.imageBynder &&
+                  blog.fields?.thumbnail?.fields?.imageBynder[0].copyright && (
+                    <em>
+                      Credit:{' '}
+                      {blog.fields?.thumbnail?.fields?.imageBynder[0].copyright}
+                    </em>
+                  )}
               </Box>
             </Box>
-            {blog.fields.thumbnail && (
-              <Box className={classes.media}>
-                <NextImageWrapper
-                  src={
-                    blog.fields?.thumbnail?.fields?.imageBynder
-                      ? blog.fields?.thumbnail?.fields?.imageBynder[0]?.src
-                      : blog.fields?.thumbnail?.fields?.imageContentful?.fields
-                          ?.file?.url
-                      ? blog.fields?.thumbnail?.fields?.imageContentful?.fields
-                          ?.file?.url
-                      : '/images/ASCDImageFiller.png'
-                  }
-                  alt={blog.fields?.thumbnail?.fields?.alternate}
-                  width={800}
-                  height={433}
-                  layout='responsive'
-                  className={classes.nextImage}
-                />
-                <Box>
-                  {blog.fields.thumbnail &&
-                    blog.fields?.thumbnail?.fields?.imageBynder &&
-                    blog.fields?.thumbnail?.fields?.imageBynder[0]
-                      .copyright && (
-                      <em>
-                        Credit:{' '}
-                        {
-                          blog.fields?.thumbnail?.fields?.imageBynder[0]
-                            .copyright
-                        }
-                      </em>
-                    )}
-                </Box>
+          )}
+          <Box mt={6} ml={2} display={['block', 'block', 'none']} width='100%'>
+            <TOCNav
+              toc_items={toc_items}
+              activeBorderWidth='4px'
+              activeBorderColor='black'
+              backgroundColor='white'
+              borderLeft
+              maxWidth='290px'
+            />
+          </Box>
+          <Box className={classes.articleText} my={6}>
+            <ArticleBody refresherKey={refresherKey}>
+              {documentToReactComponents(blog.fields.body, options)}
+            </ArticleBody>
+
+            {blog.fields.authors && (
+              <Box mt={7} id='authors'>
+                <ArticleAuthors authors={blog.fields.authors} />
               </Box>
             )}
-            <Box
-              mt={6}
-              ml={2}
-              display={['block', 'block', 'none']}
-              width='100%'
-            >
-              <TOCNav
-                toc_items={toc_items}
-                activeBorderWidth='4px'
-                activeBorderColor='black'
-                backgroundColor='white'
-                borderLeft
-                maxWidth='290px'
+
+            <Box mt={9}>
+              <TextCTA
+                title='ASCD is dedicated to professional growth and well-being.'
+                description="Let's put your vision into action."
+                ctaLabel='Discover our Professional Learning Services'
+                ctaLink='https://professional-development.ascd.org/get-started?utm_campaign=2022-IS-0809&utm_source=PD&utm_medium=SiteLink&utm_content=PLS_Page'
+                target='_blank'
               />
             </Box>
-            <Box className={classes.articleText} my={6}>
-              <ArticleBody refresherKey={refresherKey}>
-                {documentToReactComponents(blog.fields.body, options)}
-              </ArticleBody>
 
-              {blog.fields.authors && (
-                <Box mt={7} id='authors'>
-                  <ArticleAuthors authors={blog.fields.authors} />
-                </Box>
-              )}
-
-              <Box mt={9}>
-                <TextCTA
-                  title='Want to save this article for later?'
-                  ctaLabel='Become a member today'
-                  ctaLink='/'
+            {relatedBlogs?.length > 0 && (
+              <Box mt={11}>
+                <ContentList
+                  title='Related Articles'
+                  ctaLabel='View all'
+                  ctaLink={paths.search({
+                    types: ['blog', 'article'],
+                    topics: [blog.fields.topic.fields?.title],
+                  })}
+                  items={relatedBlogs}
+                  variant='article'
                 />
               </Box>
-
-              {relatedBlogs?.length > 0 && (
-                <Box mt={11}>
-                  <ContentList
-                    title='Related Articles'
-                    ctaLabel='View all'
-                    ctaLink={paths.search({
-                      types: ['blog', 'article'],
-                      topics: [blog.fields.topic.fields?.title],
-                    })}
-                    items={relatedBlogs}
-                    variant='article'
-                  />
-                </Box>
-              )}
-            </Box>
-          </Container>
+            )}
+          </Box>
         </Grid>
         <Grid item md={2} xs={12}>
           {relatedBlogs?.length > 0 && (

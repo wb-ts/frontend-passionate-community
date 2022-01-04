@@ -29,10 +29,10 @@ export default function TextCTA({
   button,
   ctaLabel,
   ctaLink,
+  target,
   ...props
 }) {
   const classes = useStyles(props)
-
   return (
     <Box py={5} className={classes.textcta}>
       {title && (
@@ -54,10 +54,11 @@ export default function TextCTA({
               width='100%'
               height='42'
               label={ctaLabel}
+              target={target}
               href={ctaLink}
             />
           ) : (
-            <ViewAllCTA href={ctaLink} label={ctaLabel} lg />
+            <ViewAllCTA href={ctaLink} target={target} label={ctaLabel} lg />
           )}
         </Box>
       )}

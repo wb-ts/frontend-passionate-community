@@ -1,7 +1,10 @@
 import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { ServerStyleSheets, createGenerateClassName } from '@mui/styles'
 import theme from '../theme'
+import createEmotionCache from '../createEmotionCache'
+import createEmotionServer from '@emotion/server/create-instance'
+import { ServerStyleSheets, createGenerateClassName } from '@mui/styles'
+
 export default class MyDocument extends Document {
   render() {
     return (
@@ -231,11 +234,12 @@ export default class MyDocument extends Document {
                 <hr className='snipcart-form__separator'></hr>
                 <br></br>
                 <snipcart-label class='snipcart__font--tiny' for='roleCategory'>
-                  Role
+                  Title/Role
                 </snipcart-label>
                 <snipcart-select
                   name='roleCategory'
                   class='snipcart-form__select  snipcart__font--secondary snipcart__font--bold'
+                  required
                 >
                   <option value=''></option>
                   <option value='Department Head'>Department Head</option>
@@ -254,6 +258,21 @@ export default class MyDocument extends Document {
                   <option value='Coach'>Coach</option>
                   <option value='Admin'>Admin</option>
                 </snipcart-select>
+                <br></br>
+                <snipcart-label class='snipcart__font--tiny' for='schoolName'>
+                  School
+                </snipcart-label>
+                <snipcart-input name='schoolName' required></snipcart-input>
+                <br></br>
+                <snipcart-label class='snipcart__font--tiny' for='districtName'>
+                  District (if applicable)
+                </snipcart-label>
+                <snipcart-input name='districtName'></snipcart-input>
+                <br></br>
+                <snipcart-label class='snipcart__font--tiny' for='stateCountry'>
+                  State/Country
+                </snipcart-label>
+                <snipcart-input name='stateCountry' required></snipcart-input>
                 <br></br>
               </div>
             </fieldset>
@@ -294,17 +313,32 @@ MyDocument.getInitialProps = async (ctx) => {
     productionPrefix: 'ascd',
   })
 
-  const sheets = new ServerStyleSheets({
-    serverGenerateClassName: generateClassName,
-  })
+  const sheets = new ServerStyleSheets()
+
   const originalRenderPage = ctx.renderPage
+
+  // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
+  // However, be aware that it can have global side effects.
+  const cache = createEmotionCache()
+  const { extractCriticalToChunks } = createEmotionServer(cache)
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+      enhanceApp: (App) => (props) =>
+        sheets.collect(<App emotionCache={cache} {...props} />),
     })
 
   const initialProps = await Document.getInitialProps(ctx)
+  // This is important. It prevents emotion to render invalid HTML.
+  const emotionStyles = extractCriticalToChunks(initialProps.html)
+  const emotionStyleTags = emotionStyles.styles.map((style) => (
+    <style
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
+      key={style.key}
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: style.css }}
+    />
+  ))
 
   return {
     ...initialProps,
@@ -312,6 +346,7 @@ MyDocument.getInitialProps = async (ctx) => {
     styles: [
       ...React.Children.toArray(initialProps.styles),
       sheets.getStyleElement(),
+      ...emotionStyleTags,
     ],
   }
 }

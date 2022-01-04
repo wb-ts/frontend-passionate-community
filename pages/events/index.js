@@ -351,6 +351,7 @@ export default function Events({
 export async function getStaticProps() {
   const webinarData = await client.getEntries({
     content_type: 'webinar',
+    order: '-fields.date',
     limit: 8,
   })
   const eventData = await client.getEntries({

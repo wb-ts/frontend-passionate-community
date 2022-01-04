@@ -3,6 +3,7 @@ import { connectRefinementList } from 'react-instantsearch-dom'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
 
 const CustomPaper = (props) => {
   return <Paper elevation={0} {...props} />
@@ -20,6 +21,9 @@ const RefinementList = ({ items, refine }) => (
       renderTags={() => null}
       disableCloseOnSelect
       PaperComponent={CustomPaper}
+      PopperComponent={({ style, ...props }) => (
+        <Popper {...props} style={{ ...style, height: 0 }} />
+      )}
       disablePortal={true}
       getOptionLabel={(option) => option.label}
       renderOption={(props, option) => (

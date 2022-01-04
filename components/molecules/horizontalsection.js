@@ -112,8 +112,6 @@ export default function HorizontalSection({
                         width={20}
                         height={20}
                         className={classes.nextImage}
-                        placeholder='blur'
-                        blurDataURL='/images/blurrImg.png'
                       />
                     </Box>
                     <Box>
@@ -161,7 +159,7 @@ export default function HorizontalSection({
                 >
                   <Avatar
                     src={authorImage}
-                    alt='author avatar'
+                    alt={undefined}
                     className={classes.avatar}
                   />
                 </a>
@@ -169,7 +167,7 @@ export default function HorizontalSection({
               {!imageSlug && (
                 <Avatar
                   src={authorImage}
-                  alt='author avatar'
+                  alt={undefined}
                   className={classes.avatar}
                 />
               )}

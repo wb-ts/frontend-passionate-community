@@ -21,7 +21,6 @@ export default function CtaButton({
   fullWidth = false,
   target,
   styles,
-  disabled,
   children,
   ...props
 }) {
@@ -39,7 +38,6 @@ export default function CtaButton({
       id={id}
       target={target}
       style={styles}
-      disabled={disabled}
     >
       {label || children}
     </Button>

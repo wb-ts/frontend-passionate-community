@@ -427,7 +427,11 @@ export default function Header() {
 
   return (
     <>
-      <AppBar elevation={0} className={classes.bar}>
+      <AppBar
+        elevation={0}
+        className={classes.bar}
+        style={{ backgroundColor: 'white' }}
+      >
         {mobileView ? displayMobile() : displayDesktop()}
       </AppBar>
     </>

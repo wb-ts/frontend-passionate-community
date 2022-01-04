@@ -8,18 +8,16 @@ import options from '../../../const/options'
 import paths from '../../../paths/path'
 import TextStyle from '../../atoms/TextStyle'
 import HorizontalCard from '../../molecules/horizontalcard'
-import { contentfulThumbnailToImageUrl } from '../../../lib/data-transformations'
-
-import useProfileSummary from '../../../lib/hooks/useProfileSummary'
 
 /**
- * This component can take an Array of profile ids and fetch the necessary data to display. It can show 1 or many profiles.
+ * This component displays Profile Summary information. It can display multiple profiles.
+ *
+ * @param {array} profiles
+ * @param {string} title
  * @returns {Component}
  */
-const ProfileSummary = ({ ids, title }) => {
-  const { loading, profiles } = useProfileSummary(ids)
-
-  return profiles && !loading ? (
+const ProfileSummary = ({ profiles, title }) =>
+  profiles ? (
     <Box>
       {title && (
         <Box mb={5}>
@@ -34,7 +32,7 @@ const ProfileSummary = ({ ids, title }) => {
               <HorizontalCard
                 key={item.slug}
                 body={documentToReactComponents(item.description.json, options)}
-                image={contentfulThumbnailToImageUrl(item.thumbnail)}
+                image={item.thumbnail.imgSrc}
                 ctaLink={paths.profile({ slug: item.slug })}
                 reverse
                 variant='author'
@@ -48,11 +46,23 @@ const ProfileSummary = ({ ids, title }) => {
   ) : (
     <></>
   )
-}
 
 export default ProfileSummary
 
 ProfileSummary.propTypes = {
-  ids: PropTypes.array.isRequired,
   title: PropTypes.string,
+  profiles: PropTypes.arrayOf(
+    (propValue, key, componentName, location, propFullName) => {
+      if (propValue[key]['__typename'] !== 'Profile') {
+        return new Error(
+          'Invalid prop `' +
+            propFullName +
+            '` supplied to' +
+            ' `' +
+            componentName +
+            '`. Validation failed.'
+        )
+      }
+    }
+  ),
 }

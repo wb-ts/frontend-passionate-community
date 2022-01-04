@@ -109,7 +109,8 @@ export default function AuthorWorkshop({
           ow.fields.topics &&
           ow.fields.topics.some(
             (t) =>
-              selectedTopics && selectedTopics.some((s) => s === t.fields?.title)
+              selectedTopics &&
+              selectedTopics.some((s) => s === t.fields?.title)
           )
       )
     }
@@ -145,7 +146,10 @@ export default function AuthorWorkshop({
           return (
             <HeroBanner
               title={item.fields.title}
-              description={documentToReactComponents(item?.fields?.body, options)}
+              description={documentToReactComponents(
+                item?.fields?.body,
+                options
+              )}
               imagePos='right'
               image={
                 item.fields?.image?.fields?.imageBynder
@@ -324,9 +328,12 @@ export async function getStaticProps() {
   })
 
   workshopData.items.forEach((ws) => {
-    ws.fields.variations = ws.fields.variations.filter(
+    ws.fields.variations = ws.fields.variations?.filter(
       (item) => item.fields !== undefined
     )
+    if (!ws.fields.variations) {
+      ws.fields.variations = null
+    }
   })
 
   // const eventTypeData = await client.getEntries({

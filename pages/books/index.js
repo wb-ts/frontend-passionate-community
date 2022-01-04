@@ -8,7 +8,7 @@ import TwoColumnCta from '@/components/molecules/twocolumncta'
 import TextCTA from '@/components/molecules/textcta'
 import HeroHalfHalf from '@/components/molecules/herohalfhalf'
 import paths from '@/paths/path'
-import HorizontalNav from '@/components/molecules/HorizontalNav'
+import HorizontalNav from '@/components/molecules/horizontalnav'
 import BannerMessage from '@/components/atoms/BannerMessage'
 import CustomLink from '@/components/atoms/CustomLink'
 import { useRouter } from 'next/router'
@@ -16,14 +16,7 @@ import { documentToPlainTextString } from '@contentful/rich-text-plain-text-rend
 import TextStyle from '@/components/atoms/TextStyle'
 import imageoptimization from '@/const/imageoptimization'
 import { components } from '@/const/components'
-import { makeStyles } from '@mui/styles'
 
-const useStyles = makeStyles((theme) => ({
-  navBtn: {
-    marginLeft: theme.spacing(8),
-    marginRight: theme.spacing(8),
-  },
-}))
 export default function Books({
   books,
   featuredCollection,
@@ -31,7 +24,6 @@ export default function Books({
   SEO,
 }) {
   const router = useRouter()
-  const classes = useStyles()
 
   const featuredBooks = JSON.parse(JSON.stringify(books)).filter((book) => {
     const bookVersion = book?.fields.bookVersions?.find(
@@ -230,7 +222,6 @@ export default function Books({
                 }),
               },
             ]}
-            className={classes.navBtn}
           />
         </Box>
       </Container>

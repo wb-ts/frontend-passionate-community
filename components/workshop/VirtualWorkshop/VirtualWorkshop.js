@@ -46,8 +46,7 @@ export default function VirtualWorkshop({
   roles,
   grades,
   topics,
-  author,
-  authorIds,
+  profiles,
 }) {
   const classes = useStyles()
 
@@ -81,7 +80,7 @@ export default function VirtualWorkshop({
           variant='basicSmall'
           mt={2}
           topics={roles}
-          contentType='book'
+          contentType='workshop'
         />
       </Box>
       <Box mt={3} data-testid='grades'>
@@ -91,7 +90,7 @@ export default function VirtualWorkshop({
           variant='basicSmall'
           mt={2}
           topics={grades}
-          contentType='book'
+          contentType='workshop'
         />
       </Box>
       <Box mt={3} data-testid='topicsCovered'>
@@ -101,17 +100,17 @@ export default function VirtualWorkshop({
           variant='basicSmall'
           mt={2}
           topics={topics}
-          contentType='book'
+          contentType='workshop'
         />
       </Box>
-      {authorIds !== undefined && (
-        <Box mt={3}>
-          <TextStyle variant='buttonMedium'>
-            {authorIds.length > 0 ? 'About the Authors' : 'About the Author'}
-          </TextStyle>
-          <ProfileSummary ids={authorIds} />
-        </Box>
-      )}
+      <Box mt={5}>
+        <ProfileSummary
+          profiles={profiles}
+          title={
+            profiles?.length > 0 ? 'About the Authors' : 'About the Author'
+          }
+        />
+      </Box>
     </Box>
   )
 }
@@ -123,5 +122,5 @@ VirtualWorkshop.propTypes = {
   roles: PropTypes.arrayOf(PropTypes.string),
   grades: PropTypes.arrayOf(PropTypes.string),
   topics: PropTypes.arrayOf(PropTypes.string),
-  author: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  profiles: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 }

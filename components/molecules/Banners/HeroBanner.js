@@ -128,7 +128,7 @@ export default function HeroBanner({
           className={classes.container}
         >
           <Grid container className={classes.gridContainer}>
-            <Grid item xs={12} md={6} justify='flex-start'>
+            <Grid item xs={12} md={6} justifyContent='flex-start'>
               <Box className={classes.leftContent}>
                 <TextStyle variant='h1'>{title}</TextStyle>
                 <Box mt={2} mb={5}>
@@ -160,7 +160,7 @@ export default function HeroBanner({
                 </Grid>
               </Box>
             </Grid>
-            <Grid item xs={12} md={6} container justify='flex-end'>
+            <Grid item xs={12} md={6} container justifyContent='flex-end'>
               <Box className={classes.media} mt={2}>
                 {image ? (
                   <img

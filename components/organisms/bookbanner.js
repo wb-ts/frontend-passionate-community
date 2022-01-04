@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Box, Grid, Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import Image from 'next/image'
+import NextImageWrapper from '../images/NextImageWrapper'
 import CustomLink from '@/components/atoms/CustomLink'
 import paths from '@/paths/path'
 import FilterDropdown from '@/components/atoms/FilterDropdown'
@@ -17,6 +17,7 @@ import { getCartButtonCaptionLabel } from '@/lib/utils'
 import constSnipcart from '@/const/snipcart'
 import { useReactiveVar } from '@apollo/client'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -75,7 +76,7 @@ export default function BookBanner({
     !isCollection
       ? productNumber
         ? book.fields.bookVersions.find(
-            (version) => version.fields.productNumber == productNumber
+            (version) => version?.fields?.productNumber == productNumber
           ) || book.fields.bookVersions[0]
         : book.fields.bookVersions[0]
       : ''
@@ -100,38 +101,12 @@ export default function BookBanner({
     )
   }
 
-  const imgUrl = book.fields?.thumbnail?.fields?.imageBynder
-    ? book.fields?.thumbnail?.fields?.imageBynder[0]?.src +
-      '?' +
-      imageoptimization.qualityParameter +
-      '=' +
-      imageoptimization.qualityValue
-    : book.fields?.thumbnail?.fields?.imageContentful?.fields?.file?.url
-    ? book.fields?.thumbnail?.fields?.imageContentful?.fields?.file?.url +
-      '?' +
-      imageoptimization.qualityParameter +
-      '=' +
-      imageoptimization.qualityValue
-    : '/images/ASCDImageFiller.png'
-
+  const imgUrl = contentfulThumbnailAPIToImageUrl(book.fields?.thumbnail)
   const collection = book
   const bookImages = isCollection
     ? [imgUrl].concat(
         collection.fields.items.map((book, key) =>
-          book.fields?.thumbnail?.fields?.imageBynder
-            ? book.fields?.thumbnail?.fields?.imageBynder[0]?.src +
-              '?' +
-              imageoptimization.qualityParameter +
-              '=' +
-              imageoptimization.qualityValue
-            : book.fields?.thumbnail?.fields?.imageContentful?.fields?.file?.url
-            ? book.fields?.thumbnail?.fields?.imageContentful?.fields?.file
-                ?.url +
-              '?' +
-              imageoptimization.qualityParameter +
-              '=' +
-              imageoptimization.qualityValue
-            : '/images/ASCDImageFiller.png'
+          contentfulThumbnailAPIToImageUrl(book.fields?.thumbnail)
         )
       )
     : null
@@ -146,14 +121,12 @@ export default function BookBanner({
         {isCollection ? (
           <ImageCarousel images={bookImages} />
         ) : (
-          <Image
-            src={imgUrl.startsWith('//') ? 'https:' + imgUrl : imgUrl}
+          <NextImageWrapper
+            src={imgUrl}
             alt={`Book banner image for ${book.fields.thumbnail?.fields?.title}`}
             className={classes.image}
             width={307}
             height={428}
-            placeholder='blur'
-            blurDataURL='/images/blurrImg.png'
           />
         )}
       </Grid>
@@ -209,9 +182,7 @@ export default function BookBanner({
                 dataItemId: version.fields?.productNumber,
                 dataItemName: version.fields?.title,
                 dataItemUrl: book.fields.slug,
-                dataItemImage: imgUrl.startsWith('//')
-                  ? 'https:' + imgUrl
-                  : imgUrl,
+                dataItemImage: imgUrl,
                 dataItemDescription: book.fields.description,
                 dataItemPrice: hasMemberBookPrice
                   ? version.fields?.priceMember
@@ -222,7 +193,7 @@ export default function BookBanner({
                 dataItemCustom2Value: version?.fields?.royaltyFlag
                   ? version?.fields?.royaltyFlag
                   : false,
-                dataItemCustom3Value: book.fields.authors.map(
+                dataItemCustom3Value: book.fields.authors?.map(
                   (author) =>
                     author.fields?.title +
                     (author.fields?.email ? '/' + author.fields?.email : '')
@@ -243,9 +214,7 @@ export default function BookBanner({
                 dataItemId: book.fields?.productNumber,
                 dataItemName: book.fields.title,
                 dataItemUrl: book.fields.slug,
-                dataItemImage: imgUrl.startsWith('//')
-                  ? 'https:' + imgUrl
-                  : imgUrl,
+                dataItemImage: imgUrl,
                 dataItemDescription: book.fields.description,
                 dataItemPrice: hasMemberBookPrice
                   ? book.fields?.memberDiscountedPrice

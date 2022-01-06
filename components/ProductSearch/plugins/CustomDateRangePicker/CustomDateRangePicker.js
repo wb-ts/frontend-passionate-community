@@ -17,7 +17,7 @@ const dateFns = new DateFnsUtils()
  */
 export const DateRangeInput = ({ currentRefinement, min, max, refine }) => {
   useEffect(() => {
-    if (currentRefinement.min === min || currentRefinement.max === max) {
+    if (currentRefinement.min <= min || currentRefinement.max >= max) {
       refine({
         ...currentRefinement,
         min: Math.floor(new Date().getTime() / 1000),

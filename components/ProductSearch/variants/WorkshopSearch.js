@@ -55,7 +55,7 @@ const WorkshopSearch = () => {
         <CustomStateResults
           ItemCard={WorkshopListItem}
           customWidth={4}
-          isInfinite={false}
+          isInfinite={true}
         />
       </Box>
     )

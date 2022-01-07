@@ -1,6 +1,7 @@
 import React from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import {
   Accordion,
   AccordionDetails,
@@ -10,10 +11,9 @@ import {
   Typography,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import CtaButton from '@/components/atoms/CtaButton'
-import TextStyle from '@/components/atoms/TextStyle'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import ExpandLess from '@mui/icons-material/ExpandLess'
+import { options } from '../../const'
+import CtaButton from '../atoms/CtaButton'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   accordion: {

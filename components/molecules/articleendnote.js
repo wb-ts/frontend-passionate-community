@@ -1,9 +1,9 @@
 import React from 'react'
-import { Box, Divider } from '@mui/material'
-import { makeStyles } from '@mui/styles'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
-import TextStyle from '@/components/atoms/TextStyle'
+import { Box, Divider } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
-import { render, fireEvent, screen } from 'test-utils'
-import Topics from './Topics'
+import Topics from '.'
+import { render, fireEvent, screen } from '../../../__test-utils__/test-utils'
 
 describe('Topics component:', () => {
   test('Topics rendered successfully', () => {

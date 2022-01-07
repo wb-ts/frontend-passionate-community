@@ -1,16 +1,16 @@
-import Layout from '@/components/layout'
-import Banner from '@/components/molecules/banner'
-import TwoColumnCta from '@/components/molecules/twocolumncta'
-import { Box, Container } from '@mui/material'
+import React from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import React from 'react'
+import { Box, Container } from '@mui/material'
+import Layout from '../../components/layout'
+import Banner from '../../components/molecules/banner'
+import TwoColumnCta from '../../components/molecules/twocolumncta'
 
-const PianoReset = dynamic(() => import('@/components/piano/pianoreset'), {
+const PianoReset = dynamic(() => import('../../components/piano/pianoreset'), {
   ssr: false,
 })
 
-export default function UserReset({}) {
+export default function UserReset() {
   return (
     <Layout>
       <Head>

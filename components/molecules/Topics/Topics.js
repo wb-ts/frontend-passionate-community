@@ -1,11 +1,12 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { useRouter } from 'next/router'
-import TextStyle from '@/components/atoms/TextStyle'
-import TopicTag from '@/components/molecules/TopicTag'
-import paths from '@/paths/path'
 import PropTypes from 'prop-types'
+import paths from '../../../paths/path'
+import TextStyle from '../../atoms/TextStyle'
+import TopicTag from '../TopicTag'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: (props) => (props.center ? 'flex' : null),

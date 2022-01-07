@@ -1,5 +1,5 @@
 import React from 'react'
-import CalloutBlock from '@/components/atoms/CalloutBlock'
+import CalloutBlock from '.'
 
 export default {
   component: CalloutBlock,

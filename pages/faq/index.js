@@ -1,12 +1,12 @@
 import React from 'react'
-import { Box, Container } from '@mui/material'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
-import IssueBannerTitle from '@/components/molecules/issuebannertitle'
-import AccordionList from '@/components/organisms/accordionlist'
-import TextCTA from '@/components/molecules/textcta'
 import { useRouter } from 'next/router'
+import { Box, Container } from '@mui/material'
+import Layout from '../../components/layout'
+import IssueBannerTitle from '../../components/molecules/issuebannertitle'
+import TextCTA from '../../components/molecules/textcta'
+import AccordionList from '../../components/organisms/accordionlist'
+import { SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
 
 export default function FAQ({ faqs, SEO }) {
   const router = useRouter()

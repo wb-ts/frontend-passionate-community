@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   Card,
@@ -7,10 +8,9 @@ import {
   CardContent,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/TextStyle'
-import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
+import TextStyle from '../../../atoms/TextStyle'
+import TopicTag from '../../TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {

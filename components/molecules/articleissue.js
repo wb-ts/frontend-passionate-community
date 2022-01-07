@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import NextImageWrapper from '../images/NextImageWrapper'
-import CtaButton from '@/components/atoms/CtaButton'
-import TextStyle from '@/components/atoms/TextStyle'
-import paths from '@/paths/path'
 import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
+import paths from '../../paths/path'
+import CtaButton from '../atoms/CtaButton'
+import TextStyle from '../atoms/TextStyle'
+import NextImageWrapper from '../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({
   aside: {

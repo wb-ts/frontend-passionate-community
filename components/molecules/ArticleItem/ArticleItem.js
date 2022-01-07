@@ -1,8 +1,9 @@
 import React from 'react'
 import { Card, CardActionArea, CardContent, CardMedia } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import ArticleInfo from '@/components/atoms/ArticleInfo'
 import PropTypes from 'prop-types'
+import ArticleInfo from '../../atoms/ArticleInfo'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: (props) =>

@@ -1,10 +1,8 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-
-import DaysAgo from '@/components/atoms/DaysAgo'
+import DaysAgo from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 const input = '2021-10-8'
 TimeAgo.addLocale(en)

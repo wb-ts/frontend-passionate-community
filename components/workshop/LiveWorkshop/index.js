@@ -1,1 +1,1 @@
-export default from './LiveWorkshop'
+export { default } from './LiveWorkshop'

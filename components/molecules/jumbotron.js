@@ -1,12 +1,12 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-import { Container, Box, Grid, Button } from '@mui/material'
-import CtaItem from '@/components/atoms/CtaItem'
-import TextStyle from '@/components/atoms/TextStyle'
-import CtaButton from '@/components/atoms/CtaButton'
-import BannerMessage from '@/components/atoms/BannerMessage'
-import ReactMarkdown from 'react-markdown'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
+import { Container, Box, Grid, Button } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import ReactMarkdown from 'react-markdown'
+import BannerMessage from '../atoms/BannerMessage'
+import CtaButton from '../atoms/CtaButton'
+import CtaItem from '../atoms/CtaItem'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

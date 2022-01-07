@@ -1,8 +1,8 @@
 import React from 'react'
-import TextStyle from '@/components/atoms/TextStyle'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import PropTypes from 'prop-types'
+import TextStyle from '../TextStyle'
 
 export default function DaysAgo({ input, ...props }) {
   if (!input) return ''

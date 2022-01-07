@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box } from '@mui/material'
-import { makeStyles } from '@mui/styles';
 import Head from 'next/head'
+import { Box } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {

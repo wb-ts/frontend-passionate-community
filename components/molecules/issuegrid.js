@@ -8,13 +8,11 @@ import {
   CardMedia,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import FilterDropdown from '@/components/atoms/FilterDropdown'
-import Image from 'next/image'
-import NextImageWrapper from '../images/NextImageWrapper'
 import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
-import TextStyle from '@/components/atoms/TextStyle'
-import paths from '@/paths/path'
-import imageoptimization from '@/const/imageoptimization'
+import paths from '../../paths/path'
+import FilterDropdown from '../atoms/FilterDropdown'
+import TextStyle from '../atoms/TextStyle'
+import NextImageWrapper from '../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({
   root: {

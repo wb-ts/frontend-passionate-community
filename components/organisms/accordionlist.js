@@ -1,8 +1,8 @@
-import FilterDropdown from '@/components/atoms/FilterDropdown'
-import { Box, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import AccordionFAQ from '@/components/molecules/accordionfaq'
-import AccordionIssue from '@/components/molecules/accordionissue'
+import { Box, Grid, Typography } from '@mui/material'
+import FilterDropdown from '../atoms/FilterDropdown'
+import AccordionFAQ from '../molecules/accordionfaq'
+import AccordionIssue from '../molecules/accordionissue'
 
 export default function AccordionList({
   filterType,
@@ -61,7 +61,7 @@ export default function AccordionList({
           }
           return unique
         }, [])
-        .sort()
+        .sort((a, b) => a.value - b.value)
 
     const topicFilter =
       issues &&

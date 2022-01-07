@@ -1,5 +1,5 @@
 import React from 'react'
-import BannerMessage from '@/components/atoms/BannerMessage'
+import BannerMessage from '.'
 
 export default {
   component: BannerMessage,

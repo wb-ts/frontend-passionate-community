@@ -1,9 +1,13 @@
 import React, { useState, useRef } from 'react'
-
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useReactiveVar } from '@apollo/client'
-import { hasPaidMembershipVar } from '../../lib/apollo-client/cache'
-import useUserAccount from '../../lib/hooks/useUserAccount'
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import BookmarkIcon from '@mui/icons-material/Bookmark'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
+import HistoryIcon from '@mui/icons-material/History'
+import ReceiptIcon from '@mui/icons-material/Receipt'
 import {
   Box,
   IconButton,
@@ -14,17 +18,11 @@ import {
   Button,
 } from '@mui/material'
 import { makeStyles, withStyles } from '@mui/styles'
-import CtaButton from '@/components/atoms/CtaButton'
-import Link from 'next/link'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import BookmarkIcon from '@mui/icons-material/Bookmark'
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
-import HistoryIcon from '@mui/icons-material/History'
-import ReceiptIcon from '@mui/icons-material/Receipt'
-import ExitToAppIcon from '@mui/icons-material/ExitToApp'
-import dynamic from 'next/dynamic'
-import TextStyle from '@/components/atoms/TextStyle'
+import { hasPaidMembershipVar } from '../../lib/apollo-client/cache'
+import useUserAccount from '../../lib/hooks/useUserAccount'
 import paths from '../../paths/path'
+import CtaButton from '../atoms/CtaButton'
+import TextStyle from '../atoms/TextStyle'
 
 const DashboardAnnotations = dynamic(
   () => import('../organisms/dashboardannotations'),
@@ -157,7 +155,7 @@ const UserAccountToolbarMenu = ({ loginHandler, logoutHandler, mobile }) => {
                     href='/user/account'
                     style={{ textDecoration: 'underline' }}
                   >
-                    Edit Account
+                    <a>Edit Account</a>
                   </Link>
                 </TextStyle>
               </Box>
@@ -189,7 +187,9 @@ const UserAccountToolbarMenu = ({ loginHandler, logoutHandler, mobile }) => {
                 startIcon={<HistoryIcon />}
                 className={classes.downloads}
               >
-                <Link href='/user/downloads'>My Downloads</Link>
+                <Link href='/user/downloads'>
+                  <a>My Downloads</a>
+                </Link>
               </StyledButton>
             </Box>
           </Grid>

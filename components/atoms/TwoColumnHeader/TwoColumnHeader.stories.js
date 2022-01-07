@@ -1,5 +1,5 @@
 import React from 'react'
-import TwoColumnHeader from '@/components/atoms/TwoColumnHeader'
+import TwoColumnHeader from '.'
 
 export default {
   component: TwoColumnHeader,

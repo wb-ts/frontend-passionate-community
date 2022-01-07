@@ -1,5 +1,5 @@
 import React from 'react'
-import TOCNav from '@/components/atoms/TOCNav'
+import TOCNav from '.'
 
 export default {
   component: TOCNav,

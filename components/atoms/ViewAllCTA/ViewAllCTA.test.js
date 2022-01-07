@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
+import ViewAllCTA from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 describe('ViewAllCTA component:', () => {
   test('ViewAllCTA rendered successfully', () => {

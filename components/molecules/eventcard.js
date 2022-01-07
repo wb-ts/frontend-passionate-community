@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, CardContent, CardMedia, Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
 
 const useStyles = makeStyles((theme) => ({
   root: {

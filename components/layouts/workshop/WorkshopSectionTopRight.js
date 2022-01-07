@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { PropTypes } from 'prop-types'
-
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-
 import { useReactiveVar } from '@apollo/client'
+import { MenuBook as MenuBookIcon } from '@mui/icons-material'
+import {
+  Box,
+  List,
+  ListItem,
+  Select,
+  MenuItem,
+  Typography,
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import { PropTypes } from 'prop-types'
 import {
   hasMemberBookPriceVar,
   hasPaidMembershipVar,
 } from '../../../lib/apollo-client/cache'
-
-import paths from '@/paths/path'
 import {
   formatDateToCalendarLong,
   formatDateToTime,
   formatDateRangeToCalendarShort,
   pathName,
 } from '../../../lib/utils'
-
-import { Box, List, ListItem, Select, MenuItem } from '@mui/material'
-import { MenuBook as MenuBookIcon } from '@mui/icons-material'
-import { makeStyles } from '@mui/styles'
-
-import CustomLink from '../../atoms/CustomLink'
-import TextStyle from '@/components/atoms/TextStyle'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import { addItemsToCart } from '@/components/Snipcart/SnipcartManager'
-import ShareButtons from '@/components/molecules/sharebuttons'
+import paths from '../../../paths/path'
+import TextStyle from '../../atoms/TextStyle'
+import ShareButtons from '../../molecules/sharebuttons'
+import { SnipcartButton } from '../../Snipcart'
+import { addItemsToCart } from '../../Snipcart/SnipcartManager'
 
 const InventorySummary = dynamic(() => import('../../info/InventorySummary'), {
   ssr: false,
@@ -394,9 +396,13 @@ export default function WorkshopSectionTopRight({
           <Box mt={[2]} display='flex' justifyContent='center'>
             <TextStyle variant='buttonMedium'>
               Questions?{' '}
-              <CustomLink href={'/faq?service=Virtual%20Author%20Workshops'}>
-                Check out our FAQ
-              </CustomLink>
+              <Link href={'/faq?service=Virtual%20Author%20Workshops'}>
+                <a>
+                  <Typography variant='medium-link' color='#005E47'>
+                    {'Check out our FAQ'}
+                  </Typography>
+                </a>
+              </Link>
             </TextStyle>
           </Box>
         </Box>

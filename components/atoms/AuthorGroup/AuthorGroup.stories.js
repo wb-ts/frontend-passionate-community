@@ -1,5 +1,5 @@
 import React from 'react'
-import AuthorGroup from '@/components/atoms/AuthorGroup'
+import AuthorGroup from '.'
 
 export default {
   component: AuthorGroup,

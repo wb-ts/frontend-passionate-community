@@ -1,9 +1,9 @@
 import React from 'react'
-import { connectRefinementList } from 'react-instantsearch-dom'
-import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import Paper from '@mui/material/Paper'
 import Popper from '@mui/material/Popper'
+import TextField from '@mui/material/TextField'
+import { connectRefinementList } from 'react-instantsearch-dom'
 
 const CustomPaper = (props) => {
   return <Paper elevation={0} {...props} />

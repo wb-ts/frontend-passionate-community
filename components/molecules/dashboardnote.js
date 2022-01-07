@@ -1,4 +1,11 @@
 import React, { useState } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 import {
   Box,
   Button,
@@ -18,15 +25,8 @@ import {
 } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
 import { makeStyles } from '@mui/styles'
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
-import EditIcon from '@mui/icons-material/Edit'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import DeleteIcon from '@mui/icons-material/Delete'
-import Image from 'next/image'
-import DaysAgo from '@/components/atoms/DaysAgo'
-import { useRouter } from 'next/router'
-import paths from '@/paths/path'
+import paths from '../../paths/path'
+import DaysAgo from '../atoms/DaysAgo'
 
 const useStyles = makeStyles((theme) => ({
   media: {

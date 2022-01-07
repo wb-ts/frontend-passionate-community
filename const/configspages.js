@@ -1,4 +1,4 @@
-export const configsPages = {
+const configsPages = {
   pages: {
     type: 'page',
     content: {
@@ -18,3 +18,5 @@ export const configsPages = {
     },
   },
 }
+
+export default configsPages

@@ -1,24 +1,23 @@
 import React from 'react'
+import Link from 'next/link'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Grid, Avatar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 // import LinkedInIcon from '@mui/icons-material/LinkedIn'
 // import TwitterIcon from '@mui/icons-material/Twitter'
 // import FacebookIcon from '@mui/icons-material/Facebook'
-import YouTubeIcon from '@mui/icons-material/YouTube'
-import InstagramIcon from '@mui/icons-material/Instagram'
 // import EmailIcon from '@mui/icons-material/Email'
-import TextStyle from '@/components/atoms/TextStyle'
-import Link from 'next/link'
 import {
   EmailIcon,
   FacebookIcon,
   LinkedinIcon,
   TwitterIcon,
-
   // YouTubeIcon,
   // InstagramIcon,
 } from 'react-share'
-import imageoptimization from '@/const/imageoptimization'
+import { imageoptimization } from '../../const'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

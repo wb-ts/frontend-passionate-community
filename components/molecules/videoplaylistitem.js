@@ -8,11 +8,11 @@ import {
   CardMedia,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import paths from '@/paths/path'
-import TopicTag from '@/components/molecules/TopicTag'
-import DaysAgo from '@/components/atoms/DaysAgo'
-// import ViewCount from '@/components/molecules/viewcount'
-import imageoptimization from '@/const/imageoptimization'
+import { imageoptimization } from '../../const'
+import paths from '../../paths/path'
+import DaysAgo from '../atoms/DaysAgo'
+import TopicTag from './TopicTag'
+// import ViewCount from './viewcount'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-
-import CalloutBlock from '@/components/atoms/CalloutBlock'
+import CalloutBlock from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 describe('Callout Block component:', () => {
   test('Callout Block rendered successfully', () => {

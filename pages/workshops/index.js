@@ -1,3 +1,9 @@
+import React, { useState, useEffect, useContext } from 'react'
+import { useReactiveVar } from '@apollo/client'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import DateFnsUtils from '@date-io/date-fns'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import { DateRangePicker, LocalizationProvider } from '@mui/lab'
 import {
   Box,
   Container,
@@ -7,26 +13,17 @@ import {
   Select,
   MenuItem,
 } from '@mui/material'
-import { DateRangePicker, LocalizationProvider } from '@mui/lab'
-import DateFnsUtils from '@date-io/date-fns'
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
-import SEOHead from '@/const/head'
-import React, { useState, useEffect, useContext } from 'react'
 import { makeStyles } from '@mui/styles'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import { components } from '@/const/components'
-import HeroBanner from '@/components/molecules/Banners/HeroBanner'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
-import imageoptimization from '@/const/imageoptimization'
-import ContentGrid from '@/components/organisms/contentgrid'
-import { workshopItemToCardData } from '@/lib/data-transformations'
-import WorkshopItem from '@/components/molecules/Workshop/WorkshopItem'
-import TextStyle from '@/components/atoms/TextStyle'
-import { useReactiveVar } from '@apollo/client'
+import TextStyle from '../../components/atoms/TextStyle'
+import Layout from '../../components/layout'
+import HeroBanner from '../../components/molecules/Banners/HeroBanner'
+import WorkshopItem from '../../components/molecules/Workshop/WorkshopItem'
+import ContentGrid from '../../components/organisms/contentgrid'
+import NeverMiss from '../../components/workshop/NeverMiss'
+import { components, imageoptimization, options, SEOHead } from '../../const'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
-import NeverMiss from '@/components/workshop/NeverMiss'
+import { client } from '../../lib/contentful'
+import { workshopItemToCardData } from '../../lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

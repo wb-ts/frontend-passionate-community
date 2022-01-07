@@ -1,9 +1,9 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TextStyle from '@/components/atoms/TextStyle'
-import CtaButton from '@/components/atoms/CtaButton'
 import PropTypes from 'prop-types'
+import CtaButton from '../CtaButton'
+import TextStyle from '../TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   title: {

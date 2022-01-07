@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Divider, Grid } from '@mui/material'
-import VideoPlayer from '@/components/molecules/videoplayer'
-import VideoPlaylistItem from '@/components/molecules/videoplaylistitem'
+import VideoPlayer from '../molecules/videoplayer'
+import VideoPlaylistItem from '../molecules/videoplaylistitem'
 
 export default function VideoPlaylist({ video, videos }) {
   const playlistItems = videos

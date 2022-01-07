@@ -1,17 +1,16 @@
 import React, { useContext } from 'react'
-import { makeStyles } from '@mui/styles'
-import { Box, Typography, Button } from '@mui/material'
+import Link from 'next/link'
+import { useReactiveVar } from '@apollo/client'
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
 import ReplyIcon from '@mui/icons-material/Reply'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import { useReactiveVar } from '@apollo/client'
+import { Box, Typography, Button } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import { imageoptimization, constSnipcart } from '../../const'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
-import TextStyle from '@/components/atoms/TextStyle'
-import paths from '@/paths/path'
-import CustomLink from '@/components/atoms/CustomLink'
-import imageoptimization from '@/const/imageoptimization'
-import { getCartButtonCaptionLabel } from '@/lib/utils'
-import constSnipcart from '@/const/snipcart'
+import { getCartButtonCaptionLabel } from '../../lib/utils'
+import paths from '../../paths/path'
+import TextStyle from '../atoms/TextStyle'
+import { SnipcartButton } from '../Snipcart'
 
 const useStyles = makeStyles((theme) => ({
   searchResults: {
@@ -400,11 +399,13 @@ export default function SearchItem({ hit, props }) {
                             member price{' '}
                           </TextStyle>
                         </Box>
-                        <CustomLink
-                          href={paths.subscribe}
-                          color='#005E47'
-                          label='join now'
-                        />
+                        <Link href={paths.subscribe}>
+                          <a>
+                            <Typography variant='medium-link' color='#005E47'>
+                              {'join now'}
+                            </Typography>
+                          </a>
+                        </Link>
                       </Box>
                     </Box>
                   </Box>
@@ -421,11 +422,13 @@ export default function SearchItem({ hit, props }) {
                   <TextStyle variant='h3'>$ {hit.priceNonmember}</TextStyle>
                   <TextStyle variant='subtitle2'>
                     $ {hit.priceMember} member price{' '}
-                    <CustomLink
-                      href={paths.subscribe}
-                      color='#005E47'
-                      label='join now'
-                    />
+                    <Link href={paths.subscribe}>
+                      <a>
+                        <Typography variant='medium-link' color='#005E47'>
+                          {'join now'}
+                        </Typography>
+                      </a>
+                    </Link>
                   </TextStyle>
                 </Box>
               )}

@@ -1,11 +1,11 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-import { Container, Box, Grid, Button } from '@mui/material'
-import CtaItem from '@/components/atoms/CtaItem'
-import TextStyle from '@/components/atoms/TextStyle'
-import CtaButton from '@/components/atoms/CtaButton'
-import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router'
+import { Container, Box, Grid, Button } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import ReactMarkdown from 'react-markdown'
+import CtaButton from '../../atoms/CtaButton'
+import CtaItem from '../../atoms/CtaItem'
+import TextStyle from '../../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

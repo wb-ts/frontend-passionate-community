@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@mui/styles'
 import { FormControl, Select, MenuItem } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({

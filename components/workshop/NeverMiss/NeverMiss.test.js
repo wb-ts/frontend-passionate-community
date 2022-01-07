@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect'
 import userEvent from '@testing-library/user-event'
-import { render, screen } from 'test-utils'
-import NeverMiss from './NeverMiss'
+import NeverMiss from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 describe('NeverMiss component:', () => {
   test('Never Miss a new workshop rendered successfully', () => {

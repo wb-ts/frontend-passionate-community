@@ -1,5 +1,5 @@
 import React from 'react'
-import NoAnnotations from '@/components/atoms/NoAnnotations'
+import NoAnnotations from '.'
 
 export default {
   component: NoAnnotations,

@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import CloseIcon from '@mui/icons-material/Close'
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import {
   Accordion,
   AccordionSummary,
@@ -16,21 +20,15 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import CtaButton from '@/components/atoms/CtaButton'
-import { components } from '@/const/components'
-import TextStyle from '@/components/atoms/TextStyle'
 import { makeStyles } from '@mui/styles'
-import { useRouter } from 'next/router'
-import paths from '@/paths/path'
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import HubSpotForm from '@/components/molecules/hubspotform'
-import CloseIcon from '@mui/icons-material/Close'
-import BannerMessage from '@/components/atoms/BannerMessage'
-import CustomLink from '@/components/atoms/CustomLink'
-import hubspotFormIds from '@/const/hubspot-form-ids'
+import BannerMessage from '../../components/atoms/BannerMessage'
+import CtaButton from '../../components/atoms/CtaButton'
+import TextStyle from '../../components/atoms/TextStyle'
+import Layout from '../../components/layout'
+import HubSpotForm from '../../components/molecules/hubspotform'
+import { components, hubspotFormIds, SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -489,12 +487,13 @@ export default function Page({ page }) {
           <BannerMessage variant='special'>
             <TextStyle variant='body2'>
               Interested in presenting at ASCD conferences?
-              <CustomLink
-                href={'https://events.ascd.org/proposals'}
-                label=' Click for more details'
-                size='large'
-                color='black'
-              />
+              <Link href={'https://events.ascd.org/proposals'}>
+                <a>
+                  <Typography color='black' variant='large-link'>
+                    {' Click for more details'}
+                  </Typography>
+                </a>
+              </Link>
             </TextStyle>
           </BannerMessage>
         </Box>
@@ -548,9 +547,13 @@ export default function Page({ page }) {
                 </Box>
                 <Box mt={1}>
                   <TextStyle variant='subtitle1'>
-                    <CustomLink href='mailto:programteam@ascd.org'>
-                      programteam@ascd.org
-                    </CustomLink>
+                    <Link href='mailto:programteam@ascd.org'>
+                      <a>
+                        <Typography variant='medium-link'>
+                          {'programteam@ascd.org'}
+                        </Typography>
+                      </a>
+                    </Link>
                   </TextStyle>
                 </Box>
               </Box>

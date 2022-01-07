@@ -1,1 +1,1 @@
-export default from './NeverMiss'
+export { default } from './NeverMiss'

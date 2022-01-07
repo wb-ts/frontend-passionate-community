@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, fireEvent, screen } from 'test-utils'
-
-import ImageCarousel from '@/components/molecules/ImageCarousel'
+import ImageCarousel from '.'
+import { render, fireEvent, screen } from '../../../__test-utils__/test-utils'
 
 describe('Custom ImageCarousel component:', () => {
   test('Make sure items in the component are rendered', () => {

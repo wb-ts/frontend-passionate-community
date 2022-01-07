@@ -1,16 +1,10 @@
 import React from 'react'
-import {
-  Box,
-  Grid,
-  Typography,
-  Modal,
-  IconButton,
-} from '@mui/material'
-import hubspotFormIds from '@/const/hubspot-form-ids'
-import HubSpotForm from '@/components/molecules/hubspotform'
-import CtaButton from '@/components/atoms/CtaButton'
 import CloseIcon from '@mui/icons-material/Close'
+import { Box, Grid, Typography, Modal, IconButton } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { hubspotFormIds } from '../../../const'
+import CtaButton from '../../atoms/CtaButton'
+import HubSpotForm from '../../molecules/hubspotform'
 
 const useStyles = makeStyles((theme) => ({
   container: {

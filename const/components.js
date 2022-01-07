@@ -1,22 +1,21 @@
-import { Box, Typography } from '@mui/material'
-import CardGrid from '@/components/molecules/cardgrid'
-import TextCTA from '@/components/molecules/textcta'
-import CalloutBlock from '@/components/atoms/CalloutBlock'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
-import TwoColumnCTA from '@/components/molecules/twocolumncta'
-import TwoColContentListing from '@/components/organisms/twocolcontentlisting'
-import VideoPlayer from '@/components/molecules/videoplayer'
-import PodcastPlayer from '@/components/molecules/podcastplayer'
-import HeroHalfHalf from '@/components/molecules/herohalfhalf'
-import HorizontalSection from '@/components/molecules/horizontalsection'
-import TextStyle from '@/components/atoms/TextStyle'
-import IssueBannerTitle from '@/components/molecules/issuebannertitle'
-import Jumbotron from '@/components/molecules/jumbotron'
-import paths from '@/paths/path'
-import ContentfulTable from '@/components/molecules/contentfultable'
-import EmbeddedMedia from '@/components/molecules/embeddedmedia'
-import imageoptimization from '@/const/imageoptimization'
+import { Box, Typography } from '@mui/material'
+import { options, imageoptimization } from '.'
+import CalloutBlock from '../components/atoms/CalloutBlock'
+import TextStyle from '../components/atoms/TextStyle'
+import CardGrid from '../components/molecules/cardgrid'
+import ContentfulTable from '../components/molecules/contentfultable'
+import EmbeddedMedia from '../components/molecules/embeddedmedia'
+import HeroHalfHalf from '../components/molecules/herohalfhalf'
+import HorizontalSection from '../components/molecules/horizontalsection'
+import IssueBannerTitle from '../components/molecules/issuebannertitle'
+import Jumbotron from '../components/molecules/jumbotron'
+import PodcastPlayer from '../components/molecules/podcastplayer'
+import TextCTA from '../components/molecules/textcta'
+import TwoColumnCTA from '../components/molecules/twocolumncta'
+import VideoPlayer from '../components/molecules/videoplayer'
+import TwoColContentListing from '../components/organisms/twocolcontentlisting'
+import paths from '../paths/path'
 
 export const components = (item, key) => {
   if (item.sys.contentType) {
@@ -272,3 +271,5 @@ export const components = (item, key) => {
     }
   }
 }
+
+export default components

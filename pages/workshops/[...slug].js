@@ -1,23 +1,18 @@
 import React from 'react'
-
 import dynamic from 'next/dynamic'
-
-import { contentfulDirectClient } from '../../lib/apollo-client'
-import PAGE_QUERY from '../../lib/schema/pages/workshopProductPage.graphql'
-
 import { Box, Container, Divider, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-
-import WorkshopSectionTopLeft from '../../components/layouts/workshop/WorkshopSectionTopLeft'
-import ProductBanner from '../../components/layouts/ProductBanner'
-
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
 import ReactMarkdown from 'react-markdown'
-import TwoColContentListingWorkshop from '@/components/organisms/TwoColContentListingWorkshop'
-import NeverMiss from '@/components/workshop/NeverMiss'
-import SpotlightImage from '@/components/workshop/SpotlightImage'
+import Layout from '../../components/layout'
+import ProductBanner from '../../components/layouts/ProductBanner'
+import WorkshopSectionTopLeft from '../../components/layouts/workshop/WorkshopSectionTopLeft'
+import TwoColContentListingWorkshop from '../../components/organisms/TwoColContentListingWorkshop'
+import NeverMiss from '../../components/workshop/NeverMiss'
+import SpotlightImage from '../../components/workshop/SpotlightImage'
+import { SEOHead } from '../../const'
+import { contentfulDirectClient } from '../../lib/apollo-client'
+import { client } from '../../lib/contentful'
+import PAGE_QUERY from '../../lib/schema/pages/workshopProductPage.graphql'
 
 const WorkshopSectionTopRight = dynamic(
   () => import('../../components/layouts/workshop/WorkshopSectionTopRight'),

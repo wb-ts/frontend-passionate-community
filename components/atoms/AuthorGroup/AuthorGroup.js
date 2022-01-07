@@ -1,10 +1,10 @@
 import React from 'react'
-import { Box, Avatar } from '@mui/material'
-import { makeStyles } from '@mui/styles'
+import Link from 'next/link'
+import { Box, Avatar, Typography } from '@mui/material'
 import AvatarGroup from '@mui/material/AvatarGroup'
+import { makeStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
-import CustomLink from '@/components/atoms/CustomLink'
-import imageoptimization from '@/const/imageoptimization'
+import { imageoptimization } from '../../../const'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,12 +51,13 @@ export default function AuthorGroup({ label, authors, link, ...props }) {
       </AvatarGroup>
 
       <Box pl={2}>
-        <CustomLink
-          href={link ? link : ''}
-          label={label}
-          color='black'
-          size='medium'
-        />
+        <Link href={link}>
+          <a>
+            <Typography color='black' variant='medium-link'>
+              {label}
+            </Typography>
+          </a>
+        </Link>
       </Box>
     </Box>
   )

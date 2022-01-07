@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import CtaButton from '@/components/atoms/CtaButton'
-import FilterDropdown from '@/components/atoms/FilterDropdown'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import {
   Accordion,
   AccordionDetails,
@@ -13,8 +12,9 @@ import {
   Typography,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import { options } from '../../const'
+import CtaButton from '../atoms/CtaButton'
+import FilterDropdown from '../atoms/FilterDropdown'
 
 const useStyles = makeStyles((theme) => ({
   accordion: {

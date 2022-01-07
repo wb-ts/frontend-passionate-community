@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   Card,
@@ -7,10 +8,9 @@ import {
   Typography,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import paths from '@/paths/path'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import { useRouter } from 'next/router'
+import paths from '../../paths/path'
 import TextStyle from '../atoms/TextStyle'
+import { SnipcartButton } from '../Snipcart'
 
 const useStyles = makeStyles((theme) => ({
   tile: {

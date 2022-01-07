@@ -1,5 +1,5 @@
 import React from 'react'
-import FilterDropdown from '@/components/atoms/FilterDropdown'
+import FilterDropdown from '.'
 
 export default {
   component: FilterDropdown,

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import {
   Accordion,
   AccordionDetails,
@@ -11,8 +12,7 @@ import {
   Typography,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import ExpandLess from '@mui/icons-material/ExpandLess'
+import { options } from '../../const'
 
 const useStyles = makeStyles((theme) => ({
   accordion: {

@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
-
-import { Box, Typography, Divider } from '@mui/material'
-import { makeStyles } from '@mui/styles'
+import React, { useState, Fragment } from 'react'
+import Link from 'next/link'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import LoyaltySharpIcon from '@mui/icons-material/LoyaltySharp'
-
-import CustomLink from '../../../atoms/CustomLink'
-import NextImageWrapper from '../../../images/NextImageWrapper'
+import { Box, Typography, Divider } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import paths from '../../../../paths/path'
-import PriceDisplay from '../plugins/PriceDisplay'
+import NextImageWrapper from '../../../images/NextImageWrapper'
 import BuyButton from '../../../inputs/BuyButton'
+import PriceDisplay from '../plugins/PriceDisplay'
 
 const useStyles = makeStyles((theme) => ({
   icons: {
@@ -61,13 +59,17 @@ const withBookProductBanner = (
             <Typography variant='body3'>By </Typography>
           </Box>
           {book.authors.items.map((author, key) => (
-            <React.Fragment key={key}>
-              <CustomLink href={paths.author({ slug: author.slug })}>
-                {`${author.firstName} ${author.lastName}`}
-                {key < book.authors.items.length - 1 ? ',' : ''}
-              </CustomLink>
+            <Fragment key={key}>
+              <Link href={paths.author({ slug: author.slug })}>
+                <a>
+                  <Typography variant='medium-link' color='#005E47'>
+                    {`${author.firstName} ${author.lastName}`}
+                    {key < book.authors.items.length - 1 ? ',' : ''}
+                  </Typography>
+                </a>
+              </Link>
               &nbsp;
-            </React.Fragment>
+            </Fragment>
           ))}
         </Box>
         <Box my={1}>

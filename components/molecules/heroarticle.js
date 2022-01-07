@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Grid, Box, Avatar, AvatarGroup, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { Grid, Box, Avatar, AvatarGroup } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
-import ShareButtons from '@/components/molecules/sharebuttons'
-import CustomLink from '@/components/atoms/CustomLink'
-import paths from '@/paths/path'
-import imageoptimization from '@/const/imageoptimization'
+import TextStyle from '../../components/atoms/TextStyle'
+import ShareButtons from '../../components/molecules/sharebuttons'
+import { imageoptimization } from '../../const'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -123,11 +123,13 @@ export default function HeroArticle({ article, minuteRead }) {
                     mr={authorThumbnails && authorThumbnails.length > 0 ? 0 : 1}
                   >
                     {author.fields && (
-                      <CustomLink
-                        href={paths.author({ slug: author.fields.slug })}
-                        label={author.fields.title}
-                        size='medium'
-                      />
+                      <Link href={paths.author({ slug: author.fields.slug })}>
+                        <a>
+                          <Typography variant='medium-link' color='#005E47'>
+                            {author.fields.title}
+                          </Typography>
+                        </a>
+                      </Link>
                     )}
 
                     {article.fields.authors.length - 1 > key && ','}

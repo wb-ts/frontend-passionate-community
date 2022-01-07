@@ -1,13 +1,12 @@
-import React from 'react'
-import Layout from '@/components/layout'
-import { Box, Container } from '@mui/material'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
-import paths from '@/paths/path'
 import Router from 'next/router'
-import { useEffect } from 'react'
-import { algoliaSearchIndexId, algoliaSearchIndices } from '@/lib/algolia'
+import { Box, Container } from '@mui/material'
+import Layout from '../../components/layout'
+import { algoliaSearchIndexId, algoliaSearchIndices } from '../../lib/algolia'
+import paths from '../../paths/path'
 
-export default function Blogs({}) {
+export default function Blogs() {
   const searchIndicesSortBy =
     process.env.NEXT_PUBLIC_ALGOLIA_INDEX_ID == 'ascd_dev'
       ? algoliaSearchIndices.dev[4].value

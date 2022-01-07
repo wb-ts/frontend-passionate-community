@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { Box, Container, Divider, Skeleton } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
-import HorizontalScroll from '@/components/organisms/horizontalscroll'
-import ReadMore from '@/components/molecules/readmore'
-import BookBanner from '@/components/organisms/bookbanner'
-import paths from '@/paths/path'
-import { useRouter } from 'next/router'
+import Layout from '../../components/layout'
+import ReadMore from '../../components/molecules/readmore'
+import BookBanner from '../../components/organisms/bookbanner'
+import HorizontalScroll from '../../components/organisms/horizontalscroll'
+import { SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   root: {},

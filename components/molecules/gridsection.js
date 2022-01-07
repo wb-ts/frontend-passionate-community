@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box, Divider, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import ArticleItem from '@/components/molecules/ArticleItem'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
 import clsx from 'clsx'
-import { articleItemToCardData } from '@/lib/data-transformations'
+import { articleItemToCardData } from '../../lib/data-transformations'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
+import ArticleItem from './ArticleItem'
 
 const useStyles = makeStyles((theme) => ({
   root: {},

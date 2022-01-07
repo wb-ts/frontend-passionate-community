@@ -1,10 +1,8 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-
-import { Box, Divider } from '@mui/material'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '../../../const/options'
-
+import { Box, Divider } from '@mui/material'
+import PropTypes from 'prop-types'
+import { options } from '../../../const'
 import paths from '../../../paths/path'
 import TextStyle from '../../atoms/TextStyle'
 import HorizontalCard from '../../molecules/horizontalcard'

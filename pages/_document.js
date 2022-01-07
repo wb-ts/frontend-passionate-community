@@ -1,9 +1,9 @@
 import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import theme from '../theme'
-import createEmotionCache from '../createEmotionCache'
 import createEmotionServer from '@emotion/server/create-instance'
 import { ServerStyleSheets, createGenerateClassName } from '@mui/styles'
+import createEmotionCache from '../createEmotionCache'
+import { theme } from '../styles/mui'
 
 export default class MyDocument extends Document {
   render() {
@@ -222,6 +222,7 @@ export default class MyDocument extends Document {
                 >
                   Important Tax Exempt Info
                 </a>
+                <h1 className='tax-exempt'>To process a transaction with a Purchase Order please send to member@ascd.org</h1>
               </div>
             </div>
           </cart-summary>

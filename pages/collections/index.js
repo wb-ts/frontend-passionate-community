@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import Layout from '@/components/layout'
-import { Box, Container } from '@mui/material'
 import Head from 'next/head'
-import paths from '@/paths/path'
 import Router from 'next/router'
+import { Box, Container } from '@mui/material'
+import Layout from '../../components/layout'
+import paths from '../../paths/path'
 
-export default function Collections({}) {
+export default function Collections() {
   useEffect(() => {
     Router.replace(
       paths.search({

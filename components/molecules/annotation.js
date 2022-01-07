@@ -13,9 +13,9 @@ import {
   DialogTitle,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import dateFormat from 'dateformat'
 import clsx from 'clsx'
-import TextStyle from '@/components/atoms/TextStyle'
+import dateFormat from 'dateformat'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

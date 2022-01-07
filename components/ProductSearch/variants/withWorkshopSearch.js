@@ -1,11 +1,9 @@
 import React from 'react'
-import algoliasearch from 'algoliasearch'
 import { InstantSearch, Configure } from 'react-instantsearch-dom'
 import { Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { CustomDateRangePicker, CustomDropDownSelect } from '../plugins'
 import { CustomStateResults } from '../CustomStateResults'
-import { algoliaAppId, algoliaSearchApiKey } from '@/lib/algolia'
 import { RefinementsTop } from '../layout'
 import WorkshopListItem from '@/components/molecules/Workshop/WorkshopListItem'
 /**
@@ -20,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const searchClient = algoliasearch(algoliaAppId, algoliaSearchApiKey)
-const WorkshopSearch = () => {
+const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
   const Refinements = () => {
     const classes = useStyles()
 
@@ -66,15 +63,11 @@ const WorkshopSearch = () => {
       indexName={process.env.NEXT_PUBLIC_ALGOLIA_WORKSHOP_INDEX_ID}
     >
       <main className='search-container'>
-        <Configure
-          hitsPerPage={3}
-          attributesToSnippet={['content:24']}
-          snippetEllipsisText=' ...'
-        />
+        <Configure hitsPerPage={hitsPerPage} />
         <RefinementsTop Refinements={<Refinements />} Content={<Results />} />
       </main>
     </InstantSearch>
   )
 }
 
-export default WorkshopSearch
+export default withWorkshopSearch

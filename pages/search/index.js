@@ -1,20 +1,19 @@
 import React from 'react'
 import { isEqual } from 'lodash'
-import Layout from '@/components/layout'
+import Layout from '../../components/layout'
 import { Container } from '@mui/material'
 import PropTypes from 'prop-types'
 import { withRouter } from 'next/router'
 import qs from 'qs'
 import algoliasearch from 'algoliasearch/lite'
-import { Head, App } from '@/components/search'
-import SEOHead from '@/const/head'
-import { client } from '@/lib/contentful'
-
+import { Head, App } from '../../components/search'
+import { SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
 import {
   algoliaAppId,
   algoliaSearchApiKey,
   algoliaSearchIndexId,
-} from '@/lib/algolia'
+} from '../../lib/algolia'
 
 const searchClient = algoliasearch(algoliaAppId, algoliaSearchApiKey)
 

@@ -1,1 +1,1 @@
-export default from './ModalMessageBox'
+export { default } from './ModalMessageBox'

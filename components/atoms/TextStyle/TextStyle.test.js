@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-
-import TextStyle from '@/components/atoms/TextStyle'
+import TextStyle from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 describe('TextStyle component:', () => {
   test('TextStyle rendered successfully', () => {

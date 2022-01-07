@@ -1,13 +1,11 @@
 import React from 'react'
-
 import { Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import ShowMoreText from 'react-show-more-text'
-
+import { getContentText } from '../../../lib/data-transformations'
+import ProfileSummary from '../../info/ProfileSummary'
 import Topics from '../../molecules/Topics'
 import TopicTag from '../../molecules/TopicTag'
-import ProfileSummary from '../../info/ProfileSummary'
-import { getContentText } from '../../../lib/data-transformations'
 
 const useStyles = makeStyles((theme) => ({
   description: {

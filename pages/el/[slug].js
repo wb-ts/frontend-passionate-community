@@ -1,20 +1,19 @@
 import React from 'react'
-import { Box, Container, Grid } from '@mui/material'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
-import HorizontalScroll from '@/components/organisms/horizontalscroll'
-import PodcastPlayer from '@/components/molecules/podcastplayer'
-import IssueBanner from '@/components/organisms/issuebanner'
-import ContentList from '@/components/molecules/contentlist'
-import ReadMore from '@/components/molecules/readmore'
-import VideoPlayer from '@/components/molecules/videoplayer'
-import TOCNav from '@/components/atoms/TOCNav'
-import paths from '@/paths/path'
-import { makeStyles } from '@mui/styles';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@mui/material';
+import { Box, Container, Grid, Skeleton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import TOCNav from '../../components/atoms/TOCNav'
+import Layout from '../../components/layout'
+import ContentList from '../../components/molecules/contentlist'
+import PodcastPlayer from '../../components/molecules/podcastplayer'
+import ReadMore from '../../components/molecules/readmore'
+import VideoPlayer from '../../components/molecules/videoplayer'
+import HorizontalScroll from '../../components/organisms/horizontalscroll'
+import IssueBanner from '../../components/organisms/issuebanner'
+import { SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -34,7 +33,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Publication({ publication, publications }) {
   const router = useRouter()
   if (router.isFallback) {
-    return <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />;
+    return (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
+    )
   }
 
   const classes = useStyles()

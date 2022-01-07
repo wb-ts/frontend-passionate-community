@@ -1,1 +1,1 @@
-export default from './TwoColumn'
+export { default } from './TwoColumn'

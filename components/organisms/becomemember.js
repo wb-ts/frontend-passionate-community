@@ -1,8 +1,8 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
 import { Box, Container, Grid } from '@mui/material'
-import MemberCard from '@/components/molecules/membercard'
-import TextStyle from '@/components/atoms/TextStyle'
+import { makeStyles } from '@mui/styles'
+import TextStyle from '../atoms/TextStyle'
+import MemberCard from '../molecules/membercard'
 
 const useStyles = makeStyles((theme) => ({
   members: {

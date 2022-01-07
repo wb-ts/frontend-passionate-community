@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-import VirtualWorkshop from './VirtualWorkshop'
+import VirtualWorkshop from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 const workshopData = {
   title: 'Principles and Practices for Effective Online and Blended Learning',

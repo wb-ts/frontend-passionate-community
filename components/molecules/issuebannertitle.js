@@ -1,16 +1,16 @@
 import React from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Box, Chip, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import CtaButton from '@/components/atoms/CtaButton'
-import AuthorGroup from '@/components/atoms/AuthorGroup'
 import PropTypes from 'prop-types'
-import TextStyle from '@/components/atoms/TextStyle'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import { useRouter } from 'next/router'
-import ShareButtons from '@/components/molecules/sharebuttons'
-import paths from '@/paths/path'
-import CustomLink from '@/components/atoms/CustomLink'
-import { getCartButtonCaptionLabel } from '@/lib/utils'
+import AuthorGroup from '../../components/atoms/AuthorGroup'
+import CtaButton from '../../components/atoms/CtaButton'
+import TextStyle from '../../components/atoms/TextStyle'
+import ShareButtons from '../../components/molecules/sharebuttons'
+import SnipcartButton from '../../components/Snipcart/SnipcartButton'
+import { getCartButtonCaptionLabel } from '../../lib/utils'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -260,12 +260,13 @@ export default function IssueBannerTitle({
       )}
       {extraLink && dt.getFullYear() == '2021' && dt.getMonth() + 1 == '7' && (
         <Box my={2} px={[5, 0, 0]} textAlign={['center', 'left', 'left']}>
-          <CustomLink
-            href='https://share.hsforms.com/1KGJ1NHq1T5Og0HOn6HeZOA4rwbz?__hstc=258360661.7d073d228b90833ecab4fcc424388120.1608059657822.1626182273289.1626206955662.363&__hssc=258360661.2.1626206955662&__hsfp=1879013358'
-            label='Download the Summer 2021 issue of EL'
-            target='_blank'
-            size='large'
-          />
+          <Link href='https://share.hsforms.com/1KGJ1NHq1T5Og0HOn6HeZOA4rwbz?__hstc=258360661.7d073d228b90833ecab4fcc424388120.1608059657822.1626182273289.1626206955662.363&__hssc=258360661.2.1626206955662&__hsfp=1879013358'>
+            <a target='_blank'>
+              <Typography variant='large-link'>
+                {'Download the Summer 2021 issue of EL'}
+              </Typography>
+            </a>
+          </Link>
         </Box>
       )}
     </Box>

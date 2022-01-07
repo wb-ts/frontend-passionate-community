@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticleInfo from '@/components/atoms/ArticleInfo'
+import ArticleInfo from '.'
 
 export default {
   component: ArticleInfo,

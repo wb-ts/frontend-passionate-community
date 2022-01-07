@@ -1,13 +1,13 @@
 import React from 'react'
+import Image from 'next/image'
+import { useReactiveVar } from '@apollo/client'
 import { Box, Container, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import Image from 'next/image'
-import IssueBannerTitle from '@/components/molecules/issuebannertitle'
-import paths from '@/paths/path'
-import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
-import NextImageWrapper from '../images/NextImageWrapper'
 import { hasPaidMembershipVar } from '../../lib/apollo-client/cache'
-import { useReactiveVar } from '@apollo/client'
+import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
+import paths from '../../paths/path'
+import NextImageWrapper from '../images/NextImageWrapper'
+import IssueBannerTitle from '../molecules/issuebannertitle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

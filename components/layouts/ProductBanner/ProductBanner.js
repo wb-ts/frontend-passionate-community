@@ -1,5 +1,4 @@
 import React from 'react'
-
 import TwoColumn from '../TwoColumn'
 import { withBookProductBanner } from './variants'
 

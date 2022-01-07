@@ -1,12 +1,12 @@
 import React from 'react'
 import { Box, Container } from '@mui/material'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
-import IssueGrid from '@/components/molecules/issuegrid'
-import IssueBannerTitle from '@/components/molecules/issuebannertitle'
-import paths from '@/paths/path'
-import TwoColumnCta from '@/components/molecules/twocolumncta'
+import Layout from '../../components/layout'
+import IssueBannerTitle from '../../components/molecules/issuebannertitle'
+import IssueGrid from '../../components/molecules/issuegrid'
+import TwoColumnCta from '../../components/molecules/twocolumncta'
+import { SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
+import paths from '../../paths/path'
 
 export default function AllIssues({ publications, SEO, featuredAuthors }) {
   publications.sort((a, b) => {

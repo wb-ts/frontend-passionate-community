@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-import SpotlightImage from './SpotlightImage'
+import SpotlightImage from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 const src =
   '//images.ctfassets.net/cguvp07qpj80/2p2n6Zy0oDvftGFLyyVNtI/c1e24cd4cdd692e8ff2e90d26d6928ba/3-literacy-concepts-for-develo.png'

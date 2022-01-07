@@ -1,1 +1,1 @@
-export default from './BookToc'
+export { default } from './BookToc'

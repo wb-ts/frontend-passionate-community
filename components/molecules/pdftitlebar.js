@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
+import TextStyle from '../atoms/TextStyle'
 
 export default function PdfTitleBar({ title, volume, number, issueDate }) {
   return (

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@mui/styles'
+import { useRouter } from 'next/router'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import CloseIcon from '@mui/icons-material/Close'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import {
   Box,
   Modal,
@@ -13,16 +18,10 @@ import {
   CardContent,
   Link,
 } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import _ from 'lodash'
-import { useRouter } from 'next/router'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import CloseIcon from '@mui/icons-material/Close'
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
-import NavigateNextIcon from '@mui/icons-material/NavigateNext'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import TextStyle from '@/components/atoms/TextStyle'
-import options from '@/const/options'
-import imageoptimization from '@/const/imageoptimization'
+import { options, imageoptimization } from '../../const'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

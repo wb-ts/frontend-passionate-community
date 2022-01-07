@@ -1,6 +1,6 @@
 import React from 'react'
+import { makeStyles } from '@mui/styles'
 import { connectCurrentRefinements } from 'react-instantsearch-dom'
-import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   link: {

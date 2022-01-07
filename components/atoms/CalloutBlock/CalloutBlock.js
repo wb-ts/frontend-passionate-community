@@ -1,9 +1,9 @@
 import React from 'react'
-import { Box, Typography } from '@mui/material'
-import { makeStyles } from '@mui/styles';
-import PropTypes from 'prop-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
+import { Box, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import PropTypes from 'prop-types'
+import { options } from '../../../const'
 import TextStyle from '../TextStyle'
 
 const useStyles = makeStyles((theme) => ({

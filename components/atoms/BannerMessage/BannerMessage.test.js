@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-
-import BannerMessage from '@/components/atoms/BannerMessage'
+import BannerMessage from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 describe('BannerMessage component:', () => {
   test('BannerMessage rendered successfully', () => {

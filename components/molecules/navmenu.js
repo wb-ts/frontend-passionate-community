@@ -1,12 +1,12 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
+import ContactsIcon from '@mui/icons-material/Contacts'
+import EventAvailableIcon from '@mui/icons-material/EventAvailable'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import WidgetsIcon from '@mui/icons-material/Widgets'
-import EventAvailableIcon from '@mui/icons-material/EventAvailable'
-import ContactsIcon from '@mui/icons-material/Contacts'
-import CtaButton from '@/components/atoms/CtaButton'
+import { makeStyles } from '@mui/styles'
+import paths from '../../paths/path'
+import CtaButton from '../atoms/CtaButton'
 import NavMenuItem from './navmenuitem'
-import paths from '@/paths/path'
 
 const useStyles = makeStyles((theme) => ({
   withIcon: {

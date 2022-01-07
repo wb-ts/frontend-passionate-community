@@ -1,13 +1,13 @@
 import React from 'react'
+import Image from 'next/image'
 import { Avatar, Box, Container, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import TopicTag from '@/components/molecules/TopicTag'
-import paths from '@/paths/path'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import Image from 'next/image'
+import paths from '../../paths/path'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {},

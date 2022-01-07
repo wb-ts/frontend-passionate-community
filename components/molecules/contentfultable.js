@@ -1,4 +1,5 @@
 import React from 'react'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import {
   Box,
   Table,
@@ -9,8 +10,7 @@ import {
   TableRow,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import TextStyle from '@/components/atoms/TextStyle'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {},

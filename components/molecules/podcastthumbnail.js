@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
-import clsx from 'clsx'
-import paths from '@/paths/path'
 import { Box, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import DaysAgo from '@/components/atoms/DaysAgo'
-import TextStyle from '@/components/atoms/TextStyle'
-import TopicTag from '@/components/molecules/TopicTag'
-import imageoptimization from '@/const/imageoptimization'
+import clsx from 'clsx'
+import { imageoptimization } from '../../const'
+import paths from '../../paths/path'
+import DaysAgo from '../atoms/DaysAgo'
+import TextStyle from '../atoms/TextStyle'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -172,7 +172,7 @@ export default function PodcastThumbnail({ podcast, ...props }) {
         justifyContent='center'
         title={podcast.fields?.thumbnail?.fields?.alternate}
       />
-      <Link href={pathUsed(props.path)}>
+      <Link href={`${pathUsed(props.path)}`}>
         <a className={classes.shadowBg}>
           <img
             alt=''

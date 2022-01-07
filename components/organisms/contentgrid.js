@@ -1,14 +1,14 @@
-import ContentCardListing from '@/components/molecules/contentcardlisting'
-import paths from '@/paths/path'
+import React, { useState } from 'react'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { Box, Button, Divider, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TextStyle from '@/components/atoms/TextStyle'
-import TopicTag from '@/components/molecules/TopicTag'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import React, { useState } from 'react'
-import WorkshopListItem from '@/components/molecules/Workshop/WorkshopListItem'
-import { workshopItemToCardData } from '@/lib/data-transformations'
+import { workshopItemToCardData } from '../../lib/data-transformations'
+import paths from '../../paths/path'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
+import ContentCardListing from '../molecules/contentcardlisting'
+import TopicTag from '../molecules/TopicTag'
+import WorkshopListItem from '../molecules/Workshop/WorkshopListItem'
 
 const useStyles = makeStyles((theme) => ({
   root: {},

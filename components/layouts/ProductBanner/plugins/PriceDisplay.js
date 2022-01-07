@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-
+import Link from 'next/link'
+import { useReactiveVar } from '@apollo/client'
 import { Box, Typography, FormControl, Select, MenuItem } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-
-import { useReactiveVar } from '@apollo/client'
+import PropTypes from 'prop-types'
 import { hasMemberBookPriceVar } from '../../../../lib/apollo-client/cache'
-
-import CustomLink from '../../../atoms/CustomLink'
-
 import paths from '../../../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +83,13 @@ const PriceDisplay = ({ id, prices, membershipVar, handleOnChange }) => {
       {!hasMemberPricing ? (
         <Typography variant='subtitle2'>
           $ {price.priceMember} member price{' '}
-          <CustomLink href={paths.subscribe} color='#005E47' label='join now' />
+          <Link href={paths.subscribe}>
+            <a>
+              <Typography variant='medium-link' color='#005E47'>
+                {'join now'}
+              </Typography>
+            </a>
+          </Link>
         </Typography>
       ) : (
         <Typography variant='subtitle2'>

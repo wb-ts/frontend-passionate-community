@@ -1,16 +1,19 @@
-import Layout from '@/components/layout'
-import { Box, Container } from '@mui/material'
-import Head from 'next/head'
-import dynamic from 'next/dynamic'
 import React from 'react'
-import Banner from '@/components/molecules/banner'
-import TwoColumnCta from '@/components/molecules/twocolumncta'
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
+import { Box, Container } from '@mui/material'
+import Layout from '../../components/layout'
+import Banner from '../../components/molecules/banner'
+import TwoColumnCta from '../../components/molecules/twocolumncta'
 
-const PianoAccount = dynamic(() => import('@/components/piano/pianoaccount'), {
-  ssr: false,
-})
+const PianoAccount = dynamic(
+  () => import('../../components/piano/pianoaccount'),
+  {
+    ssr: false,
+  }
+)
 
-export default function UserAccount({}) {
+export default function UserAccount() {
   return (
     <Layout>
       <Head>

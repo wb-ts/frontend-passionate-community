@@ -4,7 +4,7 @@ import {
   StylesProvider,
   createGenerateClassName,
 } from '@mui/styles'
-import theme from '../theme'
+import { theme } from '../styles/mui'
 import CssBaseline from '@mui/material/CssBaseline'
 import { withTests } from '@storybook/addon-jest'
 import results from '../test-results/report.json'

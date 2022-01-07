@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useReactiveVar } from '@apollo/client'
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+import { fetchProductPricesByProductNumbers } from '../../lib/contentful'
+import useProductInventory from '../../lib/hooks/useProductInventory'
 import useUserAccount from '../../lib/hooks/useUserAccount'
 import {
   getSnipcartClient,
   encodeSnipcartOrderValidationUrl,
 } from '../../lib/utils'
-import { fetchProductPricesByProductNumbers } from '@/lib/contentful'
-import ModalMessageBox from '@/components/organisms/ModalMessageBox'
-import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
-import useProductInventory from '../../lib/hooks/useProductInventory'
+import ModalMessageBox from '../organisms/ModalMessageBox'
 
 /**
  * Snipcart is a third party app service that we are using for buying items such as books.

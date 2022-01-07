@@ -1,12 +1,12 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { Box, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import CtaButton from '@/components/atoms/CtaButton'
-import TextStyle from '@/components/atoms/TextStyle'
-import TopicTag from '@/components/molecules/TopicTag'
-import { useRouter } from 'next/router'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
 import ReactMarkdown from 'react-markdown'
+import CtaButton from '../atoms/CtaButton'
+import TextStyle from '../atoms/TextStyle'
+import { SnipcartButton } from '../Snipcart'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,8 +94,8 @@ const useStyles = makeStyles((theme) => ({
   },
   descriptionLink: {
     '& a': {
-      color: theme.palette.primary.main
-    }
+      color: theme.palette.primary.main,
+    },
   },
 }))
 
@@ -143,7 +143,9 @@ export default function HeroHalfHalf({
                 {Array.isArray(description) ? (
                   description
                 ) : (
-                  <ReactMarkdown className={classes.descriptionLink}>{description}</ReactMarkdown>
+                  <ReactMarkdown className={classes.descriptionLink}>
+                    {description}
+                  </ReactMarkdown>
                 )}
               </TextStyle>
             </Box>

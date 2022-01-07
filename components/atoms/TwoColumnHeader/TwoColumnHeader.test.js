@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-
-import TwoColumnHeader from '@/components/atoms/TwoColumnHeader'
+import TwoColumnHeader from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 describe('TwoColumnHeader component:', () => {
   test('TwoColumnHeader rendered successfully', () => {

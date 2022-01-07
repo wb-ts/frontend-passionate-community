@@ -1,12 +1,9 @@
 import React from 'react'
-
+import { useReactiveVar } from '@apollo/client'
 import { Box, Typography, Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-
-import { useReactiveVar } from '@apollo/client'
+import { constSnipcart } from '../../../../const'
 import { hasMemberBookPriceVar } from '../../../../lib/apollo-client/cache'
-
-import constSnipcart from '../../../../const/snipcart'
 
 const useStyles = makeStyles((theme) => ({
   snipcartBtn: {

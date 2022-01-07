@@ -1,14 +1,17 @@
-import Layout from '@/components/layout'
-import Banner from '@/components/molecules/banner'
-import TwoColumnCta from '@/components/molecules/twocolumncta'
-import { Box, Container } from '@mui/material'
+import React from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import React from 'react'
+import { Box, Container } from '@mui/material'
+import Layout from '../../components/layout'
+import Banner from '../../components/molecules/banner'
+import TwoColumnCta from '../../components/molecules/twocolumncta'
 
-const PianoAccount = dynamic(() => import('@/components/piano/pianoaccount'), {
-  ssr: false,
-})
+const PianoAccount = dynamic(
+  () => import('../../components/piano/pianoaccount'),
+  {
+    ssr: false,
+  }
+)
 
 export default function UserSubs({}) {
   return (

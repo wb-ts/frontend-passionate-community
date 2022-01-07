@@ -1,9 +1,9 @@
 import React from 'react'
+import Head from 'next/head'
 import { Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import Head from 'next/head'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
 
 const useStyles = makeStyles((theme) => ({
   root: {

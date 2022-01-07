@@ -1,10 +1,10 @@
-import { algoliaSearchIndex } from '@/lib/algolia'
-import { client } from '@/lib/contentful'
+import React from 'react'
+import Head from 'next/head'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { Box, Container, Typography } from '@mui/material'
-import Head from 'next/head'
-import React from 'react'
-import paths from '@/paths/path'
+import { algoliaSearchIndex } from '../../../lib/algolia'
+import { client } from '../../../lib/contentful'
+import paths from '../../../paths/path'
 
 // const importContent = process.env.NEXT_PUBLIC_ALGOLIA_REINDEX
 //   ? process.env.NEXT_PUBLIC_ALGOLIA_REINDEX

@@ -1,4 +1,6 @@
 import React from 'react'
+import CloseIcon from '@mui/icons-material/Close'
+import TuneIcon from '@mui/icons-material/Tune'
 import {
   Box,
   Grid,
@@ -9,12 +11,9 @@ import {
   Button,
   IconButton,
 } from '@mui/material'
+import Switch from '@mui/material/Switch'
 import { withStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
-import SearchItem from '@/components/search/searchitem'
-import Switch from '@mui/material/Switch'
-import TuneIcon from '@mui/icons-material/Tune'
-import CloseIcon from '@mui/icons-material/Close'
 import {
   Configure,
   Hits,
@@ -27,9 +26,10 @@ import {
   Stats,
   connectRefinementList,
 } from 'react-instantsearch-dom'
-import { CustomCurrentRefinements } from '@/components/search/customcurrentrefinement'
-import { CustomRefinementList } from '@/components/search/customrefinementlist'
-import { algoliaSearchIndexId, algoliaSearchIndices } from '@/lib/algolia'
+import { algoliaSearchIndexId, algoliaSearchIndices } from '../../lib/algolia'
+import { CustomCurrentRefinements } from './customcurrentrefinement'
+import { CustomRefinementList } from './customrefinementlist'
+import SearchItem from './searchitem'
 
 const useStyles = (theme) => ({
   searchBar: {
@@ -223,14 +223,6 @@ const PremiumResourcesSwitch = withStyles((theme) => ({
 
 const VirtualRefinementList = connectRefinementList(() => null)
 class App extends React.Component {
-  static propTypes = {
-    searchState: PropTypes.object,
-    resultsState: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    onSearchStateChange: PropTypes.func,
-    createURL: PropTypes.func,
-    indexName: PropTypes.string,
-    searchClient: PropTypes.object,
-  }
   constructor(props) {
     super(props)
     this.state = {
@@ -527,7 +519,8 @@ class App extends React.Component {
                   <IconButton
                     className={classes.drawerHeaderClose}
                     onClick={handleFiltersDrawerClose}
-                    size="large">
+                    size='large'
+                  >
                     <CloseIcon />
                   </IconButton>
                   <Typography variant='h4'>Filters</Typography>
@@ -619,8 +612,17 @@ class App extends React.Component {
           </Grid>
         </InstantSearch>
       </Grid>
-    );
+    )
   }
+}
+
+App.proptypes = {
+  searchState: PropTypes.object,
+  resultsState: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  onSearchStateChange: PropTypes.func,
+  createURL: PropTypes.func,
+  indexName: PropTypes.string,
+  searchClient: PropTypes.object,
 }
 
 export default withStyles(useStyles)(App)

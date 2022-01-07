@@ -1,2 +1,2 @@
-export * from '@/components/search/head'
-export { default as App } from '@/components/search/app'
+export * from './head'
+export { default as App } from './app'

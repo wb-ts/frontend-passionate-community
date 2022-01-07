@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import paths from '@/paths/path'
+import CloseIcon from '@mui/icons-material/Close'
+import MenuIcon from '@mui/icons-material/Menu'
+import SearchIcon from '@mui/icons-material/Search'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import {
   AppBar,
   Box,
@@ -12,20 +17,15 @@ import {
   Button,
   Badge,
 } from '@mui/material'
-import Link from 'next/link'
 import { makeStyles } from '@mui/styles'
-import MenuIcon from '@mui/icons-material/Menu'
-import SearchPopover from '@/components/molecules/searchpopover'
-import SearchIcon from '@mui/icons-material/Search'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import CloseIcon from '@mui/icons-material/Close'
 import useSWR from 'swr'
+import NavMenu from '../../components/molecules/navmenu'
+import SearchPopover from '../../components/molecules/searchpopover'
+import { AppContext } from '../../context/state'
+import paths from '../../paths/path'
 import NextImageWrapper from '../images/NextImageWrapper'
-import dynamic from 'next/dynamic'
-import { AppContext } from '@/context/state'
-import NavMenu from '@/components/molecules/navmenu'
-import UserAccountToolbarMenu from '../UserAccount'
 import { pianoLogInHandler, pianoLogOutHandler } from '../piano/PianoManager'
+import UserAccountToolbarMenu from '../UserAccount'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,8 +94,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       left: '35%',
     },
-    transform: 'translateX(-50%)',
-    transform: 'translateY(-180%)',
+    transform: 'translate(-50%, -180%)',
     transition: 'transform 0.3s',
     zIndex: '100',
     '&:focus': {
@@ -148,12 +147,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Header() {
-  const [state, setState] = useState({
-    mobileView: false,
-    drawerOpen: false,
-  })
+  const [mobileView, setMobileView] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [searchPopover, setSearchPopover] = useState(null)
+  const [searchPopoverValue, setSearchPopoverValue] = useState('')
+
   const router = useRouter()
-  const { mobileView, drawerOpen } = state
 
   const { setTopics, grades, setGrades, subjects, setSubjects } =
     useContext(AppContext)
@@ -161,11 +160,15 @@ export default function Header() {
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 960
-        ? setState((prevState) => ({ ...prevState, mobileView: true }))
-        : setState((prevState) => ({ ...prevState, mobileView: false }))
+        ? setMobileView(true)
+        : setMobileView(false)
     }
     setResponsiveness()
     window.addEventListener('resize', () => setResponsiveness())
+
+    return () => {
+      window.removeEventListener('resize', () => setResponsiveness())
+    }
   }, [])
 
   const classes = useStyles()
@@ -177,10 +180,14 @@ export default function Header() {
     console.error(error)
   }
 
-  setTopics(data?.topics)
-  setGrades(data?.grades)
-  setSubjects(data?.subjects)
-  // setRoles(data?.roles)
+  useEffect(() => {
+    if (data) {
+      setTopics(data.topics)
+      setGrades(data.grades)
+      setSubjects(data.subjects)
+      // setRoles(data?.roles)
+    }
+  }, [data])
 
   const selectedTopics = data?.topics.filter((currentElement) => {
     return (
@@ -193,8 +200,6 @@ export default function Header() {
     )
   })
 
-  const [searchPopover, setSearchPopover] = useState(null)
-
   const openSearchPopover = (event) => {
     setSearchPopover(event.target)
   }
@@ -202,8 +207,6 @@ export default function Header() {
   const closeSearchPopover = () => {
     setSearchPopover(null)
   }
-
-  const [searchPopoverValue, setSearchPopoverValue] = useState('')
 
   const triggerSearch = () => {
     setSearchPopover(null)
@@ -229,18 +232,20 @@ export default function Header() {
       <Toolbar disableGutters className={classes.desktopToolbar}>
         <Grid container alignItems='center'>
           <Grid item md={8} container>
-            <a href='#mainContent' className={classes.skipLink}>
-              Skip to main content
-            </a>
+            <Link href='#mainContent'>
+              <a className={classes.skipLink}>Skip to main content</a>
+            </Link>
             <Box mr={1.75} tabIndex='0'>
               <Link href='/' className={classes.logoLink}>
-                <NextImageWrapper
-                  src={'/images/logo.svg'}
-                  alt='ascd logo'
-                  className={classes.nextImage1}
-                  width={109}
-                  height={36}
-                />
+                <a>
+                  <NextImageWrapper
+                    src={'/images/logo.svg'}
+                    alt='ascd logo'
+                    className={classes.nextImage1}
+                    width={109}
+                    height={36}
+                  />
+                </a>
               </Link>
             </Box>
             <NavMenu />
@@ -306,10 +311,8 @@ export default function Header() {
   }
 
   const displayMobile = () => {
-    const handleDrawerOpen = () =>
-      setState((prevState) => ({ ...prevState, drawerOpen: true }))
-    const handleDrawerClose = () =>
-      setState((prevState) => ({ ...prevState, drawerOpen: false }))
+    const handleDrawerOpen = () => setDrawerOpen(true)
+    const handleDrawerClose = () => setDrawerOpen(false)
     return (
       <Toolbar className={classes.mobileToolbar}>
         <a href='#mainContent' className={classes.skipLink}>
@@ -332,13 +335,15 @@ export default function Header() {
           <Grid item xs={6}>
             <Box ml={1}>
               <Link href='/'>
-                <NextImageWrapper
-                  src={'/images/logo.svg'}
-                  alt='ascd logo'
-                  width={109}
-                  height={29}
-                  className={classes.nextImage2}
-                />
+                <a>
+                  <NextImageWrapper
+                    src={'/images/logo.svg'}
+                    alt='ascd logo'
+                    width={109}
+                    height={29}
+                    className={classes.nextImage2}
+                  />
+                </a>
               </Link>
             </Box>
           </Grid>
@@ -380,13 +385,15 @@ export default function Header() {
               </IconButton>
               <Box tabIndex='0'>
                 <Link href='/'>
-                  <NextImageWrapper
-                    src={'/images/fulllogo_white.svg'}
-                    alt='ascd logo'
-                    className={classes.nextImage3}
-                    width={109}
-                    height={29}
-                  />
+                  <a>
+                    <NextImageWrapper
+                      src={'/images/fulllogo_white.svg'}
+                      alt='ascd logo'
+                      className={classes.nextImage3}
+                      width={109}
+                      height={29}
+                    />
+                  </a>
                 </Link>
               </Box>
             </Box>

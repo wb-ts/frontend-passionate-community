@@ -1,9 +1,9 @@
 import React from 'react'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import CtaButton from '@/components/atoms/CtaButton'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
+import { options } from '../../const'
+import CtaButton from '../atoms/CtaButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,15 +1,13 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
-
 import { Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { PropTypes } from 'prop-types'
 import ShowMoreText from 'react-show-more-text'
-
-import options from '../../../const/options'
-import Topics from '../../molecules/Topics'
-import TopicTag from '../../molecules/TopicTag'
+import { options } from '../../../const'
 import TextStyle from '../../atoms/TextStyle'
 import ProfileSummary from '../../info/ProfileSummary'
+import Topics from '../../molecules/Topics'
+import TopicTag from '../../molecules/TopicTag'
 import ArticleAuthors from '../../organisms/articleaauthors'
 
 const useStyles = makeStyles((theme) => ({

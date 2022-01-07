@@ -1,8 +1,8 @@
 import React from 'react'
-import { render } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
-import theme from '../theme'
-import { AppProvider } from '@/context/state'
+import { render } from '@testing-library/react'
+import { AppProvider } from '../context/state'
+import { theme } from '../styles/mui'
 
 const AllTheProviders = ({ children }) => {
   return (

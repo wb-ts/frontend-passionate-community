@@ -1,21 +1,18 @@
 import React from 'react'
-import Layout from '@/components/layout'
-import { client } from '@/lib/contentful'
-import { Box, Container, Divider } from '@mui/material'
-import { makeStyles } from '@mui/styles';
-import SEOHead from '@/const/head'
-import ReadMore from '@/components/molecules/readmore'
-import Topics from '@/components/molecules/Topics'
-import TwoColumnCta from '@/components/molecules/twocolumncta'
-import TextCTA from '@/components/molecules/textcta'
-import VideoPlaylist from '@/components/organisms/videoplaylist'
-import paths from '@/paths/path'
-import ContentGrid from '@/components/organisms/contentgrid'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@mui/material';
-import imageoptimization from '@/const/imageoptimization'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { Box, Container, Divider, Skeleton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import Layout from '../../components/layout'
+import ReadMore from '../../components/molecules/readmore'
+import TextCTA from '../../components/molecules/textcta'
+import Topics from '../../components/molecules/Topics'
+import TwoColumnCta from '../../components/molecules/twocolumncta'
+import ContentGrid from '../../components/organisms/contentgrid'
+import VideoPlaylist from '../../components/organisms/videoplaylist'
+import { imageoptimization, options, SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -24,7 +21,14 @@ const useStyles = makeStyles(() => ({
 export default function Webinar({ webinar, webinars }) {
   const router = useRouter()
   if (router.isFallback) {
-    return <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />;
+    return (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='100%'
+        height='100px'
+      />
+    )
   }
 
   const classes = useStyles()

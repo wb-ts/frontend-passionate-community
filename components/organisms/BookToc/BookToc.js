@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Box, Button } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Box, Button } from '@mui/material'
+import TextStyle from '../../atoms/TextStyle'
 import ChapterLink from './ChapterLink'
 
 /**

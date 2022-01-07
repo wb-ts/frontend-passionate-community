@@ -1,5 +1,5 @@
 import React from 'react'
-import TextStyle from '@/components/atoms/TextStyle'
+import TextStyle from '.'
 
 export default {
   component: TextStyle,

@@ -1,1 +1,1 @@
-export default from './EmailCapture'
+export { default } from './EmailCapture'

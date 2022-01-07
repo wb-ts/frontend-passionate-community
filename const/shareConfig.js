@@ -1,4 +1,4 @@
-export const shareConfig = {
+const shareConfig = {
   follow: {
     action: 'Follow us:', // call to action (STRING)
     action_enable: false, // show/hide call to action (true, false)
@@ -60,3 +60,5 @@ export const shareConfig = {
     // username: 'custom twitter handle' // (only for twitter sharing)
   },
 }
+
+export default shareConfig

@@ -1,1 +1,1 @@
-export { default as WorkshopSearch } from './WorkshopSearch'
+export { default as withWorkshopSearch } from './withWorkshopSearch'

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { makeStyles } from '@mui/styles';
-import { baseUrl } from '@/lib/utils'
+import { makeStyles } from '@mui/styles'
 import {
   EmailIcon,
   EmailShareButton,
@@ -12,6 +11,7 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from 'react-share'
+import { baseUrl } from '../../lib/utils'
 
 const useStyles = makeStyles(() => ({
   root: {},

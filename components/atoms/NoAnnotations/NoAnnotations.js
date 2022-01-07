@@ -1,7 +1,7 @@
 import React from 'react'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
 import { Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({

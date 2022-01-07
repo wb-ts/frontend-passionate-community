@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   Card,
@@ -7,13 +8,11 @@ import {
   CardContent,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import paths from '@/paths/path'
-import TopicTag from '@/components/molecules/TopicTag'
-import DaysAgo from '@/components/atoms/DaysAgo'
-import TextStyle from '@/components/atoms/TextStyle'
-// import ViewCount from '@/components/molecules/viewcount'
-import { useRouter } from 'next/router'
-import imageoptimization from '@/const/imageoptimization'
+import { imageoptimization } from '../../const'
+import paths from '../../paths/path'
+import DaysAgo from '../atoms/DaysAgo'
+import TextStyle from '../atoms/TextStyle'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {

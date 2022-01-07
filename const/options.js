@@ -1,8 +1,8 @@
 import { INLINES, BLOCKS } from '@contentful/rich-text-types'
-import TextStyle from '@/components/atoms/TextStyle'
 import { Link, Box } from '@mui/material'
-import { components } from '@/const/components'
-import imageoptimization from '@/const/imageoptimization'
+import { imageoptimization } from '.'
+import TextStyle from '../components/atoms/TextStyle'
+import { components } from './components'
 
 const options = {
   renderNode: {

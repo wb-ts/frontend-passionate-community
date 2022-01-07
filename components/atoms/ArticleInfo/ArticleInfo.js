@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
 import { makeStyles } from '@mui/styles'
-import TopicTag from '@/components/molecules/TopicTag'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import PropTypes from 'prop-types'
+import TopicTag from '../../molecules/TopicTag'
+import TextStyle from '../TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

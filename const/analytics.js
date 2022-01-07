@@ -1,5 +1,5 @@
-import Analytics from 'analytics'
 import googleAnalytics from '@analytics/google-analytics'
+import Analytics from 'analytics'
 
 const analytics = Analytics({
   app: 'ascd',

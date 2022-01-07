@@ -1,21 +1,19 @@
 import React from 'react'
-import { Box, Container } from '@mui/material'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
-import HorizontalScroll from '@/components/organisms/horizontalscroll'
-import TwoColumnCta from '@/components/molecules/twocolumncta'
-import TextCTA from '@/components/molecules/textcta'
-import HeroHalfHalf from '@/components/molecules/herohalfhalf'
-import paths from '@/paths/path'
-import HorizontalNav from '@/components/molecules/horizontalnav'
-import BannerMessage from '@/components/atoms/BannerMessage'
-import CustomLink from '@/components/atoms/CustomLink'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
-import TextStyle from '@/components/atoms/TextStyle'
-import imageoptimization from '@/const/imageoptimization'
-import { components } from '@/const/components'
+import { Box, Container, Typography } from '@mui/material'
+import BannerMessage from '../../components/atoms/BannerMessage'
+import TextStyle from '../../components/atoms/TextStyle'
+import Layout from '../../components/layout'
+import HeroHalfHalf from '../../components/molecules/herohalfhalf'
+import HorizontalNav from '../../components/molecules/horizontalnav'
+import TextCTA from '../../components/molecules/textcta'
+import TwoColumnCta from '../../components/molecules/twocolumncta'
+import HorizontalScroll from '../../components/organisms/horizontalscroll'
+import { components, SEOHead, imageoptimization } from '../../const'
+import { client } from '../../lib/contentful'
+import paths from '../../paths/path'
 
 export default function Books({
   books,
@@ -343,12 +341,13 @@ export default function Books({
           <BannerMessage variant='special'>
             <TextStyle variant='body2'>
               Premium members receive 9 new books a year. &nbsp;
-              <CustomLink
-                href={paths.subscribe}
-                label='Join today'
-                size='large'
-                color='black'
-              />
+              <Link href={paths.subscribe}>
+                <a>
+                  <Typography color='black' variant='large-link'>
+                    {'Join today'}
+                  </Typography>
+                </a>
+              </Link>
             </TextStyle>
           </BannerMessage>
         </Box>

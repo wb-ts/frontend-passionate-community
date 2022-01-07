@@ -1,23 +1,22 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Box, Grid, Divider } from '@mui/material'
-import { makeStyles } from '@mui/styles'
-import NextImageWrapper from '../images/NextImageWrapper'
-import CustomLink from '@/components/atoms/CustomLink'
-import paths from '@/paths/path'
-import FilterDropdown from '@/components/atoms/FilterDropdown'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import BookBannerPrice from '@/components/molecules/bookbannerprice'
-import TextStyle from '@/components/atoms/TextStyle'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useReactiveVar } from '@apollo/client'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import LoyaltySharpIcon from '@mui/icons-material/LoyaltySharp'
-import { useRouter } from 'next/router'
-import imageoptimization from '@/const/imageoptimization'
-import ImageCarousel from '@/components/molecules/ImageCarousel'
-import { getCartButtonCaptionLabel } from '@/lib/utils'
-import constSnipcart from '@/const/snipcart'
-import { useReactiveVar } from '@apollo/client'
+import { Box, Grid, Divider, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import FilterDropdown from '../../components/atoms/FilterDropdown'
+import TextStyle from '../../components/atoms/TextStyle'
+import BookBannerPrice from '../../components/molecules/bookbannerprice'
+import SnipcartButton from '../../components/Snipcart/SnipcartButton'
+import { imageoptimization, constSnipcart } from '../../const'
 import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
 import { contentfulThumbnailAPIToImageUrl } from '../../lib/data-transformations'
+import { getCartButtonCaptionLabel } from '../../lib/utils'
+import paths from '../../paths/path'
+import NextImageWrapper from '../images/NextImageWrapper'
+import ImageCarousel from '../molecules/ImageCarousel'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -105,7 +104,7 @@ export default function BookBanner({
   const collection = book
   const bookImages = isCollection
     ? [imgUrl].concat(
-        collection.fields.items.map((book, key) =>
+        collection.fields.items.map((book) =>
           contentfulThumbnailAPIToImageUrl(book.fields?.thumbnail)
         )
       )
@@ -137,10 +136,13 @@ export default function BookBanner({
         <Box my={1} display='flex' alignItems='center' flexWrap='wrap'>
           <Box mr={1}>
             {isCollection ? (
-              <CustomLink
-                href={paths.search({ types: ['collection'] })}
-                label='ASCD Collections'
-              ></CustomLink>
+              <Link href={paths.search({ types: ['collection'] })}>
+                <a>
+                  <Typography variant='medium-link' color='#005E47'>
+                    {'ASCD Collections'}
+                  </Typography>
+                </a>
+              </Link>
             ) : (
               <TextStyle variant='body3'>By </TextStyle>
             )}
@@ -148,10 +150,14 @@ export default function BookBanner({
           {book?.fields?.authors &&
             book.fields.authors.map((author, key) => (
               <React.Fragment key={key}>
-                <CustomLink href={paths.author({ slug: author.fields?.slug })}>
-                  {`${author.fields?.firstName} ${author.fields?.lastName}`}
-                  {key < book.fields.authors.length - 1 ? ',' : ''}
-                </CustomLink>
+                <Link href={paths.author({ slug: author.fields?.slug })}>
+                  <a>
+                    <Typography variant='medium-link' color='#005E47'>
+                      {`${author.fields?.firstName} ${author.fields?.lastName}`}
+                      {key < book.fields.authors.length - 1 ? ',' : ''}
+                    </Typography>
+                  </a>
+                </Link>
                 &nbsp;
               </React.Fragment>
             ))}

@@ -1,12 +1,12 @@
 import React from 'react'
 import { Box, Divider, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import paths from '@/paths/path'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import HorizontalCard from '@/components/molecules/horizontalcard'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import paths from '../../paths/path'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
+import HorizontalCard from './horizontalcard'
 
 const useStyles = makeStyles((theme) => ({
   lists: {

@@ -1,20 +1,18 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
-import TextStyle from '@/components/atoms/TextStyle'
-import { Box, Grid, IconButton, Modal, Button } from '@mui/material'
-import { makeStyles } from '@mui/styles'
-import CloseIcon from '@mui/icons-material/Close'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import CartTile from '@/components/molecules/carttile'
-import TopicTag from '@/components/molecules/TopicTag'
-import MiniCartTile from '@/components/molecules/minicarttile'
-import { BLOCKS, INLINES } from '@contentful/rich-text-types'
-import { components } from '@/const/components'
-import CustomLink from '@/components/atoms/CustomLink'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import imageoptimization from '@/const/imageoptimization'
-import constSnipcart from '@/const/snipcart'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { BLOCKS, INLINES } from '@contentful/rich-text-types'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Grid, IconButton, Modal, Button, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import ReactToPrint from 'react-to-print'
+import { components, imageoptimization, constSnipcart } from '../../../const'
 import useUserAccount from '../../../lib/hooks/useUserAccount'
+import TextStyle from '../../atoms/TextStyle'
+import CartTile from '../../molecules/carttile'
+import MiniCartTile from '../../molecules/minicarttile'
+import TopicTag from '../../molecules/TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   tocLink: {
@@ -181,18 +179,21 @@ const options = {
     },
     [BLOCKS.EMBEDDED_ASSET]: (node) =>
       node?.data?.target?.fields?.file?.contentType === 'application/pdf' ? (
-        <CustomLink
-          href={node?.data?.target?.fields?.file?.url}
-          target={
-            node?.data?.target?.fields?.file?.url
-              ?.toLowerCase()
-              .includes('https://www.ascd.org')
-              ? ''
-              : '_blank'
-          }
-        >
-          {node?.data?.target?.fields?.file?.fileName}
-        </CustomLink>
+        <Link href={node?.data?.target?.fields?.file?.url || ''}>
+          <a
+            target={
+              node?.data?.target?.fields?.file?.url
+                ?.toLowerCase()
+                .includes('https://www.ascd.org')
+                ? ''
+                : '_blank'
+            }
+          >
+            <Typography variant='medium-link'>
+              {node?.data?.target?.fields?.file?.fileName}
+            </Typography>
+          </a>
+        </Link>
       ) : (
         <img
           src={
@@ -224,16 +225,17 @@ const options = {
     },
     [INLINES.HYPERLINK]: (node, children) => {
       return (
-        <CustomLink
-          href={node.data.uri}
-          target={
-            node.data.uri?.toLowerCase().includes('https://www.ascd.org')
-              ? ''
-              : '_blank'
-          }
-        >
-          {children}
-        </CustomLink>
+        <Link href={node?.data?.uri || ''}>
+          <a
+            target={
+              node.data.uri?.toLowerCase().includes('https://www.ascd.org')
+                ? ''
+                : '_blank'
+            }
+          >
+            <Typography variant='medium-link'>{children}</Typography>
+          </a>
+        </Link>
       )
     },
   },

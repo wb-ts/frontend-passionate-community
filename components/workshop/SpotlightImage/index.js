@@ -1,1 +1,1 @@
-export default from './SpotlightImage'
+export { default } from './SpotlightImage'

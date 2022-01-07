@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import TextStyle from '../../atoms/TextStyle'
-import useProductInventory from '../../../lib/hooks/useProductInventory'
 import Skeleton from '@mui/material/Skeleton'
+import PropTypes from 'prop-types'
+import useProductInventory from '../../../lib/hooks/useProductInventory'
+import TextStyle from '../../atoms/TextStyle'
 /**
  * @typedef {string} DisplayVariants
  **/

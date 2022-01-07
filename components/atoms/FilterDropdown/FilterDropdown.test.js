@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-
-import FilterDropdown from '@/components/atoms/FilterDropdown'
+import FilterDropdown from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 const items = [
   { value: 'item 1', label: 'item 1' },

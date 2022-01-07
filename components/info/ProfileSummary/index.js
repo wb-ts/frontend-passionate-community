@@ -1,1 +1,1 @@
-export default from './ProfileSummary'
+export { default } from './ProfileSummary'

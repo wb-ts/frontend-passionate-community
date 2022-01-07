@@ -1,9 +1,9 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-import { Box, Grid, Typography } from '@mui/material'
-import NextImageWrapper from '../../images/NextImageWrapper'
 import { useRouter } from 'next/router'
+import { Box, Grid, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
+import NextImageWrapper from '../../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({
   root: {

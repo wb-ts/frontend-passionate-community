@@ -1,8 +1,8 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-import CtaButton from '@/components/atoms/CtaButton'
 import { Box, Container } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
+import { makeStyles } from '@mui/styles'
+import CtaButton from '../atoms/CtaButton'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   header: {

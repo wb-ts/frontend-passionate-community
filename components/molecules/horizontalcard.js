@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import {
   Box,
   Card,
@@ -8,11 +9,10 @@ import {
   Avatar,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import Image from 'next/image'
-import imageoptimization from '@/const/imageoptimization'
+import { imageoptimization } from '../../const'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {

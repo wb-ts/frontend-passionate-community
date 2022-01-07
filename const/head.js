@@ -1,8 +1,8 @@
-import NextHead from 'next/head'
 import React from 'react'
-import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
-import imageoptimization from '@/const/imageoptimization'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
+import { imageoptimization } from '.'
 
 const defaultOGImage = '/images/ASCDImageFiller.png'
 
@@ -10,7 +10,7 @@ const defaultOGImage = '/images/ASCDImageFiller.png'
  *
  * @todo Move this to components directory
  */
-export const Head = ({ seo }) => {
+export const SEOHead = ({ seo }) => {
   const CANONICAL_DOMAIN = 'https://www.ascd.org'
   const title = seo?.fields?.title
     ? seo.fields.id == 'home'
@@ -35,7 +35,7 @@ export const Head = ({ seo }) => {
         : seo?.fields?.summary
       : ''
   return (
-    <NextHead>
+    <Head>
       <meta charSet='UTF-8' />
       <title>{title}</title>
       <link rel='canonical' href={`${CANONICAL_DOMAIN}${useRouter().asPath}`} />
@@ -112,7 +112,7 @@ export const Head = ({ seo }) => {
             : defaultOGImage
         }
       />
-    </NextHead>
+    </Head>
   )
 }
-export default Head
+export default SEOHead

@@ -1,4 +1,5 @@
 import React from 'react'
+import CloseIcon from '@mui/icons-material/Close'
 import {
   Box,
   Divider,
@@ -7,12 +8,11 @@ import {
   List,
   Typography,
 } from '@mui/material'
-import { makeStyles } from '@mui/styles';
-import CloseIcon from '@mui/icons-material/Close'
-import useSWR, { mutate } from 'swr'
+import { makeStyles } from '@mui/styles'
 import axios from 'axios'
-import DashboardNote from '../molecules/dashboardnote'
+import useSWR, { mutate } from 'swr'
 import NoAnnotations from '../atoms/NoAnnotations'
+import DashboardNote from '../molecules/dashboardnote'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -76,7 +76,8 @@ export default function DashboardAnnotations({ userId, open, toggleOpen }) {
           <IconButton
             aria-label='Close notes and annotations dashboard button'
             className={classes.closeModalButton}
-            size="large">
+            size='large'
+          >
             <CloseIcon size='small' onClick={() => toggleOpen(false)} />
           </IconButton>
           <Typography variant='h5'>Notes & Highlights</Typography>
@@ -99,5 +100,5 @@ export default function DashboardAnnotations({ userId, open, toggleOpen }) {
         </List>
       </div>
     </Drawer>
-  );
+  )
 }

@@ -1,9 +1,9 @@
 import React from 'react'
-import CustomLink from '@/components/atoms/CustomLink'
-import { makeStyles } from '@mui/styles'
-import { Button, Popover, Box, Typography, IconButton } from '@mui/material'
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
+import { Button, Popover, Box, Typography, IconButton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   navMenuItem: {
@@ -409,11 +409,9 @@ export default function NavMenuItem({
             <ul>
               {items.map((item, key) => (
                 <li key={`${item.label}-${key}`}>
-                  <CustomLink
-                    href={item.href}
-                    label={item.label}
-                    target={item.target}
-                  />
+                  <Link href={item.href}>
+                    <a target={item.target}>{item.label}</a>
+                  </Link>
                   <KeyboardBackspaceIcon
                     className={classes.forwardArrowNoMobile}
                   />
@@ -426,11 +424,9 @@ export default function NavMenuItem({
               <ul>
                 {rightLinks.map((item, key) => (
                   <li key={`${item.label}-${key}`}>
-                    <CustomLink
-                      href={item.href}
-                      label={item.label}
-                      target={item.target}
-                    />
+                    <Link href={item.href}>
+                      <a target={item.target}>{item.label}</a>
+                    </Link>
                   </li>
                 ))}
               </ul>

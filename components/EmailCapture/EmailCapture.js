@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Box, Container, TextField, Grid, Button } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
+import { Box, Container, TextField, Grid, Button } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TextStyle from '../../components/atoms/TextStyle'
 import ReactMarkdown from 'react-markdown'
+import TextStyle from '../../components/atoms/TextStyle'
 import { validateEmail } from '../../lib/utils'
 
 const useStyles = makeStyles((theme) => ({

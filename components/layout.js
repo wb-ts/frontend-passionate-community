@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from './organisms/header'
-import Footer from './organisms/footer'
 import { makeStyles } from '@mui/styles'
+import Footer from './organisms/footer'
+import Header from './organisms/header'
 
 const useStyles = makeStyles((theme) => ({
   root: {

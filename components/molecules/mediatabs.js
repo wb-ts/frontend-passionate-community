@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, Container, Divider, Tab, Tabs } from '@mui/material'
-import paths from '@/paths/path'
 import { useRouter } from 'next/router'
-import { makeStyles } from '@mui/styles';
+import { Box, Container, Divider, Tab, Tabs } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   tab: {

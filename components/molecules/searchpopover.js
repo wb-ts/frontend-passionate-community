@@ -1,12 +1,12 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-import { Popover, Box, Typography, InputBase, IconButton } from '@mui/material'
-import TopicTag from '@/components/molecules/TopicTag'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
-import { useRouter } from 'next/router'
-import paths from '@/paths/path'
-import Link from 'next/link'
+import { Popover, Box, Typography, InputBase, IconButton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import paths from '../../paths/path'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   searchPopover: {
@@ -264,7 +264,9 @@ export default function SearchPopover({
           </IconButton>
         </Box>
         <Box className={classes.searchFaq}>
-          <Link href='/faq'>Search FAQ</Link>
+          <Link href='/faq'>
+            <a>Search FAQ</a>
+          </Link>
         </Box>
         <Box className={classes.searchPopoverTopics}>
           <Box className={classes.searchPopoverTopicsBox}>

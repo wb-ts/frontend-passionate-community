@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
-import { useTheme } from '@mui/material/styles'
 import { Grid } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import PropTypes from 'prop-types'
 
 /**
  * Basic two column layout. Centers content on left. Becomes a single column in mobile.

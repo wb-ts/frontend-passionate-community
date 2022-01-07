@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
-import { render, fireEvent, screen } from 'test-utils'
-import TopicTag from './TopicTag'
+import TopicTag from '.'
+import { render, fireEvent, screen } from '../../../__test-utils__/test-utils'
 
 describe('TopicTag component:', () => {
   test('TopicTag variant=special rendered successfully', () => {

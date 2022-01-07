@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
-import { WorkshopSearch } from './variants'
+import { withWorkshopSearch } from './variants'
+import { algoliaAppId, algoliaSearchApiKey } from '@/lib/algolia'
+import algoliasearch from 'algoliasearch'
 
 /**
  *
@@ -8,11 +10,13 @@ import { WorkshopSearch } from './variants'
  * @returns {Component}
  */
 
+const searchClient = algoliasearch(algoliaAppId, algoliaSearchApiKey)
+
 const ProductSearch = ({ variant, ...restProps }) => {
   const getVariant = () => {
     switch (variant) {
       case 'workshop':
-        return WorkshopSearch()
+        return withWorkshopSearch(searchClient)
     }
   }
 

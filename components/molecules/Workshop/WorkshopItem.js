@@ -8,11 +8,11 @@ import {
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
-import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/TextStyle'
-import CtaButton from '@/components/atoms/CtaButton'
+import CtaButton from '../../atoms/CtaButton'
+import TextStyle from '../../atoms/TextStyle'
 import InventorySummary from '../../info/InventorySummary'
-import SpotlightImage from '@/components/workshop/SpotlightImage'
+import SpotlightImage from '../../workshop/SpotlightImage'
+import TopicTag from '../TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {

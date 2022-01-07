@@ -8,9 +8,9 @@ import {
   CardMedia,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import paths from '@/paths/path'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
+import paths from '../../paths/path'
 import TextStyle from '../atoms/TextStyle'
+import { SnipcartButton } from '../Snipcart'
 
 const useStyles = makeStyles((theme) => ({
   tile: {

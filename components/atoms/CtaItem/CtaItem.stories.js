@@ -1,5 +1,5 @@
 import React from 'react'
-import CtaItem from '@/components/atoms/CtaItem'
+import CtaItem from '.'
 
 export default {
   component: CtaItem,

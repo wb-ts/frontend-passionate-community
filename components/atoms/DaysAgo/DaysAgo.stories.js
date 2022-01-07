@@ -1,5 +1,5 @@
 import React from 'react'
-import DaysAgo from '@/components/atoms/DaysAgo'
+import DaysAgo from '.'
 
 export default {
   component: DaysAgo,

@@ -2,11 +2,11 @@ import React from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import ReactPlayer from 'react-player/wistia'
-import DaysAgo from '@/components/atoms/DaysAgo'
-// import ViewCount from '@/components/molecules/viewcount'
-import TopicTag from '@/components/molecules/TopicTag'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
+import DaysAgo from '../atoms/DaysAgo'
+// import ViewCount from './viewcount'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {

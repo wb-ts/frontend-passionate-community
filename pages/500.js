@@ -1,8 +1,8 @@
-import Layout from '@/components/layout'
+import React from 'react'
 import Head from 'next/head'
 import { Box, Container } from '@mui/material'
-import React from 'react'
-import TwoColumnCTA from '@/components/molecules/twocolumncta'
+import Layout from '../components/layout'
+import TwoColumnCTA from '../components/molecules/twocolumncta'
 
 export default function NotFound() {
   return (

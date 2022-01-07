@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import BorderColorIcon from '@mui/icons-material/BorderColor'
+import CloseIcon from '@mui/icons-material/Close'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
 import {
   Badge,
   Box,
@@ -9,15 +12,12 @@ import {
   Typography,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
-import BorderColorIcon from '@mui/icons-material/BorderColor'
-import CloseIcon from '@mui/icons-material/Close'
-import clsx from 'clsx'
-import Annotation from '@/components/molecules/annotation'
-import useSWR, { mutate } from 'swr'
 import axios from 'axios'
-import TextStyle from '@/components/atoms/TextStyle'
-import NoAnnotations from '@/components/atoms/NoAnnotations'
+import clsx from 'clsx'
+import useSWR, { mutate } from 'swr'
+import NoAnnotations from '../atoms/NoAnnotations'
+import TextStyle from '../atoms/TextStyle'
+import Annotation from '../molecules/annotation'
 
 const useStyles = makeStyles((theme) => ({
   sidelist: {

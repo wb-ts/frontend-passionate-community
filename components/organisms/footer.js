@@ -1,3 +1,8 @@
+import React, { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import CloseIcon from '@mui/icons-material/Close'
+import SendIcon from '@mui/icons-material/Send'
 import {
   Box,
   Container,
@@ -12,18 +17,12 @@ import {
   IconButton,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import FooterMenu from '@/components/molecules/footermenu'
-import SocialButtons from '@/components/molecules/socialbuttons'
-import CustomLink from '@/components/atoms/CustomLink'
-import NLink from 'next/link'
-import SendIcon from '@mui/icons-material/Send'
-import Image from 'next/image'
-import TextStyle from '@/components/atoms/TextStyle'
-import React, { useState } from 'react'
-import CloseIcon from '@mui/icons-material/Close'
-import hubspotFormIds from '@/const/hubspot-form-ids'
-import HubSpotForm from '@/components/molecules/hubspotform'
-import CtaButton from '@/components/atoms/CtaButton'
+import { hubspotFormIds } from '../../const'
+import CtaButton from '../atoms/CtaButton'
+import TextStyle from '../atoms/TextStyle'
+import FooterMenu from '../molecules/footermenu'
+import HubSpotForm from '../molecules/hubspotform'
+import SocialButtons from '../molecules/socialbuttons'
 
 const useStyles = makeStyles((theme) => ({
   greyBg: {
@@ -366,17 +365,19 @@ export default function Footer({ grey }) {
         <Grid container className={classes.container}>
           <Grid className={classes.footerFirstColumn}>
             <Box mb={3} className={classes.logo}>
-              <NLink href='/'>
-                <Image
-                  src={'/images/fulllogo_white.svg'}
-                  alt='ascd logo'
-                  width={109}
-                  height={29}
-                  className={classes.nextImage}
-                  placeholder='blur'
-                  blurDataURL='/images/blurrImg.png'
-                />
-              </NLink>
+              <Link href='/'>
+                <a>
+                  <Image
+                    src={'/images/fulllogo_white.svg'}
+                    alt='ascd logo'
+                    width={109}
+                    height={29}
+                    className={classes.nextImage}
+                    placeholder='blur'
+                    blurDataURL='/images/blurrImg.png'
+                  />
+                </a>
+              </Link>
               <Box
                 style={{
                   verticalAlign: 'top',
@@ -452,11 +453,13 @@ export default function Footer({ grey }) {
                 </Box> */}
                 <TextStyle variant='h5'>Questions?</TextStyle>
                 <Box mt={0.75}>
-                  <CustomLink
-                    href='/faq'
-                    label='Check out our FAQ'
-                    size='small'
-                  />
+                  <Link href='/faq'>
+                    <a>
+                      <Typography variant='small-link'>
+                        {'Check out our FAQ'}
+                      </Typography>
+                    </a>
+                  </Link>
                 </Box>
               </Box>
             </Grid>
@@ -483,17 +486,23 @@ export default function Footer({ grey }) {
               >
                 <Box mr={3} className={classes.subLink}>
                   <TextStyle variant='caption'>
-                    <NLink href='/privacy-policy'> Privacy Policy</NLink>
+                    <Link href='/privacy-policy'>
+                      <a>Privacy Policy</a>
+                    </Link>
                   </TextStyle>
                 </Box>
                 <Box mr={3} className={classes.subLink}>
                   <TextStyle variant='caption'>
-                    <NLink href='/terms-of-use'>Terms of Use</NLink>
+                    <Link href='/terms-of-use'>
+                      <a>Terms of Use</a>
+                    </Link>
                   </TextStyle>
                 </Box>
                 <Box mr={3} className={classes.subLink}>
                   <TextStyle variant='caption'>
-                    <NLink href='/governance'>Governance</NLink>
+                    <Link href='/governance'>
+                      <a>Governance</a>
+                    </Link>
                   </TextStyle>
                 </Box>
               </Box>
@@ -522,8 +531,9 @@ export default function Footer({ grey }) {
                 aria-label='Close modal button'
                 className={classes.closeModalButton}
                 size='large'
+                onClick={() => setOpenModal(false)}
               >
-                <CloseIcon size='small' onClick={() => setOpenModal(false)} />
+                <CloseIcon size='small' />
               </IconButton>
             </Box>
 

@@ -3,9 +3,9 @@ import { Divider, Grid, Box, ListItem } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import paths from '@/paths/path'
-import HorizontalCard from '@/components/molecules/horizontalcard'
-import TwoColumnHeader from '@/components/atoms/TwoColumnHeader'
+import paths from '../../paths/path'
+import TwoColumnHeader from '../atoms/TwoColumnHeader'
+import HorizontalCard from '../molecules/horizontalcard'
 
 const useStyles = makeStyles((theme) => ({
   gridLeft: {

@@ -1,6 +1,6 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
 import { makeStyles } from '@mui/styles'
+import { PropTypes } from 'prop-types'
 import NextImageWrapper from '../../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({

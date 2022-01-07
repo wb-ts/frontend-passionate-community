@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-
-import { Box, Button, List, ListItem, Select, MenuItem } from '@mui/material'
-import { MenuBook as MenuBookIcon } from '@mui/icons-material'
-import { makeStyles } from '@mui/styles'
-import TextStyle from '@/components/atoms/TextStyle'
 import { useReactiveVar } from '@apollo/client'
+import { MenuBook as MenuBookIcon } from '@mui/icons-material'
+import { Box, Button, List, ListItem, Select, MenuItem } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import { PropTypes } from 'prop-types'
 import {
   hasMemberBookPriceVar,
   hasPaidMembershipVar,
 } from '../../../lib/apollo-client/cache'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
-import { addItemsToCart } from '@/components/Snipcart/SnipcartManager'
-import ShareButtons from '@/components/molecules/sharebuttons'
-import paths from '@/paths/path'
-import { PropTypes } from 'prop-types'
 import { convertTimeToLocaleTimeWithDST, pathName } from '../../../lib/utils'
+import paths from '../../../paths/path'
+import TextStyle from '../../atoms/TextStyle'
+import ShareButtons from '../../molecules/sharebuttons'
+import { SnipcartButton } from '../../Snipcart'
+import { addItemsToCart } from '../../Snipcart/SnipcartManager'
 
 const InventorySummary = dynamic(() => import('../../info/InventorySummary'), {
   ssr: false,

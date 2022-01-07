@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import { Box, IconButton } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import TextStyle from '@/components/atoms/TextStyle'
+import TextStyle from '../../atoms/TextStyle'
 import NextImageWrapper from '../../images/NextImageWrapper'
 
 const useStyles = makeStyles((theme) => ({

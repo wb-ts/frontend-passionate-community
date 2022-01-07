@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react'
-
-import Cookies from 'universal-cookie'
-const cookies = new Cookies()
-import { hostnameForCookie, pianoClient } from '../../lib/utils'
 import { useReactiveVar } from '@apollo/client'
+import Cookies from 'universal-cookie'
 import { userAccountIdVar } from '../../lib/apollo-client/cache'
+import { hostnameForCookie, pianoClient } from '../../lib/utils'
+
+const cookies = new Cookies()
 
 /**
  * Piano Manager is used to manage api interactions with the piano client sdk.

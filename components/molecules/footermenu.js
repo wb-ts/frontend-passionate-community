@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
+import { makeStyles } from '@mui/styles'
+import TextStyle from '../../components/atoms/TextStyle'
 
 const useStyles = makeStyles({
   list: {
@@ -26,8 +26,8 @@ const _renderMenuItems = (items) => {
   return items.map(({ label, href }) => (
     <li key={label} className={classes.link}>
       <TextStyle variant='body3'>
-        <Link href={href} passHref>
-          {label}
+        <Link href={href}>
+          <a>{label}</a>
         </Link>
       </TextStyle>
     </li>

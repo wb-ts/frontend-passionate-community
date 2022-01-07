@@ -1,32 +1,30 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@mui/styles'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { client } from 'lib/contentful'
-import SEOHead from '@/const/head'
-import paths from '@/paths/path'
-import NextImageWrapper from '../../components/images/NextImageWrapper'
-import TextStyle from '@/components/atoms/TextStyle'
-import TOCNav from '@/components/atoms/TOCNav'
-import Layout from '@/components/layout'
-import HeroArticle from '@/components/molecules/heroarticle'
-import ArticleEndnote from '@/components/molecules/articleendnote'
-import ContentList from '@/components/molecules/contentlist'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { Box, Container, Grid, Typography, Skeleton } from '@mui/material'
-import Annotator from '@/components/organisms/annotator'
-import TopicTag from '@/components/molecules/TopicTag'
-import TextCTA from '@/components/molecules/textcta'
-import ArticleAuthors from '@/components/organisms/articleaauthors'
-import { components } from '@/const/components'
-import CustomLink from '@/components/atoms/CustomLink'
-import imageoptimization from '@/const/imageoptimization'
+import { makeStyles } from '@mui/styles'
+import TextStyle from '../../components/atoms/TextStyle'
+import TOCNav from '../../components/atoms/TOCNav'
+import NextImageWrapper from '../../components/images/NextImageWrapper'
+import Layout from '../../components/layout'
+import ArticleEndnote from '../../components/molecules/articleendnote'
+import ContentList from '../../components/molecules/contentlist'
+import HeroArticle from '../../components/molecules/heroarticle'
+import TextCTA from '../../components/molecules/textcta'
+import TopicTag from '../../components/molecules/TopicTag'
+import Annotator from '../../components/organisms/annotator'
+import ArticleAuthors from '../../components/organisms/articleaauthors'
+import { components, SEOHead, imageoptimization } from '../../const'
+import { client } from '../../lib/contentful'
 import {
   contentfulThumbnailAPIToImageUrl,
   contentfulThumbnailAPIToImageWidth,
   contentfulThumbnailAPIToImageHeight,
 } from '../../lib/data-transformations'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   topics: {
@@ -79,18 +77,21 @@ export default function Blog({ blog, relatedBlogs }) {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: (node) =>
         node?.data?.target?.fields?.file?.contentType === 'application/pdf' ? (
-          <CustomLink
-            href={node?.data?.target?.fields?.file?.url}
-            target={
-              node?.data?.target?.fields?.file?.url
-                ?.toLowerCase()
-                .includes('https://www.ascd.org')
-                ? ''
-                : '_blank'
-            }
-          >
-            {node?.data?.target?.fields?.file?.fileName}
-          </CustomLink>
+          <Link href={node?.data?.target?.fields?.file?.url || ''}>
+            <a
+              target={
+                node?.data?.target?.fields?.file?.url
+                  ?.toLowerCase()
+                  .includes('https://www.ascd.org')
+                  ? ''
+                  : '_blank'
+              }
+            >
+              <Typography variant='medium-link'>
+                {node?.data?.target?.fields?.file?.fileName}
+              </Typography>
+            </a>
+          </Link>
         ) : (
           <img
             src={
@@ -139,16 +140,17 @@ export default function Blog({ blog, relatedBlogs }) {
       },
       [INLINES.HYPERLINK]: (node, children) => {
         return (
-          <CustomLink
-            href={node.data.uri}
-            label={children}
-            size='large'
-            target={
-              node.data.uri?.toLowerCase().startsWith('https://www.ascd.org')
-                ? ''
-                : '_blank'
-            }
-          />
+          <Link href={node?.data?.uri || ''}>
+            <a
+              target={
+                node.data.uri?.toLowerCase().startsWith('https://www.ascd.org')
+                  ? ''
+                  : '_blank'
+              }
+            >
+              <Typography variant='large-link'>{children}</Typography>
+            </a>
+          </Link>
         )
       },
     },

@@ -1,10 +1,10 @@
-import { Box, Divider } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
-import HorizontalCard from '@/components/molecules/horizontalcard'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import paths from '@/paths/path'
 import React, { Fragment } from 'react'
-import options from '@/const/options'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { Box, Divider } from '@mui/material'
+import { options } from '../../const'
+import paths from '../../paths/path'
+import TextStyle from '../atoms/TextStyle'
+import HorizontalCard from '../molecules/horizontalcard'
 
 export default function ArticleAuthors({ authors, title }) {
   return (

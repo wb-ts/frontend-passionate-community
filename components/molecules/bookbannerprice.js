@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Box, FormControl, MenuItem, Select } from '@mui/material'
+import Link from 'next/link'
+import { Box, FormControl, MenuItem, Select, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import CustomLink from '@/components/atoms/CustomLink'
-import paths from '@/paths/path'
-import TextStyle from '@/components/atoms/TextStyle'
+import TextStyle from '../../components/atoms/TextStyle'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -129,21 +129,25 @@ export default function BookBannerPrice({
               <Box mr={1}>
                 <TextStyle variant='subtitle2'> member price </TextStyle>
               </Box>
-              <CustomLink
-                href={paths.subscribe}
-                color='#005E47'
-                label='join now'
-              />
+              <Link href={paths.subscribe}>
+                <a>
+                  <Typography variant='medium-link' color='#005E47'>
+                    {'join now'}
+                  </Typography>
+                </a>
+              </Link>
             </Box>
           </Box>
         ) : (
           <TextStyle variant='subtitle2'>
             $ {version?.fields?.priceMember} member price{' '}
-            <CustomLink
-              href={paths.subscribe}
-              color='#005E47'
-              label='join now'
-            />
+            <Link href={paths.subscribe}>
+              <a>
+                <Typography variant='medium-link' color='#005E47'>
+                  {'join now'}
+                </Typography>
+              </a>
+            </Link>
           </TextStyle>
         )
       ) : collection ? (

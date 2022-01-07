@@ -1,7 +1,7 @@
+import React, { useRef, useState } from 'react'
 import { Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TextStyle from '@/components/atoms/TextStyle'
-import React, { useEffect, useRef, useState } from 'react'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

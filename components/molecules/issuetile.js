@@ -7,8 +7,8 @@ import {
   CardMedia,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import paths from '@/paths/path'
-import TextStyle from '@/components/atoms/TextStyle'
+import paths from '../../paths/path'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   tile: {

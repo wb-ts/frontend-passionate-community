@@ -1,11 +1,11 @@
 import React from 'react'
-import Layout from '@/components/layout'
 import Head from 'next/head'
-import { client } from '@/lib/contentful'
 import { Box, Container } from '@mui/material'
-import TwoColumnCTA from '@/components/molecules/twocolumncta'
-import GridSection from '@/components/molecules/gridsection'
-import paths from '@/paths/path'
+import Layout from '../components/layout'
+import GridSection from '../components/molecules/gridsection'
+import TwoColumnCTA from '../components/molecules/twocolumncta'
+import { client } from '../lib/contentful'
+import paths from '../paths/path'
 
 export default function NotFound({ featuredArticles }) {
   return (

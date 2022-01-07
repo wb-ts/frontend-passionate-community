@@ -1,36 +1,34 @@
 import React, { useState, useContext } from 'react'
-import { makeStyles } from '@mui/styles'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { client } from 'lib/contentful'
-import SEOHead from '@/const/head'
-import paths from '@/paths/path'
-import NextImageWrapper from '../../../components/images/NextImageWrapper'
-import TextStyle from '@/components/atoms/TextStyle'
-import TOCNav from '@/components/atoms/TOCNav'
-import Layout from '@/components/layout'
-import HeroArticle from '@/components/molecules/heroarticle'
-import ArticleEndnote from '@/components/molecules/articleendnote'
-import ArticleIssue from '@/components/molecules/articleissue'
-import ContentList from '@/components/molecules/contentlist'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { Box, Container, Grid, Typography, Skeleton } from '@mui/material'
-import Annotator from '@/components/organisms/annotator'
-import TopicTag from '@/components/molecules/TopicTag'
-import TextCTA from '@/components/molecules/textcta'
-import ArticleAuthors from '@/components/organisms/articleaauthors'
-import { components } from '@/const/components'
-import PdfIframe from '@/components/molecules/pdfIframe'
-import PdfTitleBar from '@/components/molecules/pdftitlebar'
-import CustomLink from '@/components/atoms/CustomLink'
-import imageoptimization from '@/const/imageoptimization'
-import useUserAccount from '../../../lib/hooks/useUserAccount'
+import { makeStyles } from '@mui/styles'
+import TextStyle from '../../../components/atoms/TextStyle'
+import TOCNav from '../../../components/atoms/TOCNav'
+import NextImageWrapper from '../../../components/images/NextImageWrapper'
+import Layout from '../../../components/layout'
+import ArticleEndnote from '../../../components/molecules/articleendnote'
+import ArticleIssue from '../../../components/molecules/articleissue'
+import ContentList from '../../../components/molecules/contentlist'
+import HeroArticle from '../../../components/molecules/heroarticle'
+import PdfIframe from '../../../components/molecules/pdfIframe'
+import PdfTitleBar from '../../../components/molecules/pdftitlebar'
+import TextCTA from '../../../components/molecules/textcta'
+import TopicTag from '../../../components/molecules/TopicTag'
+import Annotator from '../../../components/organisms/annotator'
+import ArticleAuthors from '../../../components/organisms/articleaauthors'
+import { components, imageoptimization, SEOHead } from '../../../const'
+import { client } from '../../../lib/contentful'
 import {
   contentfulThumbnailAPIToImageUrl,
   contentfulThumbnailAPIToImageWidth,
   contentfulThumbnailAPIToImageHeight,
 } from '../../../lib/data-transformations'
+import useUserAccount from '../../../lib/hooks/useUserAccount'
+import paths from '../../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -138,18 +136,21 @@ export default function Article({ article, issue, relatedArticles }) {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: (node) =>
         node?.data?.target?.fields?.file?.contentType === 'application/pdf' ? (
-          <CustomLink
-            href={node?.data?.target?.fields?.file?.url}
-            target={
-              node?.data?.target?.fields?.file?.url
-                ?.toLowerCase()
-                .includes('https://www.ascd.org')
-                ? ''
-                : '_blank'
-            }
-          >
-            {node?.data?.target?.fields?.file?.fileName}
-          </CustomLink>
+          <Link href={node?.data?.target?.fields?.file?.url || ''}>
+            <a
+              target={
+                node?.data?.target?.fields?.file?.url
+                  ?.toLowerCase()
+                  .includes('https://www.ascd.org')
+                  ? ''
+                  : '_blank'
+              }
+            >
+              <Typography variant='medium-link'>
+                {node?.data?.target?.fields?.file?.fileName}
+              </Typography>
+            </a>
+          </Link>
         ) : (
           <Box>
             <img
@@ -202,25 +203,26 @@ export default function Article({ article, issue, relatedArticles }) {
         if (node.data.uri.includes('#')) {
           const domId = node.data.uri.split('#')[1]
           return (
-            <CustomLink
-              clickAction={() => navigateTo(domId)}
-              label={children}
-              size='large'
-            />
+            <a onClick={() => navigateTo(domId)}>
+              <Typography variant='large-link'>{children}</Typography>
+            </a>
           )
         } else {
           return (
-            <CustomLink
-              href={node.data.uri}
-              label={children}
-              size='large'
-              target={
-                node.data.uri?.toLowerCase().includes('https://www.ascd.org') ||
-                !node.data.uri?.toLowerCase().includes('https://')
-                  ? ''
-                  : '_blank'
-              }
-            />
+            <Link href={node?.data?.uri || ''}>
+              <a
+                target={
+                  node.data.uri
+                    ?.toLowerCase()
+                    .includes('https://www.ascd.org') ||
+                  !node.data.uri?.toLowerCase().includes('https://')
+                    ? ''
+                    : '_blank'
+                }
+              >
+                <Typography variant='large-link'>{children}</Typography>
+              </a>
+            </Link>
           )
         }
       },

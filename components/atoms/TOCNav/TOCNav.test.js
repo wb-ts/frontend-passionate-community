@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from 'test-utils'
-
-import TOCNav from '@/components/atoms/TOCNav'
+import TOCNav from '.'
+import { render, screen } from '../../../__test-utils__/test-utils'
 
 const toc_items = [
   { id: 'item_1', label: 'item 1' },

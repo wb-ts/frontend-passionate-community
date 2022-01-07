@@ -1,5 +1,5 @@
 import React from 'react'
-import CtaButton from '@/components/atoms/CtaButton'
+import CtaButton from '.'
 
 export default {
   component: CtaButton,

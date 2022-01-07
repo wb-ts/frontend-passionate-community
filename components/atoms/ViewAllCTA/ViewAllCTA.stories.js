@@ -1,5 +1,5 @@
 import React from 'react'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
+import ViewAllCTA from '.'
 
 export default {
   component: ViewAllCTA,

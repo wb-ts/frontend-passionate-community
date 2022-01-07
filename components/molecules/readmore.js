@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Box, Button } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import TextStyle from '@/components/atoms/TextStyle'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import options from '@/const/options'
+import { options } from '../../const'
+import TextStyle from '../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   root: {

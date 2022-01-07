@@ -1,14 +1,14 @@
 import React from 'react'
 import { Box, Container } from '@mui/material'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
-import IssueBannerTitle from '@/components/molecules/issuebannertitle'
-import HorizontalScroll from '@/components/organisms/horizontalscroll'
-import paths from '@/paths/path'
-import TextCTA from '@/components/molecules/textcta'
-import AccordionList from '@/components/organisms/accordionlist'
 import _ from 'lodash'
+import Layout from '../../components/layout'
+import IssueBannerTitle from '../../components/molecules/issuebannertitle'
+import TextCTA from '../../components/molecules/textcta'
+import AccordionList from '../../components/organisms/accordionlist'
+import HorizontalScroll from '../../components/organisms/horizontalscroll'
+import { SEOHead } from '../../const'
+import { client } from '../../lib/contentful'
+import paths from '../../paths/path'
 
 export default function WriteEL({ topics, publications, SEO }) {
   const dateFormat = require('dateformat')

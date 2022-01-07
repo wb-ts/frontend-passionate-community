@@ -1,8 +1,8 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
 import { Chip, Typography, Box } from '@mui/material'
-import TextStyle from '@/components/atoms/TextStyle'
+import { makeStyles } from '@mui/styles'
 import { PropTypes } from 'prop-types'
+import TextStyle from '../../atoms/TextStyle'
 
 const useStyles = makeStyles((theme) => ({
   topic: {

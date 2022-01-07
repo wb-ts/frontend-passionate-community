@@ -1,6 +1,4 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-import ReactMarkdown from 'react-markdown'
 import {
   Grid,
   CardMedia,
@@ -10,11 +8,12 @@ import {
   CardActionArea,
   Avatar,
 } from '@mui/material'
-
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import paths from '@/paths/path'
-import imageoptimization from '@/const/imageoptimization'
+import { makeStyles } from '@mui/styles'
+import ReactMarkdown from 'react-markdown'
+import { imageoptimization } from '../../const'
+import paths from '../../paths/path'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
 
 const useStyles = makeStyles((theme) => ({
   btn: {

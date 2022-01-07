@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { DiscFull } from '@mui/icons-material'
+import CloseIcon from '@mui/icons-material/Close'
 import {
   Box,
   Modal,
@@ -8,9 +10,7 @@ import {
   ListItem,
   ListItemIcon,
 } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
-import { makeStyles } from '@mui/styles';
-import { DiscFull } from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -84,14 +84,13 @@ export default function ModalMessageBox({
           <IconButton
             aria-label='Close modal button'
             className={classes.closeModalButton}
-            size="large">
-            <CloseIcon
-              size='small'
-              onClick={() => {
-                openMessageBox = false
-                onMessageBoxClose(openMessageBox)
-              }}
-            />
+            size='large'
+            onClick={() => {
+              openMessageBox = false
+              onMessageBoxClose(openMessageBox)
+            }}
+          >
+            <CloseIcon size='small' />
           </IconButton>
         </Box>
         <Box display='flex'>
@@ -102,9 +101,9 @@ export default function ModalMessageBox({
             {message}
             {itemlist.length && (
               <List>
-                {itemlist.map((item) => {
+                {itemlist.map((item, key) => {
                   return (
-                    <ListItem className={classes.listItem}>
+                    <ListItem className={classes.listItem} key={key}>
                       <ListItemIcon className={classes.listItemIcon}>
                         •
                       </ListItemIcon>
@@ -118,5 +117,5 @@ export default function ModalMessageBox({
         </Box>
       </Box>
     </Modal>
-  );
+  )
 }

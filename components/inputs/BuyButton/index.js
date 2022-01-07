@@ -1,1 +1,1 @@
-export default from './BuyButton'
+export { default } from './BuyButton'

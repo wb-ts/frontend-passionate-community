@@ -1,1 +1,1 @@
-export default from './VirtualWorkshop'
+export { default } from './VirtualWorkshop'

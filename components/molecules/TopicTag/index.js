@@ -1,1 +1,1 @@
-export default from './TopicTag'
+export { default } from './TopicTag'

@@ -1,12 +1,12 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { Box, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import CtaButton from '@/components/atoms/CtaButton'
-import TextStyle from '@/components/atoms/TextStyle'
-import ViewAllCTA from '@/components/atoms/ViewAllCTA'
-import TopicTag from '@/components/molecules/TopicTag'
-import { useRouter } from 'next/router'
-import SnipcartButton from '@/components/Snipcart/SnipcartButton'
+import CtaButton from '../atoms/CtaButton'
+import TextStyle from '../atoms/TextStyle'
+import ViewAllCTA from '../atoms/ViewAllCTA'
+import { SnipcartButton } from '../Snipcart'
+import TopicTag from './TopicTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -138,7 +138,9 @@ export default function TwoColumnCta({
 }) {
   const classes = useStyles({ imagePos, variant, descriptionLineNumbers })
   const router = useRouter()
-  const charCount = (string) => { return string?.length > 0 ? string.length : 0 }
+  const charCount = (string) => {
+    return string?.length > 0 ? string.length : 0
+  }
   return (
     <Grid
       container
@@ -147,13 +149,14 @@ export default function TwoColumnCta({
     >
       <Grid item sm={6} xs={12} className={classes.content}>
         <Box
-          ml={variant == 'grey' 
-            ? (descriptionLineNumbers > 4 
-              ? [0, 1, 2] 
-              : [0, 3, 6]) 
-            : (descriptionLineNumbers > 4
+          ml={
+            variant == 'grey'
+              ? descriptionLineNumbers > 4
+                ? [0, 1, 2]
+                : [0, 3, 6]
+              : descriptionLineNumbers > 4
               ? [0, 1, 2]
-              : 0)
+              : 0
           }
           mr={[0, 1]}
           mt={[3, 0]}
@@ -193,10 +196,19 @@ export default function TwoColumnCta({
                 <TextStyle variant='subtitle2'>{`${date} - ${time}`}</TextStyle>
               </>
             ) : null}
-            <Box pt={1} className={descriptionLineNumbers < 5 ? classes.description : classes.longDescription}>
-              <TextStyle variant={variant === 'error' 
-                  ? 'h3' 
-                  : descriptionLineNumbers < 5 
+            <Box
+              pt={1}
+              className={
+                descriptionLineNumbers < 5
+                  ? classes.description
+                  : classes.longDescription
+              }
+            >
+              <TextStyle
+                variant={
+                  variant === 'error'
+                    ? 'h3'
+                    : descriptionLineNumbers < 5
                     ? 'subtitle2'
                     : 'subtitle3'
                 }

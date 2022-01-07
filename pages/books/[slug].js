@@ -1,25 +1,24 @@
 import React, { useEffect, useState, useContext } from 'react'
+import { useRouter } from 'next/router'
+import { useReactiveVar } from '@apollo/client'
 import { Box, Container, Divider, Skeleton } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { client } from '@/lib/contentful'
-import Layout from '@/components/layout'
-import SEOHead from '@/const/head'
-import HorizontalScroll from '@/components/organisms/horizontalscroll'
-import ReadMore from '@/components/molecules/readmore'
-import BookBanner from '@/components/organisms/bookbanner'
-import Topics from '@/components/molecules/Topics'
-import paths from '@/paths/path'
-import BookToc from '@/components/organisms/BookToc'
-import ChapterPreview from '@/components/organisms/ChapterPreview'
-import AlternateRows from '@/components/molecules/alternaterows'
-import ArticleAuthors from '@/components/organisms/articleaauthors'
-import useUserAccount from '../../lib/hooks/useUserAccount'
-import { useReactiveVar } from '@apollo/client'
-import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+import Layout from '../../components/layout'
+import AlternateRows from '../../components/molecules/alternaterows'
+import ReadMore from '../../components/molecules/readmore'
+import Topics from '../../components/molecules/Topics'
+import ArticleAuthors from '../../components/organisms/articleaauthors'
+import BookBanner from '../../components/organisms/bookbanner'
+import BookToc from '../../components/organisms/BookToc'
+import ChapterPreview from '../../components/organisms/ChapterPreview'
+import HorizontalScroll from '../../components/organisms/horizontalscroll'
+import { constSnipcart, SEOHead } from '../../const'
 import { hasAccessToBook } from '../../lib/access-validator'
-import { useRouter } from 'next/router'
-import { getCartButtonCaptionLabel } from '@/lib/utils'
-import constSnipcart from '@/const/snipcart'
+import { hasMemberBookPriceVar } from '../../lib/apollo-client/cache'
+import { client } from '../../lib/contentful'
+import useUserAccount from '../../lib/hooks/useUserAccount'
+import { getCartButtonCaptionLabel } from '../../lib/utils'
+import paths from '../../paths/path'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -95,27 +94,39 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
       const variant = url.searchParams.get('variant')
-      const defaultBookVersion = bookVersionWithProductNumber(book?.fields.bookVersions)
+      const defaultBookVersion = bookVersionWithProductNumber(
+        book?.fields.bookVersions
+      )
       if (!defaultBookVersion) {
         router.push('/404')
-      }
-      else {
+      } else {
         if (variant) {
-          const matchedBookVersion = book?.fields.bookVersions.find((version) => version.fields?.productNumber === variant) 
+          const matchedBookVersion = book?.fields.bookVersions.find(
+            (version) => version.fields?.productNumber === variant
+          )
           if (!matchedBookVersion) {
-            if (book?.fields?.slug && defaultBookVersion.fields?.productNumber) {
-              router.push(`/books/${book.fields.slug}?variant=${defaultBookVersion.fields.productNumber}`)
+            if (
+              book?.fields?.slug &&
+              defaultBookVersion.fields?.productNumber
+            ) {
+              router.push(
+                `/books/${book.fields.slug}?variant=${defaultBookVersion.fields.productNumber}`
+              )
             }
-          }
-          else {
+          } else {
             setProductNumber(variant)
             setBookVersion(matchedBookVersion)
           }
-        }
-        else {
+        } else {
           const chapter = url.searchParams.get('chapter')
-          if (!chapter && book?.fields?.slug && defaultBookVersion.fields?.productNumber) {
-            router.push(`/books/${book.fields.slug}?variant=${defaultBookVersion.fields.productNumber}`)
+          if (
+            !chapter &&
+            book?.fields?.slug &&
+            defaultBookVersion.fields?.productNumber
+          ) {
+            router.push(
+              `/books/${book.fields.slug}?variant=${defaultBookVersion.fields.productNumber}`
+            )
           }
         }
       }
@@ -124,9 +135,12 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
 
   const bookVersionWithProductNumber = (bookVersions) => {
     if (bookVersions && bookVersions.length > 0) {
-      return bookVersions.find((version) => version.fields?.productNumber !== undefined && version.fields?.productNumber.trim() !== '')
-    }
-    else {
+      return bookVersions.find(
+        (version) =>
+          version.fields?.productNumber !== undefined &&
+          version.fields?.productNumber.trim() !== ''
+      )
+    } else {
       return undefined
     }
   }
@@ -287,7 +301,12 @@ export default function Book({ book, relatedBooks, relatedCollections }) {
       </Container>
     </Layout>
   ) : (
-    <Skeleton animation='wave' variant="rectangular" width='100%' height='100px' />
+    <Skeleton
+      animation='wave'
+      variant='rectangular'
+      width='100%'
+      height='100px'
+    />
   )
 }
 

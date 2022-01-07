@@ -1,7 +1,8 @@
 import React from 'react'
+import Link from 'next/link'
+import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
-import TextStyle from '@/components/atoms/TextStyle'
-import CustomLink from '@/components/atoms/CustomLink'
+import TextStyle from '../../atoms/TextStyle'
 
 /**
  * The Chapter Link component will display the name of the chapter and
@@ -24,17 +25,20 @@ const ChapterLink = ({ chapter, hasMemberBookAccess, pathname }) => {
       <TextStyle variant='body1'>
         {(hasMemberBookAccess && chapter.fields?.slug) ||
         (chapter.fields?.freeChapter && chapter.fields?.slug) ? (
-          <CustomLink
-            scroll={false}
-            shallow={true}
-            size='large'
+          <Link
             href={{
               pathname: pathname,
               query: { chapter: chapter.fields.slug },
             }}
+            scroll={false}
+            shallow={true}
           >
-            <ChapterText />
-          </CustomLink>
+            <a>
+              <Typography variant='large-link' color='#005E47'>
+                <ChapterText />
+              </Typography>
+            </a>
+          </Link>
         ) : (
           <ChapterText />
         )}

@@ -1,16 +1,15 @@
 import React from 'react'
-import { useReactiveVar } from '@apollo/client'
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Container } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import _, { sortBy } from 'lodash'
 import { InstantSearch, Configure } from 'react-instantsearch-dom'
+import TextStyle from '../../../components/atoms/TextStyle'
+import Directory from '../../../components/molecules/Directory/Directory'
 import { CustomStateResults } from '../CustomStateResults'
 import { RefinementsTop } from '../layout'
 import { CustomDateRangePicker, CustomDropDownSelect } from '../plugins'
-import WorkshopListItem from '@/components/molecules/Workshop/WorkshopListItem'
-import { hasMemberBookPriceVar } from '@/lib/apollo-client/cache'
-
 /**
- * Rendering Workshop Search
+ * Rendering People Search
 
  */
 
@@ -34,16 +33,12 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
         alignItems='center'
       >
         <Box m={2}>
-          <Box>Topics</Box>
-          <CustomDropDownSelect attribute='topics' customWidth={200} />
+          <Box>Expertise</Box>
+          <CustomDropDownSelect attribute='expertise' customWidth={200} />
         </Box>
         <Box m={2}>
-          <Box>Date</Box>
-          <CustomDateRangePicker
-            attribute='workshopDateTimeStamp'
-            min={-2208948402} // 01/01/0
-            max={4102484440} // 01/01/2100
-          />
+          <Box>Profile Type</Box>
+          <CustomDropDownSelect attribute='profileType' customWidth={200} />
         </Box>
       </Box>
     )
@@ -59,7 +54,7 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
   return (
     <InstantSearch
       searchClient={searchClient}
-      indexName={process.env.NEXT_PUBLIC_ALGOLIA_WORKSHOP_INDEX_ID}
+      indexName={process.env.NEXT_PUBLIC_ALGOLIA_PEOPLE_INDEX_ID}
     >
       <main className='search-container'>
         <Configure hitsPerPage={hitsPerPage} />
@@ -70,19 +65,28 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
 }
 
 const RenderResults = ({ hits }) => {
-  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
+  const groupByLastName = _(hits)
+    .filter((author) => author.lastName)
+    .groupBy((o) => {
+      const ln = o.lastName?.trim()
+      return ln[0].toUpperCase()
+    })
+    .map((contacts, letter) => ({ letter, contacts }))
+    .value()
+
   return (
     <>
-      <Grid container spacing={3}>
-        {hits.map((hit) => (
-          <Grid item xs={12} md={4} key={hit.objectID}>
-            <WorkshopListItem
-              useMemberBookPrice={hasMemberBookPrice}
-              cardData={hit}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {groupByLastName.map(
+        (item) =>
+          item.contacts.length > 0 && (
+            <Container key={item.letter}>
+              <Box my={2} ml={2}>
+                <TextStyle variant='h1'> {item.letter} </TextStyle>
+              </Box>
+              <Directory items={item.contacts} />
+            </Container>
+          )
+      )}
     </>
   )
 }

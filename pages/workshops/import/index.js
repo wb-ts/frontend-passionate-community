@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import algoliasearch from 'algoliasearch'
 import { client } from '@/lib/contentful'
 // import { algoliaWriteClient } from '@/lib/algolia'
 import { workshopItemToCardData } from '@/lib/data-transformations'
-import algoliasearch from 'algoliasearch'
 
 const algoliaClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
@@ -30,8 +30,11 @@ export default function WorkshopIndex({ workshops }) {
     //convert 2d array to 1d array
     const workshopRecords = [].concat(...workshopsToAlgoliaData)
     try {
-      const algoliaIndex = algoliaClient.initIndex('workshop_stage')
+      const algoliaIndex = algoliaClient.initIndex(
+        process.env.NEXT_PUBLIC_ALGOLIA_WORKSHOP_INDEX_ID
+      )
 
+      await algoliaIndex.clearObjects()
       const indexedContent = await algoliaIndex.saveObjects(workshopRecords, {
         autoGenerateObjectIDIfNotExist: true,
       })
@@ -52,7 +55,9 @@ export default function WorkshopIndex({ workshops }) {
   }
   return (
     <>
-      <button onClick={handleClick}>Import from contentful to algolia</button>
+      <button onClick={handleClick}>
+        Import from workshop content to algolia
+      </button>
     </>
   )
 }

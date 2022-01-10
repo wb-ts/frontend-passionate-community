@@ -1,11 +1,9 @@
-import { connectHits, connectInfiniteHits } from 'react-instantsearch-dom'
-import { Box, Grid, Button } from '@mui/material'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import { Box, Grid, Button } from '@mui/material'
+import PropTypes from 'prop-types'
+import { connectHits, connectInfiniteHits } from 'react-instantsearch-dom'
 import { branch } from 'react-recompose'
 import { CustomPagination } from '../plugins'
-import { hasMemberBookPriceVar } from '@/lib/apollo-client/cache'
-import { useReactiveVar } from '@apollo/client'
-import PropTypes from 'prop-types'
 /**
  * Use the widget to display a list of results.
  * @param {Boolean} isInfinite if True, display an infinite list of results with a “Load more” button, else display with Pagination
@@ -19,19 +17,11 @@ export const ResultHits = ({
   refinePrevious,
   hasMore,
   refineNext,
-  ItemCard,
-  customWidth,
+  RenderResults,
 }) => {
-  const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={3}>
-        {hits.map((hit) => (
-          <Grid item xs={12} md={customWidth} key={hit.objectID}>
-            <ItemCard useMemberBookPrice={hasMemberBookPrice} cardData={hit} />
-          </Grid>
-        ))}
-      </Grid>
+      <RenderResults hits={hits} />
       {isInfinite ? (
         <Box my={10}>
           <Button
@@ -39,7 +29,7 @@ export const ResultHits = ({
             onClick={refineNext}
             startIcon={<ArrowDownwardIcon />}
           >
-            View More
+            Load More
           </Button>
         </Box>
       ) : (
@@ -56,8 +46,7 @@ ResultHits.propTypes = {
   isInfinite: PropTypes.bool,
   hasMore: PropTypes.bool,
   refineNext: PropTypes.func,
-  customWidth: PropTypes.number,
-  ItemCard: PropTypes.elementType,
+  RenderResults: PropTypes.elementType,
   hasPrevious: PropTypes.bool,
   refinePrevious: PropTypes.func,
 }

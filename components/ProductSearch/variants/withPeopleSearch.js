@@ -65,7 +65,10 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
 }
 
 const RenderResults = ({ hits }) => {
-  const groupByLastName = _(hits)
+  const sortedHits = sortBy(hits, (item) =>
+    item?.lastName?.trim().toUpperCase()
+  )
+  const groupByLastName = _(sortedHits)
     .filter((author) => author.lastName)
     .groupBy((o) => {
       const ln = o.lastName?.trim()
@@ -75,7 +78,7 @@ const RenderResults = ({ hits }) => {
     .value()
 
   return (
-    <>
+    <Box sx={{ width: '100%' }}>
       {groupByLastName.map(
         (item) =>
           item.contacts.length > 0 && (
@@ -87,7 +90,7 @@ const RenderResults = ({ hits }) => {
             </Container>
           )
       )}
-    </>
+    </Box>
   )
 }
 

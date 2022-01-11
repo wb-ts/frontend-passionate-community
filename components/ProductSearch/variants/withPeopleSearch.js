@@ -65,16 +65,16 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
 }
 
 const RenderResults = ({ hits }) => {
-  const sortedHits = sortBy(hits, (item) =>
-    item?.lastName?.trim().toUpperCase()
-  )
-  const groupByLastName = _(sortedHits)
+  console.log('hits ', hits)
+
+  const groupByLastName = _(hits)
     .filter((author) => author.lastName)
     .groupBy((o) => {
       const ln = o.lastName?.trim()
       return ln[0].toUpperCase()
     })
     .map((contacts, letter) => ({ letter, contacts }))
+    .sortBy('letter')
     .value()
 
   return (

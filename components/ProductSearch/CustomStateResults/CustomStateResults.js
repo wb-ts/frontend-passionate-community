@@ -31,7 +31,7 @@ export const StateResults = ({
           <CircularProgress color='inherit' />
         </Box>
       ) : (
-        <Box>
+        <Box sx={{ width: '100%' }}>
           {hasResults ? (
             <ResultsComponent
               RenderResults={RenderResults}

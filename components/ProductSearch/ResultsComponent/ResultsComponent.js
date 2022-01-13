@@ -24,7 +24,7 @@ export const ResultHits = ({
   return (
     <Box sx={{ flexGrow: 1 }}>
       <RenderResults hits={hits} />
-      {isInfinite && hasMore ? (
+      {isInfinite ? (
         <Box my={10}>
           <Button
             disabled={!hasMore}

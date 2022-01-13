@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import { connectHits, connectInfiniteHits } from 'react-instantsearch-dom'
 import { branch } from 'react-recompose'
 import { CustomPagination } from '../plugins'
+import { useEffect } from 'react'
 /**
  * Use the widget to display a list of results.
  * @param {Boolean} isInfinite if True, display an infinite list of results with a “Load more” button, else display with Pagination
  * @param {Component} ItemCard
  * @returns
  */
+
 export const ResultHits = ({
   hits,
   isInfinite,
@@ -22,7 +24,7 @@ export const ResultHits = ({
   return (
     <Box sx={{ flexGrow: 1 }}>
       <RenderResults hits={hits} />
-      {isInfinite ? (
+      {isInfinite && hasMore ? (
         <Box my={10}>
           <Button
             disabled={!hasMore}

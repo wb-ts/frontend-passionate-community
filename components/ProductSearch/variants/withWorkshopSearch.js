@@ -8,6 +8,7 @@ import { RefinementsTop } from '../layout'
 import { CustomDateRangePicker, CustomDropDownSelect } from '../plugins'
 import WorkshopListItem from '@/components/molecules/Workshop/WorkshopListItem'
 import { hasMemberBookPriceVar } from '@/lib/apollo-client/cache'
+import { ResultsComponent } from '../ResultsComponent'
 
 /**
  * Rendering Workshop Search
@@ -63,7 +64,8 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
     >
       <main className='search-container'>
         <Configure hitsPerPage={hitsPerPage} />
-        <RefinementsTop Refinements={<Refinements />} Content={<Results />} />
+        <Refinements />
+        <ResultsComponent RenderResults = {RenderResults} isInfinite = {true} />
       </main>
     </InstantSearch>
   )

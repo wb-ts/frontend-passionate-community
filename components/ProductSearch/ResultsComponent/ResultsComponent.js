@@ -1,7 +1,7 @@
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import { Box, Grid, Button } from '@mui/material'
+import { Box, Grid, Button , CircularProgress} from '@mui/material'
 import PropTypes from 'prop-types'
-import { connectHits, connectInfiniteHits } from 'react-instantsearch-dom'
+import { connectHits, connectInfiniteHits , connectStateResults } from 'react-instantsearch-dom'
 import { branch } from 'react-recompose'
 import { CustomPagination } from '../plugins'
 import { useEffect } from 'react'
@@ -20,25 +20,39 @@ export const ResultHits = ({
   hasMore,
   refineNext,
   RenderResults,
+  searchState,
+  isSearchStalled
 }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <RenderResults hits={hits} />
-      {isInfinite ? (
-        <Box my={10}>
-          <Button
-            disabled={!hasMore}
-            onClick={refineNext}
-            startIcon={<ArrowDownwardIcon />}
-          >
-            Load More
-          </Button>
+      {isSearchStalled ? (
+        <Box data-testid='circularprogress-id'>
+          <CircularProgress color='inherit' />
         </Box>
       ) : (
-        <Box>
-          <CustomPagination />
+        hits.length > 0 ?
+          isInfinite ? (
+            <Box my={10}>
+              <Button
+                disabled={!hasMore}
+                onClick={refineNext}
+                startIcon={<ArrowDownwardIcon />}
+              >
+                Load More
+              </Button>
+            </Box>
+          ) : (
+            <Box>
+              <CustomPagination />
+            </Box>
+          ) 
+        : 
+        <Box data-testid='no-results-id'>
+          No results found for <strong>{searchState.query}</strong>.
         </Box>
       )}
+      
     </Box>
   )
 }
@@ -51,12 +65,14 @@ ResultHits.propTypes = {
   RenderResults: PropTypes.elementType,
   hasPrevious: PropTypes.bool,
   refinePrevious: PropTypes.func,
+  searchState: PropTypes.object,
+  isSearchStalled: PropTypes.bool,
 }
 
 const ResultsComponent = branch(
   ({ isInfinite }) => isInfinite,
   connectInfiniteHits,
   connectHits
-)(ResultHits)
+)(connectStateResults(ResultHits))
 
 export default ResultsComponent

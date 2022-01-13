@@ -5,9 +5,13 @@ import _, { sortBy } from 'lodash'
 import { InstantSearch, Configure } from 'react-instantsearch-dom'
 import TextStyle from '../../../components/atoms/TextStyle'
 import Directory from '../../../components/molecules/Directory/Directory'
-import { CustomStateResults } from '../CustomStateResults'
-import { RefinementsTop } from '../layout'
-import { CustomDateRangePicker, CustomDropDownSelect } from '../plugins'
+import {
+  CustomDateRangePicker,
+  CustomDropDownSelect,
+  CustomSearchBox,
+  CustomClearFilters,
+} from '../plugins'
+import { ResultsComponent } from '../ResultsComponent'
 /**
  * Rendering People Search
 
@@ -20,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
+const withPeopleSearch = (searchClient, hitsPerPage = 3) => {
   const Refinements = () => {
     const classes = useStyles()
 
@@ -44,13 +48,6 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
     )
   }
 
-  const Results = () => {
-    return (
-      <Box mt={2}>
-        <CustomStateResults RenderResults={RenderResults} isInfinite={true} />
-      </Box>
-    )
-  }
   return (
     <InstantSearch
       searchClient={searchClient}
@@ -58,7 +55,27 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
     >
       <main className='search-container'>
         <Configure hitsPerPage={hitsPerPage} />
-        <RefinementsTop Refinements={<Refinements />} Content={<Results />} />
+        <Box
+          display='flex'
+          flexDirection='row'
+          flexWrap='wrap'
+          justifyContent='center'
+          alignItems='center'
+        >
+          <Refinements />
+          <Box mt={2} textAlign='center'>
+            <CustomSearchBox
+              customWidth={200}
+              translations={{ placeholder: 'Search for products' }}
+            />
+          </Box>
+          <Box>
+            <CustomClearFilters />
+          </Box>
+        </Box>
+        <Box mt={2} display='flex' justifyContent='center' alignItems='center'>
+          <ResultsComponent RenderResults={RenderResults} isInfinite={true} />
+        </Box>
       </main>
     </InstantSearch>
   )
@@ -94,4 +111,4 @@ const RenderResults = ({ hits }) => {
   )
 }
 
-export default withWorkshopSearch
+export default withPeopleSearch

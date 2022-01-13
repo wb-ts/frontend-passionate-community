@@ -3,8 +3,6 @@ import { useReactiveVar } from '@apollo/client'
 import { Box, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { InstantSearch, Configure } from 'react-instantsearch-dom'
-import { CustomStateResults } from '../CustomStateResults'
-import { RefinementsTop } from '../layout'
 import {
   CustomDateRangePicker,
   CustomDropDownSelect,
@@ -55,13 +53,6 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
     )
   }
 
-  // const Results = () => {
-  //   return (
-  //     <Box mt={2}>
-  //       <CustomStateResults RenderResults={RenderResults} isInfinite={true} />
-  //     </Box>
-  //   )
-  // }
   return (
     <InstantSearch
       searchClient={searchClient}

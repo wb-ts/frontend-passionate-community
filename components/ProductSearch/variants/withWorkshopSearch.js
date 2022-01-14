@@ -3,9 +3,13 @@ import { useReactiveVar } from '@apollo/client'
 import { Box, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { InstantSearch, Configure } from 'react-instantsearch-dom'
-import { CustomStateResults } from '../CustomStateResults'
-import { RefinementsTop } from '../layout'
-import { CustomDateRangePicker, CustomDropDownSelect } from '../plugins'
+import {
+  CustomDateRangePicker,
+  CustomDropDownSelect,
+  CustomSearchBox,
+  CustomClearFilters,
+} from '../plugins'
+import { ResultsComponent } from '../ResultsComponent'
 import WorkshopListItem from '@/components/molecules/Workshop/WorkshopListItem'
 import { hasMemberBookPriceVar } from '@/lib/apollo-client/cache'
 
@@ -49,13 +53,6 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
     )
   }
 
-  const Results = () => {
-    return (
-      <Box mt={2}>
-        <CustomStateResults RenderResults={RenderResults} isInfinite={true} />
-      </Box>
-    )
-  }
   return (
     <InstantSearch
       searchClient={searchClient}
@@ -63,13 +60,35 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
     >
       <main className='search-container'>
         <Configure hitsPerPage={hitsPerPage} />
-        <RefinementsTop Refinements={<Refinements />} Content={<Results />} />
+        {/* <RefinementsTop Refinements={<Refinements />} Content={<Results />} /> */}
+        <Box
+          display='flex'
+          flexDirection='row'
+          flexWrap='wrap'
+          justifyContent='center'
+          alignItems='center'
+        >
+          <Refinements />
+          <Box mt={2} textAlign='center'>
+            <CustomSearchBox
+              customWidth={200}
+              translations={{ placeholder: 'Search for products' }}
+            />
+          </Box>
+          <Box>
+            <CustomClearFilters keepFilters={['workshopDateTimeStamp']} />
+          </Box>
+        </Box>
+        <Box mt={2} display='flex' justifyContent='center' alignItems='center'>
+          <ResultsComponent RenderResults={RenderResults} isInfinite={true} />
+        </Box>
       </main>
     </InstantSearch>
   )
 }
 
 const RenderResults = ({ hits }) => {
+  console.log('hits ', hits)
   const hasMemberBookPrice = useReactiveVar(hasMemberBookPriceVar)
   return (
     <>

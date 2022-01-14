@@ -61,10 +61,6 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
     >
       <main className='search-container'>
         <Configure hitsPerPage={hitsPerPage} />
-<<<<<<< HEAD
-        <Refinements />
-        <ResultsComponent RenderResults = {RenderResults} isInfinite = {true} />
-=======
         {/* <RefinementsTop Refinements={<Refinements />} Content={<Results />} /> */}
         <Box
           display='flex'
@@ -87,7 +83,6 @@ const withWorkshopSearch = (searchClient, hitsPerPage = 3) => {
         <Box mt={2} display='flex' justifyContent='center' alignItems='center'>
           <ResultsComponent RenderResults={RenderResults} isInfinite={true} />
         </Box>
->>>>>>> 52543b1f953d102d23b18307c109049e756ad9b3
       </main>
     </InstantSearch>
   )

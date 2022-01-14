@@ -12,7 +12,6 @@ import {
 import { ResultsComponent } from '../ResultsComponent'
 import WorkshopListItem from '@/components/molecules/Workshop/WorkshopListItem'
 import { hasMemberBookPriceVar } from '@/lib/apollo-client/cache'
-import { ResultsComponent } from '../ResultsComponent'
 
 /**
  * Rendering Workshop Search

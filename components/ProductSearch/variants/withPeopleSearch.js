@@ -75,7 +75,7 @@ const withPeopleSearch = (searchClient, hitsPerPage = 3) => {
             />
           </Box>
           <Box>
-            <CustomClearFilters />
+            <CustomClearFilters keepFilters={[]} />
           </Box>
         </Box>
         <Box mt={2} display='flex' justifyContent='center' alignItems='center'>

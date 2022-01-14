@@ -89,7 +89,7 @@ export const ResultHits = ({
 
   const hasResults = searchResults && searchResults.nbHits !== 0
   return (
-    <Box display='flex' justifyContent='center' alignItems='center'>
+    <Box display='flex' justifyContent='center' alignItems='center' sx={{width: '100%'}}>
       
         <Box sx={{ width: '100%' }}>
           {hasResults ? (
@@ -142,6 +142,11 @@ ResultHits.propTypes = {
   refinePrevious: PropTypes.func,
   searchState: PropTypes.object,
   isSearchStalled: PropTypes.bool,
+  isPeople: PropTypes.bool,
+  isClicked: PropTypes.bool,
+  setIsClickedLoadMore: PropTypes.func,
+  previousHits: PropTypes.arrayOf(PropTypes.object),
+  setPreviousHits: PropTypes.func
 }
 
 const ResultsComponent = branch(

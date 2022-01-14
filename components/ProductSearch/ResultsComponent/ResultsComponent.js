@@ -2,6 +2,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { Box, Grid, Button } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import PropTypes from 'prop-types'
+import { useEffect, useRef} from 'react'
 import {
   connectHits,
   connectInfiniteHits,
@@ -28,34 +29,91 @@ export const ResultHits = ({
   searchState,
   searchResults,
   isSearchStalled,
+  isPeople = false,
+  isClicked ,
+  setIsClickedLoadMore,
+  previousHits,
+  setPreviousHits
 }) => {
+
+  useEffect(()=>{
+
+    if( isPeople && previousHits.length && previousHits.length != hits.length) {
+      let first =  previousHits[previousHits.length-1].lastName[0] , flag = 0;
+      for(let i = 0 ; i < hits.length ; i++){
+        if ( first < hits[i].lastName[0] ) {
+          flag = 1;
+          break;
+        }
+      }
+      if(flag) {
+        setIsClickedLoadMore(false);
+        return;
+      }
+      else {
+        setPreviousHits(hits);
+        refineNext();
+      }
+    }
+  },[hits])
+
+  useEffect (()=> {
+    if(isPeople && isClicked) {
+      setPreviousHits(hits);
+      refineNext();
+    }
+    
+  } , [isClicked])
+
+
+  const sentinel = useRef(null);
+
+  const onSentinelIntersection = (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && hasMore) {
+        refineNext();
+      }
+    });
+  }
+
+  useEffect (()=> {
+    const observer = new IntersectionObserver(onSentinelIntersection);
+    if(sentinel.current) observer.observe(sentinel.current);
+  },[sentinel])
+
   const hasResults = searchResults && searchResults.nbHits !== 0
   return (
     <Box display='flex' justifyContent='center' alignItems='center'>
-      {isSearchStalled ? (
-        <Box data-testid='circularprogress-id'>
-          <CircularProgress color='inherit' />
-        </Box>
-      ) : (
+      
         <Box sx={{ width: '100%' }}>
           {hasResults ? (
             <Box sx={{ flexGrow: 1 }}>
               <RenderResults hits={hits} />
-              {isInfinite ? (
-                <Box my={10}>
-                  <Button
-                    disabled={!hasMore}
-                    onClick={refineNext}
-                    startIcon={<ArrowDownwardIcon />}
-                  >
-                    Load More
-                  </Button>
+              { ((!isPeople && isSearchStalled) || (isPeople && isClicked)) &&
+                <Box data-testid='circularprogress-id' textAlign="center">
+                  <CircularProgress color='inherit' />
                 </Box>
-              ) : (
-                <Box>
-                  <CustomPagination />
-                </Box>
-              )}
+              }
+              {
+              isPeople ? 
+                <Box ref={sentinel}></Box>
+                :
+                isInfinite ? (
+                  <Box my={10}>
+                    <Button
+                      disabled={!hasMore}
+                      onClick={()=>{isPeople ? setIsClickedLoadMore(true) : refineNext() }}
+                      startIcon={<ArrowDownwardIcon />}
+                    >
+                      Load More
+                    </Button>
+                  </Box>
+                ) : (
+                  <Box>
+                    <CustomPagination />
+                  </Box>
+                )
+              }
             </Box>
           ) : (
             <Box data-testid='no-results-id'>
@@ -63,7 +121,6 @@ export const ResultHits = ({
             </Box>
           )}
         </Box>
-      )}
       
     </Box>
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Grid, Container } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import _, { sortBy } from 'lodash'
@@ -24,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+
 const withPeopleSearch = (searchClient, hitsPerPage = 3) => {
+
+  const [isClicked , setIsClickedLoadMore ] = useState(false);
+  const [previousHits , setPreviousHits ] = useState([]);
+
   const Refinements = () => {
     const classes = useStyles()
 
@@ -74,15 +79,23 @@ const withPeopleSearch = (searchClient, hitsPerPage = 3) => {
           </Box>
         </Box>
         <Box mt={2} display='flex' justifyContent='center' alignItems='center'>
-          <ResultsComponent RenderResults={RenderResults} isInfinite={true} />
+          <ResultsComponent 
+            RenderResults={RenderResults} 
+            isInfinite={true} 
+            isPeople = {true} 
+            isClicked= {isClicked} 
+            setIsClickedLoadMore = {setIsClickedLoadMore} 
+            previousHits = {previousHits} 
+            setPreviousHits = {setPreviousHits} 
+          />
         </Box>
       </main>
     </InstantSearch>
   )
 }
 
+
 const RenderResults = ({ hits }) => {
-  console.log('hits ', hits)
 
   const groupByLastName = _(hits)
     .filter((author) => author.lastName)
